@@ -4,27 +4,27 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1860</x>
-      <y>1820</y>
+      <x>1780</x>
+      <y>2180</y>
       <w>360</w>
       <h>280</h>
     </coordinates>
-    <panel_attributes>TheWeak
+    <panel_attributes>Weak
 -
 
 -
-+ TheWeak(TheStrong)</panel_attributes>
++ nextState() : Strong</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1580</x>
-      <y>1360</y>
+      <x>1480</x>
+      <y>1700</y>
       <w>440</w>
-      <h>300</h>
+      <h>400</h>
     </coordinates>
-    <panel_attributes>/Individual/
+    <panel_attributes>/IndividualState/
 -
 - coord : sf::Vect2f()
 - liked : Element
@@ -32,30 +32,32 @@
 - attractions : vector&lt;Attraction&gt;
 - sprite : Image
 -
+#IndividualState(IndividualState)
 + updatePosition()
-+ updateAttraction()</panel_attributes>
++ updateAttraction()
++changeState(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1100</x>
-      <y>1820</y>
+      <x>1000</x>
+      <y>2180</y>
       <w>640</w>
       <h>280</h>
     </coordinates>
-    <panel_attributes>TheStrong
+    <panel_attributes>Strong
 -
 - subordinates : vector&lt;TheWeak&gt;
 -
-+ TheStrong(TheWeak)
-+ updateSubordinate(vector&lt;TheWeak&gt;) : void</panel_attributes>
++ nextState() : Weak
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2100</x>
+      <x>2140</x>
       <y>940</y>
       <w>480</w>
       <h>300</h>
@@ -74,8 +76,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2320</x>
-      <y>1460</y>
+      <x>2260</x>
+      <y>1800</y>
       <w>340</w>
       <h>160</h>
     </coordinates>
@@ -90,64 +92,51 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2000</x>
-      <y>1520</y>
-      <w>360</w>
+      <x>1900</x>
+      <y>1860</y>
+      <w>400</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=*</panel_attributes>
-    <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2460</x>
+      <x>2400</x>
       <y>1220</y>
       <w>60</w>
-      <h>280</h>
+      <h>620</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=*</panel_attributes>
-    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1720</x>
-      <y>1920</y>
-      <w>180</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
-m2=*</panel_attributes>
-    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+    <additional_attributes>10.0;290.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1420</x>
+      <x>1380</x>
       <y>900</y>
-      <w>440</w>
+      <w>520</w>
       <h>320</h>
     </coordinates>
     <panel_attributes>Map
 -
 - individuals : vector&lt;Individual&gt;
 - elements : vector&lt;Element&gt;
-- leaders : vector&lt;TheStrong&gt;
 - dangers : vector&lt;Danger&gt;
+- leaders : vector&lt;Individual&gt;
 -
-+ updatePosition() : void
-+ applyDangers() : void
-+ updateLeaders() : void</panel_attributes>
++ updateIndividuals(): void
++ applyDangers() : void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>220</x>
-      <y>1400</y>
+      <x>720</x>
+      <y>960</y>
       <w>460</w>
       <h>340</h>
     </coordinates>
@@ -161,8 +150,8 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>1820</y>
+      <x>500</x>
+      <y>1380</y>
       <w>400</w>
       <h>280</h>
     </coordinates>
@@ -174,26 +163,10 @@ m2=*</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>480</x>
-      <y>1820</y>
-      <w>400</w>
-      <h>280</h>
-    </coordinates>
-    <panel_attributes>LineDanger
--
-- direction : sf::Vect2f()
-- width : float
--
-+ affectZone(individuals) : void</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
-      <y>1720</y>
+      <x>1060</x>
+      <y>1280</y>
       <w>60</w>
       <h>140</h>
     </coordinates>
@@ -203,8 +176,8 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>1720</y>
+      <x>780</x>
+      <y>1280</y>
       <w>60</w>
       <h>140</h>
     </coordinates>
@@ -214,18 +187,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1640</x>
-      <y>1200</y>
-      <w>60</w>
-      <h>200</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1840</x>
+      <x>1880</x>
       <y>1020</y>
       <w>300</w>
       <h>60</h>
@@ -236,7 +198,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1440</x>
+      <x>1480</x>
       <y>520</y>
       <w>400</w>
       <h>240</h>
@@ -252,19 +214,19 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>980</y>
-      <w>1040</w>
-      <h>460</h>
+      <x>1020</x>
+      <y>580</y>
+      <w>500</w>
+      <h>420</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=*</panel_attributes>
-    <additional_attributes>500.0;10.0;10.0;10.0;10.0;210.0</additional_attributes>
+    <additional_attributes>230.0;10.0;10.0;10.0;10.0;190.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2100</x>
+      <x>2140</x>
       <y>460</y>
       <w>480</w>
       <h>280</h>
@@ -280,41 +242,29 @@ element : Element
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1320</x>
-      <y>1080</y>
-      <w>140</w>
-      <h>780</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;
-m2=*</panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;10.0;10.0;370.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1900</x>
-      <y>1640</y>
+      <x>1820</x>
+      <y>2080</y>
       <w>60</w>
-      <h>220</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1620</x>
-      <y>1640</y>
+      <x>1520</x>
+      <y>2080</y>
       <w>60</w>
-      <h>220</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1640</x>
+      <x>1680</x>
       <y>740</y>
       <w>60</w>
       <h>200</h>
@@ -325,7 +275,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1540</x>
+      <x>1580</x>
       <y>100</y>
       <w>340</w>
       <h>220</h>
@@ -342,7 +292,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1040</x>
+      <x>1080</x>
       <y>120</y>
       <w>340</w>
       <h>220</h>
@@ -356,7 +306,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>700</x>
+      <x>740</x>
       <y>120</y>
       <w>200</w>
       <h>540</h>
@@ -370,7 +320,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>420</x>
+      <x>460</x>
       <y>0</y>
       <w>200</w>
       <h>220</h>
@@ -384,7 +334,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1620</x>
+      <x>1660</x>
       <y>300</y>
       <w>60</w>
       <h>260</h>
@@ -395,7 +345,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
+      <x>920</x>
       <y>260</y>
       <w>200</w>
       <h>60</h>
@@ -406,7 +356,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>420</x>
+      <x>460</x>
       <y>240</y>
       <w>200</w>
       <h>240</h>
@@ -420,7 +370,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
+      <x>640</x>
       <y>160</y>
       <w>140</w>
       <h>60</h>
@@ -431,7 +381,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
+      <x>640</x>
       <y>360</y>
       <w>140</w>
       <h>60</h>
@@ -442,7 +392,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1360</x>
+      <x>1400</x>
       <y>220</y>
       <w>220</w>
       <h>60</h>
@@ -453,7 +403,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1820</x>
+      <x>1860</x>
       <y>580</y>
       <w>320</w>
       <h>60</h>
@@ -464,7 +414,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>420</x>
+      <x>460</x>
       <y>520</y>
       <w>200</w>
       <h>240</h>
@@ -478,7 +428,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
+      <x>640</x>
       <y>560</y>
       <w>140</w>
       <h>60</h>
@@ -489,7 +439,7 @@ m2=*</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>80</x>
+      <x>120</x>
       <y>520</y>
       <w>200</w>
       <h>240</h>
@@ -503,7 +453,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>260</x>
+      <x>300</x>
       <y>560</y>
       <w>200</w>
       <h>60</h>
@@ -514,7 +464,7 @@ m2=*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2320</x>
+      <x>2360</x>
       <y>720</y>
       <w>60</w>
       <h>260</h>
@@ -522,5 +472,61 @@ m2=*</panel_attributes>
     <panel_attributes>lt=&lt;-
 m1=</panel_attributes>
     <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1520</x>
+      <y>1400</y>
+      <w>340</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Individual
+-
+-state: IndividualState
+-
++getState() : void
++update() : void
++changeState(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1660</x>
+      <y>1200</y>
+      <w>60</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m2=*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1660</x>
+      <y>1600</y>
+      <w>60</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>1380</y>
+      <w>400</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>LineDanger
+-
+- direction : sf::Vect2f()
+- width : float
+-
++ affectZone(individuals) : void</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
