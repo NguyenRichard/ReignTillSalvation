@@ -1,5 +1,5 @@
-Observer - Actualisation qui implique plusieurs objet
-State - Plusieur état d'un même objet (TheWeak/TheStrong)
-Game Loop - controler la vitesse temporelle du jeu pour qu'elle soit adapté à tous les ordinateurs
-Update - déjà utilisé pour nos unités/objets
-Strategy - pour les dangers
+Observer - ??
+State - For object that will change state (Weak/Strong, GameController)
+Game Loop - Limiting update speed
+Update - Already used for our Individuals update
+Strategy - For different the different type of danger
