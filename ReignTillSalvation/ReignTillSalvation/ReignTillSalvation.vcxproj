@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -91,7 +92,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\Users\nguye\Desktop\Cours\2A\C++\MicroProjet\imgui;C:\Users\nguye\Desktop\Cours\2A\C++\MicroProjet\imgui-sfml</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cypri\source\bibli_VSC\imgui;C:\Users\cypri\source\bibli_VSC\imgui-sfml</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,14 +155,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+<<<<<<< HEAD
     <ClInclude Include="resource.h" />
+=======
+    <ClInclude Include="resource1.h" />
+>>>>>>> 45c4cebb044ee57aeeded399fe1f005d40d0773f
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\imgui-sfml\imgui-SFML.cpp" />
-    <ClCompile Include="..\..\..\imgui\imgui.cpp" />
-    <ClCompile Include="..\..\..\imgui\imgui_demo.cpp" />
-    <ClCompile Include="..\..\..\imgui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\..\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui-sfml\imgui-SFML.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_widgets.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -176,7 +181,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ResourceCompile Include="ReignTillSalvation.rc" />
+=======
+    <ResourceCompile Include="ReignTillSalvation1.rc" />
+>>>>>>> 45c4cebb044ee57aeeded399fe1f005d40d0773f
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
