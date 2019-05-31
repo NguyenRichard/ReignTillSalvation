@@ -1,7 +1,4 @@
-﻿  pch.cpp
-  Individual.cpp
-  RTSLibrary.cpp
-  Strong.cpp
-  Weak.cpp
-  Génération de code en cours...
+﻿  Menu.cpp
+LINK : warning LNK4068: /MACHINE non spΘcifiΘá; X86 pris par dΘfaut
+Game.obj : warning LNK4221: Ce fichier objet ne dΘfinit pas de symboles publics jusqu'ici non dΘfinis. Par consΘquent, il ne sera utilisΘ par aucune opΘration de lien utilisant cette bibliothΦque
   RTSLibrary.vcxproj -> C:\Users\nguye\Desktop\Cours\2A\C++\MicroProjet\ReignTillSalvation\ReignTillSalvation\Debug\RTSLibrary.lib
