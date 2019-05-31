@@ -1,2 +1,16 @@
 ﻿  ReignTillSalvation.cpp
+c:\users\nguye\desktop\cours\2a\c++\microprojet\reigntillsalvation\reigntillsalvation\reigntillsalvation\reigntillsalvation.cpp(53): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+c:\users\nguye\desktop\cours\2a\c++\microprojet\reigntillsalvation\reigntillsalvation\reigntillsalvation\reigntillsalvation.cpp(54): warning C4244: 'argument' : conversion de 'T' en 'float', perte possible de données
+          with
+          [
+              T=unsigned int
+          ]
   ReignTillSalvation.vcxproj -> C:\Users\nguye\Desktop\Cours\2A\C++\MicroProjet\ReignTillSalvation\ReignTillSalvation\Debug\ReignTillSalvation.exe
