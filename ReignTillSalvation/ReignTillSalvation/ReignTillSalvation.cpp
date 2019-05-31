@@ -11,6 +11,8 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "../RTSLibrary/Menu.h"
+
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1500
 
@@ -22,6 +24,7 @@ int main()
 	one.action();*/
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "");
+	Menu menu(window.getSize().x, window.getSize().y);
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
@@ -75,6 +78,7 @@ int main()
 
 		window.clear(bgColor); // fill background with color
 		ImGui::SFML::Render(window);
+		menu.draw(window);
 		window.display();
 	}
 
