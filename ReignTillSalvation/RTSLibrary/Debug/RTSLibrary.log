@@ -1,8 +1,0 @@
-<<<<<<< HEAD
-﻿  RTSLibrary.vcxproj -> C:\Users\cypri\Desktop\documents\ReignTillSalvation\ReignTillSalvation\Debug\RTSLibrary.lib
-=======
-﻿  Menu.cpp
-LINK : warning LNK4068: /MACHINE non spΘcifiΘá; X86 pris par dΘfaut
-Game.obj : warning LNK4221: Ce fichier objet ne dΘfinit pas de symboles publics jusqu'ici non dΘfinis. Par consΘquent, il ne sera utilisΘ par aucune opΘration de lien utilisant cette bibliothΦque
-  RTSLibrary.vcxproj -> C:\Users\nguye\Desktop\Cours\2A\C++\MicroProjet\ReignTillSalvation\ReignTillSalvation\Debug\RTSLibrary.lib
->>>>>>> 53534ff428c12f9043eecc462b90167b171e574c
