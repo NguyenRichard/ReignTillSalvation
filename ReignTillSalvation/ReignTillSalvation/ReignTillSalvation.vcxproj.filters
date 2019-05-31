@@ -18,6 +18,9 @@
     <ClInclude Include="pch.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -26,20 +29,25 @@
     <ClCompile Include="ReignTillSalvation.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\imgui\imgui.cpp">
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\imgui\imgui_draw.cpp">
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_demo.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\imgui\imgui_widgets.cpp">
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_draw.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\imgui\imgui_demo.cpp">
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_widgets.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\imgui-sfml\imgui-SFML.cpp">
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui-sfml\imgui-SFML.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ReignTillSalvation1.rc">
+      <Filter>Fichiers de ressources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
