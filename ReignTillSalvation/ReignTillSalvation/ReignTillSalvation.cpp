@@ -48,10 +48,11 @@ int main()
 
 		ImGui::SFML::Update(window, deltaClock.restart());
 
+		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+			x / 4, window.getSize().y), 0);
 		ImGui::Begin("Sample window"); // begin window
-		ImGui::SetWindowSize(sf::Vector2f(window.getSize().
-			x/ 4, window.getSize().y), 0);
-		ImGui::SetWindowFontScale(window.getSize().y / 1000);
+		ImGui::SetWindowFontScale(window.getSize().y / 800);
+
 		// Background color edit
 		if (ImGui::ColorEdit3("Background color", color)) {
 			// this code gets called if color value changes, so

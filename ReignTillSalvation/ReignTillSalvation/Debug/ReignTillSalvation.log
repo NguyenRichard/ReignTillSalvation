@@ -1,5 +1,5 @@
 ﻿  ReignTillSalvation.cpp
-c:\users\nguye\desktop\cours\2a\c++\microprojet\reigntillsalvation\reigntillsalvation\reigntillsalvation\reigntillsalvation.cpp(53): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
+c:\users\nguye\desktop\cours\2a\c++\microprojet\reigntillsalvation\reigntillsalvation\reigntillsalvation\reigntillsalvation.cpp(52): warning C4244: 'argument' : conversion de 'T' en 'T', perte possible de données
           with
           [
               T=unsigned int
