@@ -1,3 +1,4 @@
+#include "Attraction.h"
 #include "Element.h"
 
 void Element::updateRejections() {

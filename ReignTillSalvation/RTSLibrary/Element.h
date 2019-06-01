@@ -2,7 +2,7 @@
 
 #include <SFML\Graphics.hpp>
 
-#include "Attraction.h"
+class Attraction;
 
 class Element
 {
@@ -25,4 +25,3 @@ private:
 	std::vector<Attraction*> attractions;
 	sf::CircleShape sprite;
 };
-

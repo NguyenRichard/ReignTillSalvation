@@ -1,6 +1,6 @@
 #ifndef INDIVIDUALSTATE_H
 #define INDIVIDUALSTATE_H
-#pragma 
+#pragma once
 
 #include <memory>
 #include <string>
@@ -8,8 +8,6 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 
-#include "Weak.h"
-#include "Strong.h"
 
 class IndividualState {
 public:

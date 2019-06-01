@@ -32,7 +32,7 @@ int main()
 	one.action();*/
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "");
-	RTS rts { std::make_unique<Game>(window.getSize().x,window.getSize().y) };	
+	RTS rts { std::make_unique<MainMenu>(window.getSize().x,window.getSize().y) };	
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 

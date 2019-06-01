@@ -10,6 +10,6 @@ void Attraction::updateAttraction() {
 }
 
 void Attraction::updateRejection() {
-	if (power > - max_power)
+	if (power > -max_power)
 		power--;
 }

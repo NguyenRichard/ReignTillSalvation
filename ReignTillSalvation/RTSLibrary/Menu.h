@@ -23,7 +23,7 @@ public:
 	void MoveUp();
 	void MoveDown();
 	void handleKeyEvent(sf::RenderWindow& window);
-	virtual void handleKeyEventAction(sf::RenderWindow& window) = 0;
+	virtual void handleKeyEventAction(sf::RenderWindow& window) = 0; //put default option when using.
 	void handleMouseEventPositionSelect(sf::RenderWindow& window);
 	virtual void handleMouseEventClick(sf::RenderWindow& window) = 0;
 	void handleMouseEvent(sf::RenderWindow& window);
