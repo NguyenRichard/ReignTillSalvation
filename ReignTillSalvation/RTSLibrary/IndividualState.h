@@ -7,6 +7,9 @@
 #include <vector>
 #include <iostream>
 
+#include "Weak.h"
+#include "Strong.h"
+
 class IndividualState {
 public:
 	IndividualState(std::string name) : name(name) {};
