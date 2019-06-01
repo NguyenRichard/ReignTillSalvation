@@ -17,4 +17,7 @@ void RTS::render(sf::RenderWindow& window) {
 
 void RTS::processIpunt(sf::RenderWindow& window) {
 	state->processInput(window);
+	if (state->haveToChangeState()) {
+		changeState();
+	}
 }
