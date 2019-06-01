@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(float width, float height) {
+Menu::Menu() {
 
 	//default
 	selectedColor = SELECTED_COLOR;
@@ -10,7 +10,7 @@ Menu::Menu(float width, float height) {
 
 }
 
-void Menu::draw(sf::RenderWindow& window) {
+void Menu::render(sf::RenderWindow& window) {
 	for (int i = 0; i < number_choice; i++) {
 		window.draw(options[i]);
 	}
