@@ -1,6 +1,1 @@
-﻿  Game.cpp
-  Menu.cpp
-  Generating Code...
-LINK : warning LNK4068: /MACHINE not specified; defaulting to X86
-Game.obj : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-  RTSLibrary.vcxproj -> C:\Users\cypri\Desktop\documents\ReignTillSalvation\ReignTillSalvation\Debug\RTSLibrary.lib
+﻿  RTSLibrary.vcxproj -> C:\Users\cypri\Desktop\documents\ReignTillSalvationBackup\ReignTillSalvation\Debug\RTSLibrary.lib
