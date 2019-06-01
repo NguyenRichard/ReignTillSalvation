@@ -151,10 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Attraction.h" />
+    <ClInclude Include="Element.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="IndividualState.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
@@ -164,9 +167,12 @@
     <ClInclude Include="Weak.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Attraction.cpp" />
+    <ClCompile Include="Element.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
