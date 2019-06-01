@@ -547,7 +547,6 @@ m2=*</panel_attributes>
 # RTSState(RTSState)
 + render(sf::RenderWindow) : void
 + init() : void
-+ loop() : void
 + /changeState()/ : void
 + processInput(sf::RenderWindow) : void
 </panel_attributes>

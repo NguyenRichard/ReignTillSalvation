@@ -16,7 +16,6 @@ protected:
 	int char_size;
 	int number_choice;
 	sf::Text options[MAX_NUMBER_OF_ITEMS];
-	sf::FloatRect option_bounds[MAX_NUMBER_OF_ITEMS];
 public:
 	Menu();
 	void render(sf::RenderWindow& window);
