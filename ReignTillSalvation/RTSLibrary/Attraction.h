@@ -5,7 +5,7 @@
 class Attraction
 {
 public:
-	Attraction(Element element, int power):
+	Attraction(Element element, int power) :
 		element(element), power(power) {};
 	~Attraction();
 
@@ -16,4 +16,3 @@ private:
 	int power;
 	int max_power;
 };
-

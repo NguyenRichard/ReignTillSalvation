@@ -65,8 +65,8 @@ void MainMenu::init() {
 	number_choice = option_names.size();
 
 	options[0].setFont(font);
-	//Useful if you use handleKeyEvent() for default color.
-	options[0].setFillColor(selectedColor);
+	//put selectedColor for a default option if you use handleKeyEvent.
+	options[0].setFillColor(nselectedColor);
 	options[0].setString(option_names[0]);
 	options[0].setCharacterSize(char_size);
 	sf::FloatRect rect = options[0].getGlobalBounds();

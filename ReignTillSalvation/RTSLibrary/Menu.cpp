@@ -6,7 +6,7 @@ Menu::Menu() {
 	selectedColor = SELECTED_COLOR;
 	nselectedColor = NOT_SELECTED_COLOR;
 	char_size = CHAR_SIZE;
-	selectedItemIndex = 0;
+	selectedItemIndex = MAX_NUMBER_OF_ITEMS; //put default option if you use handleKeyEvent;
 
 }
 
@@ -57,8 +57,10 @@ void Menu::handleMouseEventPositionSelect(sf::RenderWindow& window) {
 			return;
 		}
 	}
-	options[selectedItemIndex].setFillColor(nselectedColor);
-	selectedItemIndex = MAX_NUMBER_OF_ITEMS;
+	if (selectedItemIndex != MAX_NUMBER_OF_ITEMS) {
+		options[selectedItemIndex].setFillColor(nselectedColor);
+		selectedItemIndex = MAX_NUMBER_OF_ITEMS;
+	}
 }
 
 void Menu::handleMouseEvent(sf::RenderWindow& window) {
