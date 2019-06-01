@@ -7,6 +7,8 @@
 #include "../RTSLibrary/Individual.h"
 #include "../RTSLibrary/Strong.h"
 #include "../RTSLibrary/MainMenu.h"
+#include "../RTSLibrary/RTS.h"
+#include "../RTSLibrary/Game.h"
 
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -30,7 +32,7 @@ int main()
 	one.action();*/
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "");
-	MainMenu menu(window.getSize().x, window.getSize().y);
+	RTS rts { std::make_unique<Game>(window.getSize().x,window.getSize().y) };	
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
@@ -50,8 +52,7 @@ int main()
 
 		while (window.pollEvent(event)) {
 			ImGui::SFML::ProcessEvent(event);
-			menu.handleMouseEventPositionSelect(window);
-			menu.handleMouseEvent(window);
+			rts.processIpunt(window);
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
@@ -61,32 +62,20 @@ int main()
 
 		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
 			x / 4, window.getSize().y), 0);
-		ImGui::Begin("Sample window"); // begin window
-		ImGui::SetWindowFontScale(window.getSize().y / 800);
+		ImGui::Begin("Game State"); // begin window
+		ImGui::SetWindowFontScale(window.getSize().y / 500);
 
-		// Background color edit
-		if (ImGui::ColorEdit3("Background color", color)) {
-			// this code gets called if color value changes, so
-			// the background color is upgraded automatically!
-			bgColor.r = static_cast<sf::Uint8>(color[0] * 255.f);
-			bgColor.g = static_cast<sf::Uint8>(color[1] * 255.f);
-			bgColor.b = static_cast<sf::Uint8>(color[2] * 255.f);
-		}
-
-		// Window title text edit
-		ImGui::InputText("Window title", windowTitle, 255);
-
-		if (ImGui::Button("Update window title")) {
+		if (ImGui::Button("Change State")) {
 			// this code gets if user clicks on the button
 			// yes, you could have written if(ImGui::InputText(...))
 			// but I do this to show how buttons work :)
-			window.setTitle(windowTitle);
+			rts.changeState();
 		}
 		ImGui::End(); // end window
 
 		window.clear(bgColor); // fill background with color
 		ImGui::SFML::Render(window);
-		menu.draw(window);
+		rts.render(window);
 		window.display();
 	}
 
