@@ -9,6 +9,6 @@ public:
 	RTS(std::unique_ptr<RTSState> new_state);
 	void changeState();
 	void render(sf::RenderWindow& window);
-	void processIpunt(sf::RenderWindow& window);
+	void processInput(sf::RenderWindow& window);
 
 };
