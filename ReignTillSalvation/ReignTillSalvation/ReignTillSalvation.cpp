@@ -1,20 +1,26 @@
 // ReignTillSalvation.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
 
+#pragma region include
 #include <iostream>
+
 #include "../RTSLibrary/Individual.h"
 #include "../RTSLibrary/Strong.h"
+#include "../RTSLibrary/MainMenu.h"
+
 #include "imgui.h"
 #include "imgui-SFML.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
+#pragma endregion include
 
-#include "../RTSLibrary/Menu.h"
-
+#pragma region define
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1500
+#define MS_PER_UPDATE 60
+#pragma endregion define
 
 int main()
 {
@@ -24,7 +30,7 @@ int main()
 	one.action();*/
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "");
-	Menu menu(window.getSize().x, window.getSize().y);
+	MainMenu menu(window.getSize().x, window.getSize().y);
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
@@ -37,18 +43,20 @@ int main()
 	char windowTitle[255] = "ImGui + SFML = <3";
 
 	window.setTitle(windowTitle);
-	window.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
+
 	sf::Clock deltaClock;
 	while (window.isOpen()) {
 		sf::Event event;
+
 		while (window.pollEvent(event)) {
 			ImGui::SFML::ProcessEvent(event);
-
+			menu.handleMouseEventPositionSelect(window);
+			menu.handleMouseEvent(window);
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
-		}
 
+		}
 		ImGui::SFML::Update(window, deltaClock.restart());
 
 		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
