@@ -1,5 +1,2 @@
-<<<<<<< HEAD
-﻿  UnitTests.vcxproj -> C:\Users\cypri\Desktop\documents\ReignTillSalvation\ReignTillSalvation\Debug\UnitTests.exe
-=======
-﻿  UnitTests.vcxproj -> C:\Users\nguye\Desktop\Cours\2A\C++\MicroProjet\ReignTillSalvation\ReignTillSalvation\Debug\UnitTests.exe
->>>>>>> 53534ff428c12f9043eecc462b90167b171e574c
+﻿  LINK : C:\Users\cypri\Desktop\documents\ReignTillSalvation\ReignTillSalvation\Debug\UnitTests.exe not found or not built by the last incremental link; performing full link
+  UnitTests.vcxproj -> C:\Users\cypri\Desktop\documents\ReignTillSalvation\ReignTillSalvation\Debug\UnitTests.exe
