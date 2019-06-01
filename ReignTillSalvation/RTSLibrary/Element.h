@@ -14,7 +14,7 @@ public:
 		sprite.setOutlineThickness(2);
 		sprite.setOutlineColor(sf::Color(255, 255, 255, 255));
 	};
-
+	virtual ~Element() = default;
 	void updateRejections();
 	void updateAttractions();
 	void deleteAttraction(Attraction*);

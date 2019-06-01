@@ -46,9 +46,12 @@ void Menu::handleKeyEvent(sf::RenderWindow& window) {
 
 
 void Menu::handleMouseEventPositionSelect(sf::RenderWindow& window) {
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+	sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+	sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+	sf::FloatRect rect;
 	for (int i = 0; i < number_choice; i++) {
-		if (option_bounds[i].contains(mousePosition.x, mousePosition.y)) {
+		rect = options[i].getGlobalBounds();
+		if (rect.contains(mouseWorldPosition.x, mouseWorldPosition.y)) {
 			if (selectedItemIndex == i) {
 				return;
 			}

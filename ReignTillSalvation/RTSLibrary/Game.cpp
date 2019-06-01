@@ -27,7 +27,6 @@ void Game::render(sf::RenderWindow& window) {
 }
 
 void::Game::init() {
-	std::cout << width << "," << height << "\n";
 
 	if (!font.loadFromFile("res/fonts/impact.ttf")) {
 		std::cout << "Impossible to load font for menu";

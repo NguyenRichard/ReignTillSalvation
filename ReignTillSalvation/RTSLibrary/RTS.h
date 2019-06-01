@@ -10,5 +10,6 @@ public:
 	void changeState();
 	void render(sf::RenderWindow& window);
 	void processInput(sf::RenderWindow& window);
+	RTSState* getState() { return state.get(); };
 
 };
