@@ -21,6 +21,9 @@ void MainMenu::handleKeyEventAction(sf::RenderWindow& window) {
 void MainMenu::handleMouseEventClick(sf::RenderWindow& window) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		switch (selectedItemIndex) {
+		case 0: //Play option
+			state = true;
+			break;
 		case 2: //Exit option
 			window.close();
 			break;
