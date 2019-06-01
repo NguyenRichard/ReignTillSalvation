@@ -8,6 +8,9 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 
+#include "Weak.h"
+#include "Strong.h"
+
 class IndividualState {
 public:
 	IndividualState() = default;
