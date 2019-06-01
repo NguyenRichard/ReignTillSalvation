@@ -5,4 +5,11 @@
       <AdditionalIncludeDirectories>C:\Users\cypri\source\bibli_VSC\imgui;C:\Users\cypri\source\bibli_VSC\imgui-sfml</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui-sfml\imgui-SFML.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\..\..\source\bibli_VSC\imgui\imgui_widgets.cpp" />
+  </ItemGroup>
 </Project>
