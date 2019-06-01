@@ -6,17 +6,18 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "SFML/Graphics.hpp"
 
 class IndividualState {
 public:
-	IndividualState(std::string name) : name(name) {};
-	IndividualState(const IndividualState & state) : name(state.name) {};
+	IndividualState() = default;
 	virtual std::unique_ptr<IndividualState> changeState() = 0;
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
+	virtual void updatePosition() {};
+	sf::CircleShape* getSprite() { return &sprite; };
 protected:
-	std::string name;
-
+	sf::CircleShape sprite;
 
 
 };
