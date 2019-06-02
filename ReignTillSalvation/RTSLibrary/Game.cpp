@@ -24,6 +24,7 @@ void Game::processInput(sf::RenderWindow& window) {
 
 void Game::render(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
+	std::vector<std::unique_ptr<Element>>& elements = map.getElements();
 	sf::Vector2f coord;
 	sf::CircleShape* circle;
 	for (const auto & leader : leaders) {
@@ -31,6 +32,17 @@ void Game::render(sf::RenderWindow& window) {
 		circle = leader.get()->getState()->getSprite();
 		circle->setPosition(coord);
 		window.draw(*circle);
+	}
+	std::vector<sf::Vector2f> element_coords;
+	for (const auto & element : elements) {
+		circle = element.get()->getSprite();
+		element_coords = element.get()->getCoords();
+		float range = element.get()->getRangeUnmutable();
+		for (const auto & element_coord : element_coords) {
+			circle->setPosition(element_coord);
+			circle->setRadius(range);
+			window.draw(*circle);
+		}
 	}
 }
 
