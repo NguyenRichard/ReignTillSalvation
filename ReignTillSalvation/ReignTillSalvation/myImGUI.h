@@ -24,6 +24,8 @@
 #pragma endregion define
 
 int imGUImain();
-void globalInformation(sf::RenderWindow &, RTS&);
-void individualWindow(sf::RenderWindow &, RTS&);
+void globalInformation(sf::RenderWindow &, RTS&, bool*);
+void individualWindow(sf::RenderWindow &, RTS&, bool*);
 void showIndividual(Individual&, const char*, int);
+void elementWindow(sf::RenderWindow &, RTS&, bool*,char*);
+void showElement(Element&, int);

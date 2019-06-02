@@ -1,8 +1,14 @@
 #include "myImGUI.h"
 
+#define MAX_INPUT_NAME 50
 
 int imGUImain(){
 
+	static bool showIndividualInfo = false;
+	static bool showGlobalInfo = false;
+	static bool showElementInfo = false;
+	static char input_name[MAX_INPUT_NAME] = "Element";
+	char elementName[255] = "Element";
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ReignTillSalvation");
 	RTS rts { std::make_unique<MainMenu>(window.getSize().x,window.getSize().y) };
 	window.setVerticalSyncEnabled(true);
@@ -32,11 +38,33 @@ int imGUImain(){
 		}
 		ImGui::SFML::Update(window, deltaClock.restart());
 
-		ImGui::ShowTestWindow();
-		globalInformation(window, rts);
-		individualWindow(window, rts);
+		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+			x / 3, window.getSize().y / 5));
+		ImGui::Begin("Main Menu"); // begin window
+		ImGui::SetWindowFontScale(window.getSize().y / 450);
+		if (ImGui::Button("Show Global Info")) {
+			// this code gets if user clicks on the button
+			// yes, you could have written if(ImGui::InputText(...))
+			// but I do this to show how buttons work :)
+			showGlobalInfo = true;
+		}
+		if (dynamic_cast<Game*>(rts.getState())) {
+			if (ImGui::Button("Show Individuals Info")) {
+				showIndividualInfo = true;
+			}
+			if (ImGui::Button("Show Element Info")) {
+				showElementInfo = true;
+			}
+		}
 
-		window.clear(bgColor); // fill background with color
+		ImGui::End(); // end window
+
+		ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
+		if(showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
+		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo);
+		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name);
+
+		window.clear();
 		ImGui::SFML::Render(window);
 		rts.render(window);
 		window.display();
@@ -48,12 +76,17 @@ int imGUImain(){
 
 }
 
-void globalInformation(sf::RenderWindow & window, RTS& rts) {
+void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
+
 
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
 		x / 7, window.getSize().y / 5));
-	ImGui::Begin("Global Information"); // begin window
-	ImGui::SetWindowFontScale(window.getSize().y / 500);
+	if (!ImGui::Begin("Global Info", p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	ImGui::SetWindowFontScale(window.getSize().y / 450);
 
 	ImGui::Text("Mouse position:");
 	std::string string = "x: " + std::to_string(sf::Mouse::getPosition(window).x);
@@ -70,41 +103,43 @@ void globalInformation(sf::RenderWindow & window, RTS& rts) {
 	ImGui::End(); // end window
 }
 
-void individualWindow(sf::RenderWindow & window, RTS& rts) {
+void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	Game* game = static_cast<Game*>(rts.getState());
-	if (dynamic_cast<Game*>(rts.getState())) {
-		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
-			x / 4, window.getSize().y / 5));
-		ImGui::Begin("List of individuals");
-		ImGui::SetWindowFontScale(window.getSize().y / 600);
-		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
-		ImGui::Columns(2);
-		ImGui::Separator();
-		std::vector<std::unique_ptr<Individual>>& leaders = game->getMap()->getLeaders();
-		int i = 1;
-		for (auto & leader : leaders) {
-			showIndividual(*leader, "Leader", i);
-			i++;
-		}
-		ImGui::Columns(1);
-		ImGui::Separator();
-		ImGui::PopStyleVar();
-		if (ImGui::Button("Add individuals")) {
-			while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
-				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
-					ImGui::End();
-					return;
-				}
-			}
-			sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
-			sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
-			if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
-				&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
-				game->getMap()->createIndividual(mouseWorldPosition);
-			}
-		}
+	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+		x / 4, window.getSize().y / 5));
+	if (!ImGui::Begin("Individuals Info", p_open))
+	{
 		ImGui::End();
+		return;
 	}
+	ImGui::SetWindowFontScale(window.getSize().y / 550);
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+	ImGui::Columns(2);
+	ImGui::Separator();
+	std::vector<std::unique_ptr<Individual>>& leaders = game->getMap()->getLeaders();
+	int i = 1;
+	for (auto & leader : leaders) {
+		showIndividual(*leader, "Leader", i);
+		i++;
+	}
+	ImGui::Columns(1);
+	ImGui::Separator();
+	ImGui::PopStyleVar();
+	if (ImGui::Button("Add individuals")) {
+		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+				ImGui::End();
+				return;
+			}
+		}
+		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
+			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
+			game->getMap()->createIndividual(mouseWorldPosition);
+		}
+	}
+	ImGui::End();
 
 }
 
@@ -118,6 +153,20 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 	ImGui::NextColumn();
 	if (node_open)
 	{
+		sf::Vector2f& coord = individual.getCoord();
+		ImGui::PushID(1);
+		// Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
+		ImGui::AlignTextToFramePadding();
+		ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Coordinate");
+
+		ImGui::NextColumn();
+		ImGui::SetNextItemWidth(-1);
+		ImGui::InputFloat("x: ", &coord.x, 1.0f);
+		ImGui::SetNextItemWidth(-1);
+		ImGui::InputFloat("y: ", &coord.y, 1.0f);
+		ImGui::NextColumn();
+		ImGui::PopID();
+
 		if (dynamic_cast<Strong*>(individual.getState())) {
 			Strong* strong = dynamic_cast<Strong*>(individual.getState());
 			std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinate();
@@ -125,27 +174,101 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 			for (auto& subordinate : subordinates)
 			{
 				ImGui::PushID(i); // Use field index as identifier.
-				showIndividual(*subordinate, "Subordinate", 424242);
+				showIndividual(*subordinate, "Subordinate", i);
 				i++;
 				ImGui::PopID();
 			}
 		}
-		float* information[2];
-		sf::Vector2f& coord = individual.getCoord();
-		information[0] = &coord.x;
-		information[1] = &coord.y;
-		for (int i = 0; i < 2; i++) {
+
+	
+		ImGui::TreePop();
+	}
+	ImGui::PopID();
+}
+
+void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_name) {
+	Game* game = static_cast<Game*>(rts.getState());
+	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+		x / 4, window.getSize().y / 5));
+	if (!ImGui::Begin("Element Info", p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	ImGui::SetWindowFontScale(window.getSize().y / 550);
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+	ImGui::Columns(2);
+	ImGui::Separator();
+	std::vector<std::unique_ptr<Element>>& elements = game->getMap()->getElements();
+	int i = 1;
+	for (auto & element : elements) {
+		showElement(*element, i);
+		i++;
+	}
+	ImGui::Columns(1);
+	ImGui::Separator();
+	ImGui::PopStyleVar();
+	ImGui::InputText("name", input_name, MAX_INPUT_NAME);
+	if (ImGui::Button("Add element")) {
+		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+				ImGui::End();
+				return;
+			}
+		}
+		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
+			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
+			std::string name(input_name);
+			game->getMap()->addElementInMap(name,mouseWorldPosition);
+		}
+	}
+	ImGui::End();
+
+}
+
+
+void showElement(Element& element, int uid)
+{
+	ImGui::PushID(uid);                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
+	ImGui::AlignTextToFramePadding();  // Text and Tree nodes are less high than regular widgets, here we add vertical spacing to make the tree lines equal high.
+	bool node_open = ImGui::TreeNode("Object", "%s", element.getName().c_str());
+	ImGui::NextColumn();
+	ImGui::AlignTextToFramePadding();
+	ImGui::NextColumn();
+	if (node_open)
+	{
+		ImGui::PushID(1);
+		ImGui::AlignTextToFramePadding();
+		ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Range");
+		ImGui::NextColumn();
+		ImGui::SetNextItemWidth(-1);
+		ImGui::InputFloat("r: ", &element.getRangeMutable(), 1.0f);
+		ImGui::SetNextItemWidth(-1);
+		ImGui::NextColumn();
+		ImGui::PopID();
+
+		int i = 0;
+
+		std::vector<sf::Vector2f>& coords = element.getCoords();
+		for (auto& coord : coords)
+		{
 			ImGui::PushID(i);
 			// Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
 			ImGui::AlignTextToFramePadding();
-			ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Field_%d", i);
+			ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Coordinate_%d",i);
 			ImGui::NextColumn();
 			ImGui::SetNextItemWidth(-1);
-
-			ImGui::InputFloat("x: ", information[i], 1.0f);
+			ImGui::InputFloat("x: ", &coords[i].x , 1.0f);
+			ImGui::SetNextItemWidth(-1);
+			ImGui::InputFloat("y: ", &coords[i].y, 1.0f);
 			ImGui::NextColumn();
 			ImGui::PopID();
+
+			i++;
 		}
+
 		ImGui::TreePop();
 	}
 	ImGui::PopID();
