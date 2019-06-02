@@ -23,7 +23,15 @@ void Game::processInput(sf::RenderWindow& window) {
 }
 
 void Game::render(sf::RenderWindow& window) {
-	window.draw(text);
+	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
+	sf::Vector2f coord;
+	sf::CircleShape* circle;
+	for (const auto & leader : leaders) {
+		coord = leader.get()->getCoord();
+		circle = leader.get()->getState()->getSprite();
+		circle->setPosition(coord);
+		window.draw(*circle);
+	}
 }
 
 void::Game::init() {
