@@ -5,4 +5,6 @@ as part of a school C++ game development project. The subject was to make a game
 Gameplay:
 The player will have to keep a population alive in this game. The population is composed of many individuals who are attracted or repelled by elements on the map. However, if you let them go as they wish, the dangers that will appear will kill them. So save them by making rules that compel them to be attracted or repelled by the element of your choice, so as to control their movement.
 
-Library used: SFML, imGUI
+Library used: SFML, imGUI and imGUI-SFML Binding
+Follow this tutorial to install the libraries.
+https://eliasdaler.github.io/using-imgui-with-sfml-pt1/
