@@ -27,19 +27,22 @@ void Game::render(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Element>>& elements = map.getElements();
 	sf::Vector2f coord;
 	sf::CircleShape* circle;
+	float radius;
 	for (const auto & leader : leaders) {
 		coord = leader.get()->getCoord();
 		circle = leader.get()->getState()->getSprite();
-		circle->setPosition(coord);
+		radius = circle->getRadius();
+		circle->setPosition(coord.x-radius,coord.y-radius);
 		window.draw(*circle);
 	}
 	std::vector<sf::Vector2f> element_coords;
 	for (const auto & element : elements) {
 		circle = element.get()->getSprite();
+		radius = circle->getRadius();
 		element_coords = element.get()->getCoords();
 		float range = element.get()->getRangeUnmutable();
 		for (const auto & element_coord : element_coords) {
-			circle->setPosition(element_coord);
+			circle->setPosition(element_coord.x-radius,element_coord.y-radius);
 			circle->setRadius(range);
 			window.draw(*circle);
 		}

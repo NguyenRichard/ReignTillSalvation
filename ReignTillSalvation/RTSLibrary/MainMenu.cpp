@@ -69,14 +69,14 @@ void MainMenu::init() {
 	options[0].setCharacterSize(char_size);
 	sf::FloatRect rect = options[0].getGlobalBounds();
 	//SFML draw with the top-left corner as origin, so we have to center the position.
-	options[0].setPosition(sf::Vector2f(width / 2 - rect.width / 2, (height / (number_choice + 1)) * 1 - rect.height / 2));
+	options[0].setPosition(sf::Vector2f(width / 2 - rect.width, (height / (number_choice + 1)) * 1 - rect.height));
 
 	for (int i = 1; i < option_names.size(); i++) {
 		options[i].setFont(font);
 		options[i].setFillColor(nselectedColor);
 		options[i].setString(option_names[i]);
 		options[i].setCharacterSize(char_size);
-		options[i].setPosition(sf::Vector2f(width / 2 - rect.width / 2, (height / (number_choice + 1)) * (i + 1) - rect.height / 2));
+		options[i].setPosition(sf::Vector2f(width / 2 - rect.width, (height / (number_choice + 1)) * (i + 1) - rect.height));
 	}
 }
 

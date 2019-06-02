@@ -56,13 +56,17 @@ int imGUImain(){
 				showElementInfo = true;
 			}
 		}
+		else {
+			showIndividualInfo = false;
+			showElementInfo = false;
+		}
 
 		ImGui::End(); // end window
 
 		ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
-		if(showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo);
 		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name);
+		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
 		window.clear();
 		ImGui::SFML::Render(window);
@@ -98,7 +102,10 @@ void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 		// this code gets if user clicks on the button
 		// yes, you could have written if(ImGui::InputText(...))
 		// but I do this to show how buttons work :)
-		rts.changeState();
+		{
+			rts.changeState();
+		}
+		printf("coucou");
 	}
 	ImGui::End(); // end window
 }
