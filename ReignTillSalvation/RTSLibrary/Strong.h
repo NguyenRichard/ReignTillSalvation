@@ -3,7 +3,7 @@
 #include "Individual.h"
 
 #pragma region define
-#define CIRCLE_S_RADIUS 50
+#define CIRCLE_S_RADIUS 10
 #define CIRCLE_S_COLOR sf::Color::Red
 
 #pragma endregion define

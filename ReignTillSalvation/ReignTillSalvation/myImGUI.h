@@ -26,3 +26,4 @@
 int imGUImain();
 void globalInformation(sf::RenderWindow &, RTS&);
 void individualWindow(sf::RenderWindow &, RTS&);
+void showIndividual(Individual&, const char*, int);

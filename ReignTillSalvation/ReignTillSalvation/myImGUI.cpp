@@ -3,7 +3,7 @@
 
 int imGUImain(){
 
-	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "");
+	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ReignTillSalvation");
 	RTS rts { std::make_unique<MainMenu>(window.getSize().x,window.getSize().y) };
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
@@ -51,7 +51,7 @@ int imGUImain(){
 void globalInformation(sf::RenderWindow & window, RTS& rts) {
 
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
-		x / 7, window.getSize().y / 5), 0);
+		x / 7, window.getSize().y / 5));
 	ImGui::Begin("Global Information"); // begin window
 	ImGui::SetWindowFontScale(window.getSize().y / 500);
 
@@ -71,28 +71,82 @@ void globalInformation(sf::RenderWindow & window, RTS& rts) {
 }
 
 void individualWindow(sf::RenderWindow & window, RTS& rts) {
-	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
-		x / 5, window.getSize().y/2), 0);
-	//ImGui::SetNextWindowPos(sf::Vector2f(0, window.getSize().y / 5));
-	ImGui::Begin("List of individuals");
-	ImGui::SetWindowFontScale(window.getSize().y / 500);
+	Game* game = static_cast<Game*>(rts.getState());
 	if (dynamic_cast<Game*>(rts.getState())) {
-		Game* game = static_cast<Game*>(rts.getState());
+		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+			x / 4, window.getSize().y / 5));
+		ImGui::Begin("List of individuals");
+		ImGui::SetWindowFontScale(window.getSize().y / 600);
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+		ImGui::Columns(2);
+		ImGui::Separator();
 		std::vector<std::unique_ptr<Individual>>& leaders = game->getMap()->getLeaders();
-		sf::Vector2f coord;
-		for (const auto & leader : leaders) {
-			coord = leader.get()->getCoord();
-			std::string string = "x: " + std::to_string(coord.x);
-			ImGui::Text(string.c_str());
-			string = "y: " + std::to_string(coord.y);
-			ImGui::Text(string.c_str());
+		int i = 1;
+		for (auto & leader : leaders) {
+			showIndividual(*leader, "Leader", i);
+			i++;
 		}
-		if(ImGui::Button("add")){
-			game->getMap()->createIndividual(sf::Vector2f(20, 20));
+		ImGui::Columns(1);
+		ImGui::Separator();
+		ImGui::PopStyleVar();
+		if (ImGui::Button("Add individuals")) {
+			while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+					ImGui::End();
+					return;
+				}
+			}
+			sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+			sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+			if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
+				&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
+				game->getMap()->createIndividual(mouseWorldPosition);
+			}
 		}
-
+		ImGui::End();
 	}
 
-	ImGui::End();
+}
 
+void showIndividual(Individual& individual, const char* prefix, int uid)
+{
+	ImGui::PushID(uid);                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
+	ImGui::AlignTextToFramePadding();  // Text and Tree nodes are less high than regular widgets, here we add vertical spacing to make the tree lines equal high.
+	bool node_open = ImGui::TreeNode("Object", "%s_%u", prefix, uid);
+	ImGui::NextColumn();
+	ImGui::AlignTextToFramePadding();
+	ImGui::NextColumn();
+	if (node_open)
+	{
+		if (dynamic_cast<Strong*>(individual.getState())) {
+			Strong* strong = dynamic_cast<Strong*>(individual.getState());
+			std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinate();
+			int i = 1;
+			for (auto& subordinate : subordinates)
+			{
+				ImGui::PushID(i); // Use field index as identifier.
+				showIndividual(*subordinate, "Subordinate", 424242);
+				i++;
+				ImGui::PopID();
+			}
+		}
+		float* information[2];
+		sf::Vector2f& coord = individual.getCoord();
+		information[0] = &coord.x;
+		information[1] = &coord.y;
+		for (int i = 0; i < 2; i++) {
+			ImGui::PushID(i);
+			// Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
+			ImGui::AlignTextToFramePadding();
+			ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Field_%d", i);
+			ImGui::NextColumn();
+			ImGui::SetNextItemWidth(-1);
+
+			ImGui::InputFloat("x: ", information[i], 1.0f);
+			ImGui::NextColumn();
+			ImGui::PopID();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::PopID();
 }

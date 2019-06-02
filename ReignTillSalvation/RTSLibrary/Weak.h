@@ -2,7 +2,7 @@
 #include "IndividualState.h"
 
 #pragma region define
-#define CIRCLE_W_RADIUS 30
+#define CIRCLE_W_RADIUS 5
 #define CIRCLE_W_COLOR sf::Color::Green
 
 #pragma endregion define

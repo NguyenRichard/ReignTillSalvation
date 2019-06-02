@@ -12,8 +12,8 @@ public:
 	void changeState();
 	void updatePosition();
 	void action();
-	IndividualState* getState() { return state.get(); };
-	sf::Vector2f getCoord() { return coord; };
+	IndividualState* getState() const { return state.get(); };
+	sf::Vector2f& getCoord() { return coord; };
 private:
 	std::unique_ptr<IndividualState> state;
 	sf::Vector2f coord;
