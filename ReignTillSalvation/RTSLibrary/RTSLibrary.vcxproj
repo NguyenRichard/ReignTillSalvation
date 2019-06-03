@@ -173,6 +173,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Individual.cpp" />
+    <ClCompile Include="IndividualState.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />

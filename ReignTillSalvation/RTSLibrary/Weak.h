@@ -12,7 +12,9 @@ public:
 	Weak(const IndividualState & state) {};
 	std::unique_ptr<IndividualState> changeState() override;
 	void action() override;
-	void updatePosition() override {};
+	void updatePositionChaos();
+	float distanceToLeader() const { return distanceTo(leader->getCoord()); };
 private:
-	std::vector<std::unique_ptr<Individual>> subordinates; 
+	float ATTRACTION_TO_LEADER = 1;
+	std::unique_ptr<Individual> leader;
 };
