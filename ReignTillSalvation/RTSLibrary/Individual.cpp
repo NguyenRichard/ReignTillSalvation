@@ -7,3 +7,7 @@ void Individual::changeState() {
 void Individual::action() {
 	state->action();
 }
+
+void Individual::changeColor(sf::Color color) {
+	state->changeColor(color);
+}

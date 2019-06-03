@@ -17,6 +17,7 @@ public:
 	virtual ~IndividualState() = default;
 	virtual void updatePosition() {};
 	sf::CircleShape* getSprite() { return &sprite; };
+	void changeColor(sf::Color color) { sprite.setFillColor(color); };
 protected:
 	sf::CircleShape sprite;
 

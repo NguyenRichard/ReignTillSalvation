@@ -5,7 +5,6 @@
 
 Weak::Weak()
 {
-	sprite.setFillColor(CIRCLE_W_COLOR);
 	sprite.setRadius(CIRCLE_W_RADIUS);
 };
 
