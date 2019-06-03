@@ -3,7 +3,6 @@
 
 #pragma region define
 #define CIRCLE_W_RADIUS 5
-#define CIRCLE_W_COLOR sf::Color::Green
 
 #pragma endregion define
 

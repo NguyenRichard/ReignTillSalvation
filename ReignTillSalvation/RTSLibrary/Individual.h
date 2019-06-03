@@ -14,6 +14,7 @@ public:
 	void action();
 	IndividualState* getState() const { return state.get(); };
 	sf::Vector2f& getCoord() { return coord; };
+	void changeColor(sf::Color color);
 private:
 	std::unique_ptr<IndividualState> state;
 	sf::Vector2f coord;

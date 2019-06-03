@@ -1,5 +1,6 @@
 #include "Attraction.h"
 #include "Element.h"
+#include "OtherFunctions.h"
 
 
 
@@ -37,11 +38,4 @@ void Element::deleteAttraction(Attraction *attraction) {
 
 void Element::addCoord(sf::Vector2f coord) {
 	coords.push_back(coord);
-}
-
-int randomint(int const n) {
-	static std::random_device rd;
-	static std::default_random_engine engine(rd());
-	std::uniform_int_distribution<> distribution(1, n);
-	return distribution(engine);
 }

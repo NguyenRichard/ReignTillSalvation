@@ -159,11 +159,13 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="OtherFunctions.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RTS.h" />
     <ClInclude Include="RTSState.h" />
     <ClInclude Include="Strong.h" />
+    <ClInclude Include="ViewManager.h" />
     <ClInclude Include="Weak.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +176,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="OtherFunctions.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -183,6 +186,7 @@
     <ClCompile Include="RTS.cpp" />
     <ClCompile Include="RTSLibrary.cpp" />
     <ClCompile Include="Strong.cpp" />
+    <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="Weak.cpp" />
   </ItemGroup>
   <ItemGroup>

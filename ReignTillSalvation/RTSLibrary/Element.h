@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
-#include <random>
 
 class Attraction;
 
@@ -34,5 +33,3 @@ private:
 	std::vector<Attraction*> attractions;
 	sf::CircleShape sprite;
 };
-
-int randomint(int const n);

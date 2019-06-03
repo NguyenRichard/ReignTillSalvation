@@ -10,19 +10,13 @@ int imGUImain(){
 	static char input_name[MAX_INPUT_NAME] = "Element";
 	char elementName[255] = "Element";
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ReignTillSalvation");
+
+	ViewManager view(window);
+	
 	RTS rts { std::make_unique<MainMenu>(window.getSize().x,window.getSize().y) };
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
-	sf::Color bgColor;
-
-	float color[3] = { 0.f, 0.f, 0.f };
-
-	// let's use char array as buffer, see next part
-	// for instructions on using std::string with ImGui
-	char windowTitle[255] = "ImGui + SFML = <3";
-
-	window.setTitle(windowTitle);
 
 	sf::Clock deltaClock;
 	while (window.isOpen()) {
@@ -33,6 +27,9 @@ int imGUImain(){
 			rts.processInput(window);
 			if (event.type == sf::Event::Closed) {
 				window.close();
+			}
+			if (event.type == sf::Event::Resized) {
+				view.set_View(window);
 			}
 
 		}

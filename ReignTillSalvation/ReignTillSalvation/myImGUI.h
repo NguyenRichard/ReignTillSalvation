@@ -8,6 +8,7 @@
 #include "../RTSLibrary/MainMenu.h"
 #include "../RTSLibrary/RTS.h"
 #include "../RTSLibrary/Game.h"
+#include "../RTSLibrary/ViewManager.h"
 
 #include "imgui.h"
 #include "imgui-SFML.h"
