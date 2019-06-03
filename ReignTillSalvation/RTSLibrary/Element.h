@@ -26,6 +26,7 @@ public:
 	sf::CircleShape* getSprite() { return &sprite; }
 	float& getRangeMutable() { return range; }
 	float getRangeUnmutable() { return range; }
+	std::vector<sf::Vector2f> getCoords() const;
 private:
 	std::string name;
 	std::vector<sf::Vector2f> coords;

@@ -39,3 +39,7 @@ void Element::deleteAttraction(Attraction *attraction) {
 void Element::addCoord(sf::Vector2f coord) {
 	coords.push_back(coord);
 }
+
+std::vector<sf::Vector2f> Element::getCoords() const {
+	return coords;
+}

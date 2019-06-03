@@ -1,22 +1,27 @@
 #pragma once
 #include "IndividualState.h"
+#include "Attraction.h"
 #include "SFML/Graphics.hpp"
 
 class Individual {
 public:
 	Individual(std::unique_ptr<IndividualState> state, sf::Vector2f coord) :
-		state{ std::move(state) },
-		coord(coord)
+		state{ std::move(state) }
 	{};
-	virtual ~Individual() = default;
 	void changeState();
 	void updatePosition();
 	void action();
 	IndividualState* getState() const { return state.get(); };
-	sf::Vector2f& getCoord() { return coord; };
+	sf::Vector2f& getCoord() const { return state->getCoord(); };
 	void changeColor(sf::Color color);
-private:
-	std::unique_ptr<IndividualState> state;
-	sf::Vector2f coord;
+	float distanceTo(const sf::Vector2f &point) const { return state->distanceTo(point); };
+	sf::Vector2f directionToward(const sf::Vector2f &point) const 
+		{ return state->directionToward(point); };
 
+private:
+	int ATTRACTION_DIVIDER = 1;
+	std::unique_ptr<IndividualState> state;
+	std::vector<std::unique_ptr<Attraction>> attractions;
+	
+	void updatePositionAttraction();
 };

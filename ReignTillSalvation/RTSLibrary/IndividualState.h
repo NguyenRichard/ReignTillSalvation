@@ -15,13 +15,19 @@ public:
 	virtual std::unique_ptr<IndividualState> changeState() = 0;
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
-	virtual void updatePosition() {};
 	sf::CircleShape* getSprite() { return &sprite; };
 	void changeColor(sf::Color color) { sprite.setFillColor(color); };
+	virtual void updatePositionChaos() = 0;
+
+	sf::Vector2f& getCoord() { return coord; };
+	float distanceTo(const sf::Vector2f&) const;
+	sf::Vector2f directionToward(const sf::Vector2f&) const;
+	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
+
 protected:
 	sf::CircleShape sprite;
-
-
+	sf::Vector2f coord;
+	sf::Vector2f old_coord;
 };
 
 #endif

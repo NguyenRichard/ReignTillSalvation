@@ -1,4 +1,8 @@
 #pragma once
+
+#include <ctime>
+#include <cstdlib>
+
 #include "IndividualState.h"
 #include "Individual.h"
 
@@ -15,7 +19,10 @@ public:
 	void action() override;
 	void addSubordinate(std::unique_ptr<Individual>);
 	std::vector<std::unique_ptr<Individual>>& getSubordinate();
-	void updatePosition() override {};
+	void updatePositionChaos();
+
+	float PI = 3.14159265358979323846f;
+	int MAX_TURN = 30;
 private:
 	std::vector<std::unique_ptr<Individual>> subordinates; //
 };
