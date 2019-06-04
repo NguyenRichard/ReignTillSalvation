@@ -12,6 +12,7 @@
 class IndividualState {
 public:
 	IndividualState() = default;
+	IndividualState(const IndividualState & state) : coord(state.coord) {};
 	virtual std::unique_ptr<IndividualState> changeState() = 0;
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
@@ -23,6 +24,7 @@ public:
 	float distanceToPoint(const sf::Vector2f&) const;
 	float distanceToIndividual(const IndividualState& individual) const;
 	sf::Vector2f directionToward(const sf::Vector2f&) const;
+	void setCoord(const sf::Vector2f &new_coord) { coord = new_coord; };
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
 
 protected:

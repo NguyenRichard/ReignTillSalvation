@@ -28,12 +28,23 @@ void Game::render(sf::RenderWindow& window) {
 	sf::Vector2f coord;
 	sf::CircleShape* circle;
 	float radius;
+	std::vector<std::unique_ptr<Individual>>* subordinates;
+	Strong* strong;
 	for (const auto & leader : leaders) {
-		coord = leader.get()->getCoord();
-		circle = leader.get()->getState()->getSprite();
+		coord = leader->getCoord();
+		circle = leader->getState()->getSprite();
 		radius = circle->getRadius();
 		circle->setPosition(coord.x-radius,coord.y-radius);
 		window.draw(*circle);
+		strong = dynamic_cast<Strong*>(leader->getState());
+		subordinates = &(strong->getSubordinates());
+		for (const auto & subordinate : *subordinates) {
+			coord = subordinate->getCoord();
+			circle = subordinate->getState()->getSprite();
+			radius = circle->getRadius();
+			circle->setPosition(coord.x - radius, coord.y - radius);
+			window.draw(*circle);
+		}
 	}
 	std::vector<sf::Vector2f> element_coords;
 	for (const auto & element : elements) {
@@ -65,6 +76,10 @@ void::Game::init() {
 	//SFML draw with the top-left corner as origin, so we have to center the position.
 	text.setPosition(sf::Vector2f(width / 2 - rect.width / 2, height / 2 - rect.height / 2));
 
+}
+
+void Game::update() {
+	map.updateGroup();
 }
 
 

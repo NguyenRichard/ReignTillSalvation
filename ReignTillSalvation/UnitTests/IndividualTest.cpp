@@ -11,10 +11,10 @@ TEST(TestIndividual, TestAddSurbordinates) {
 	Strong* strong = static_cast<Strong*>(master.getState());
 	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(200, 300)));
 	sf::CircleShape* circle_strong = strong->getSprite();
-	EXPECT_EQ(1, strong->getSubordinate().size());
+	EXPECT_EQ(1, strong->getSubordinates().size());
 	EXPECT_EQ(CIRCLE_S_RADIUS, circle_strong->getRadius());
 
-	std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinate();
+	std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinates();
 	Weak* weak = static_cast<Weak*>(subordinates[0].get()->getState());
 	sf::CircleShape* circle_weak = weak->getSprite();
 	circle_weak = weak->getSprite();

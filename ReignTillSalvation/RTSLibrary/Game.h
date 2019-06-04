@@ -9,6 +9,7 @@ public:
 	Game(const RTSState & state);
 	void processInput(sf::RenderWindow& window) override;
 	void render(sf::RenderWindow& window) override;
+	void update() override;
 	std::unique_ptr<RTSState> changeState() override;
 	void init() override;
 	Map* getMap() { return &map; }
