@@ -1,10 +1,7 @@
 #pragma once
 #include "IndividualState.h"
+#include "Value.h"
 
-#pragma region define
-#define CIRCLE_W_RADIUS 5
-
-#pragma endregion define
 
 class Weak : public IndividualState {
 public:

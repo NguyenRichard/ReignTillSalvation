@@ -3,9 +3,8 @@
 #include "Individual.h"
 #include "Strong.h"
 #include "Element.h"
+#include "Value.h"
 
-#define GROUP_SUB_RANGE 30
-#define GROUP_LEAD_RANGE 60
 
 class Map
 {
@@ -24,9 +23,6 @@ public:
 	void findStrongerLeader(std::unique_ptr<Individual>&, int);
 	void makeLeader(std::unique_ptr<Individual>&);
 	void makeSubordinate(std::unique_ptr<Individual>&, std::unique_ptr<Individual>&);
-	int findSubPositionDicho(const Individual&, Strong&);
-	int findSubPosition(const Individual&, Strong&);
-	bool stillInGroup(int, Strong&);
 	void updateGroup();
 	void eraseLeader(int);
 };

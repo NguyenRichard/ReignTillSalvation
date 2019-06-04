@@ -165,6 +165,7 @@
     <ClInclude Include="RTS.h" />
     <ClInclude Include="RTSState.h" />
     <ClInclude Include="Strong.h" />
+    <ClInclude Include="Value.h" />
     <ClInclude Include="ViewManager.h" />
     <ClInclude Include="Weak.h" />
   </ItemGroup>
