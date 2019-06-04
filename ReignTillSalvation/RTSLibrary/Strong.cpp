@@ -57,12 +57,70 @@ void Strong::eraseSubordinate(int index) {
 }
 
 void Strong::insertSubordinate(const int &index, std::unique_ptr<Individual> &new_sub) {
-	if (subordinates.size() == subordinates.max_size())
-		subordinates.resize(2 * subordinates.size());
+	if (subordinates.size() == index) {
+		subordinates.push_back(std::move(new_sub));
+		return;
+	}
+	subordinates.resize(1+subordinates.size());
 
-	for (int i = subordinates.size() - 1; i >= index; i--) {
+	for (int i = subordinates.size() - 2; i >= index; i--) {
 		subordinates[i + 1] = std::move(subordinates[i]);
 	}
-
 	subordinates[index] = std::move(new_sub);
+	subordinates[index].get()->changeColor(sprite.getFillColor());
+}
+
+/*Searching if the individual is in this group with a linear search, and
+-return its position if he is.
+-return -1 if the individual is not in the group. */
+int Strong::findSubPosition(const Individual& individual) {
+
+	//For ascending list, comparing distance to leader.
+	float distanceToLead = individual.distanceToIndividual(*this);
+	if (distanceToLead < GROUP_LEAD_RANGE) {
+		//In this case, the new subordinate is in the list. We just need to find its position.
+		for (int position = 0; position < subordinates.size(); position++) {
+			if (distanceToLead < subordinates[position]->distanceToIndividual(*this)) {
+				return position;
+			}
+		}
+		//If we arrive here, it means that all the other subordinates are farther from the leader.
+		return subordinates.size();
+	}
+	for (int position = 0; position < subordinates.size(); position++) {
+		if (subordinates[position]->distanceToIndividual(individual) < GROUP_SUB_RANGE) {
+			if (subordinates[position]->distanceToIndividual(*this) < individual.distanceToIndividual(*this)) {
+				return position+1;
+			}
+			else {
+				return position;
+			}
+		}
+	}
+	return -1;
+}
+
+
+/*Searching if the individual is in this group with a linear search, and
+-return its position if he is.
+-return -1 if the individual is not in the group. */
+bool Strong::stillInGroup(int position) {
+	//Problem if nobody is linked to the leader!!!!!!!!!!!!!
+	int count_link_lead = 0;
+	//For ascending list, comparing distance to leader.
+	float distanceToLead = subordinates[position]->distanceToIndividual(*this);
+	if (distanceToLead < GROUP_LEAD_RANGE) {
+		return true;
+	}
+	for (int i = position + 1; i < subordinates.size(); i++) {
+		if (subordinates[i]->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
+			return true;
+		}
+	}
+	for (int i = 0; i < position; i++) {
+		if (subordinates[i]->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
+			return true;
+		}
+	}
+	return false;
 }
