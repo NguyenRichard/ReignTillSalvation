@@ -25,5 +25,7 @@ public:
 	float PI = 3.14159265358979323846f;
 	int MAX_TURN = 30;
 private:
-	std::vector<std::unique_ptr<Individual>> subordinates; //
+	std::vector<std::unique_ptr<Individual>> subordinates;
+	
+	void insertSubordinate(const int&, std::unique_ptr<Individual>&);
 };
