@@ -1,5 +1,6 @@
 #include "IndividualState.h"
 
+
 sf::Vector2f IndividualState::directionToward(const sf::Vector2f &point) const {
 	sf::Vector2f direction = sf::Vector2f(point.x - coord.x, point.y - coord.y);
 	float length = std::hypot(direction.x, direction.y);
@@ -8,6 +9,12 @@ sf::Vector2f IndividualState::directionToward(const sf::Vector2f &point) const {
 	return direction;
 }
 
-float IndividualState::distanceTo(const sf::Vector2f &point) const {
-	return sqrt(pow(point.x - coord.x, 2) + pow(point.y - coord.y, 2));
+
+float IndividualState::distanceToPoint(const sf::Vector2f &point) const {
+	return std::hypot((point.x - coord.x),(point.y - coord.y));
+}
+
+
+float IndividualState::distanceToIndividual(const IndividualState& individual) const {
+	return std::hypot((individual.coord.x - coord.x), (individual.coord.y - coord.y));
 }

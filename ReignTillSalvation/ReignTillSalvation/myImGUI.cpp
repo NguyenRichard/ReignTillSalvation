@@ -157,7 +157,7 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 	ImGui::NextColumn();
 	if (node_open)
 	{
-		sf::Vector2f& coord = individual.getCoord();
+		sf::Vector2f coord = individual.getCoord();
 		ImGui::PushID(1);
 		// Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
 		ImGui::AlignTextToFramePadding();
@@ -255,7 +255,7 @@ void showElement(Element& element, int uid)
 
 		int i = 0;
 
-		std::vector<sf::Vector2f>& coords = element.getCoords();
+		std::vector<sf::Vector2f> coords = element.getCoords();
 		for (auto& coord : coords)
 		{
 			ImGui::PushID(i);

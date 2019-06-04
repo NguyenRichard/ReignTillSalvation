@@ -20,7 +20,8 @@ public:
 	virtual void updatePositionChaos() = 0;
 
 	sf::Vector2f& getCoord() { return coord; };
-	float distanceTo(const sf::Vector2f&) const;
+	float distanceToPoint(const sf::Vector2f&) const;
+	float distanceToIndividual(const IndividualState& individual) const;
 	sf::Vector2f directionToward(const sf::Vector2f&) const;
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
 
