@@ -26,6 +26,7 @@ public:
 	void makeSubordinate(std::unique_ptr<Individual>&, std::unique_ptr<Individual>&);
 	int findSubPositionDicho(const Individual&, Strong&);
 	int findSubPosition(const Individual&, Strong&);
+	bool stillInGroup(int, Strong&);
 	void updateGroup();
 	void eraseLeader(int);
 };

@@ -9,7 +9,11 @@ Strong::Strong() {
 
 Strong::Strong(const IndividualState & state) : 
 	IndividualState(state),
-	subordinates() {}
+	subordinates() {
+
+	sprite.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
+	sprite.setRadius(CIRCLE_S_RADIUS);
+}
 
 std::unique_ptr<IndividualState> Strong::changeState() {
 	return std::make_unique<Weak>(*this);

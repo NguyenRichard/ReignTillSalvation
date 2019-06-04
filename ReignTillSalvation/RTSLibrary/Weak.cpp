@@ -9,6 +9,10 @@ Weak::Weak()
 	sprite.setRadius(CIRCLE_W_RADIUS);
 };
 
+Weak::Weak(const IndividualState & state) : IndividualState(state) {
+	sprite.setRadius(CIRCLE_W_RADIUS);
+}
+
 std::unique_ptr<IndividualState> Weak::changeState() {
 	std::unique_ptr<IndividualState> weak = std::make_unique<Strong>(*this);
 	weak->changeColor(sf::Color(randomint(255), randomint(255), randomint(255)));

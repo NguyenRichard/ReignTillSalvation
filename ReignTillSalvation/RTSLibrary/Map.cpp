@@ -37,14 +37,14 @@ void Map::updateGroup() {
 			return;
 		}
 		subordinates = &(strong->getSubordinates());
-		my_position = 0;
-		for (auto& subordinate : *subordinates) {
-			findGroup(subordinate,my_position);
-			my_position++;
+
+		for (int i = subordinates->size() - 1; i >= 0;i--) {
+			findGroup((*subordinates)[i],i);
 		}
 	}
 
-	for (int i = 0; i < leaders.size(); i++) {
+	printf("%d\n", leaders.size() - 1);
+	for (int i = leaders.size() - 1; i >= 0; i--) {
 		findStrongerLeader(leaders[i], i);
 	}
 
@@ -130,6 +130,29 @@ int Map::findSubPosition(const Individual& individual, Strong& strong) {
 	return -1;
 }
 
+/*Searching if the individual is in this group with a linear search, and
+-return its position if he is.
+-return -1 if the individual is not in the group. */
+bool Map::stillInGroup(int position, Strong& strong) {
+	std::vector<std::unique_ptr<Individual>>& subordinates = strong.getSubordinates();
+	//For ascending list, comparing distance to leader.
+	float distanceToLead = subordinates[position]->distanceToIndividual(strong);
+	if (distanceToLead < GROUP_LEAD_RANGE) {
+		return true;
+	}
+	for (int i = position+1; i < subordinates.size(); i++) {
+		if (subordinates[i].get()->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
+			return true;
+		}
+	}
+	for (int i = 0; i < position; i++) {
+		if (subordinates[i].get()->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Map::findGroup(std::unique_ptr<Individual>& individual,int my_position) {
 	Individual* strongestnew = NULL;
 	int temp = -1;
@@ -151,7 +174,7 @@ void Map::findGroup(std::unique_ptr<Individual>& individual,int my_position) {
 		strong_lead = dynamic_cast<Strong*>(leaders[i]->getState());
 		if (size_strongest < strong_lead->getSubordinates().size())
 		{
-			temp = findSubPosition(*individual.get(), *strong_lead);
+			temp = findSubPosition(*individual, *strong_lead);
 			if (temp != -1) {
 				index_new_leader = i;
 				position_in_subordinate = temp;
@@ -166,50 +189,19 @@ void Map::findGroup(std::unique_ptr<Individual>& individual,int my_position) {
 		weak->setLeader(leaders[index_new_leader].get());
 		actual_lead->eraseSubordinate(my_position);
 	}
-
-
-/*	int index = 0;
-	Strong* strong;
-	while (index < leaders.size() && position == -1) {
-		strong = dynamic_cast<Strong*>(leaders[index]->getState());
-		if (strong == NULL) {
-			printf("ERROR: Cannot find a subordinate for a Weak Individual.");
-			return;
-		}
-		position = findSubPosition(*individual.get(), *strong);
-		index++;
-	}
-	if (index == leaders.size()) {
-		makeLeader(individual);
-		return;
-	}
-	strong = dynamic_cast<Strong*>(leaders[index]->getState());
-	strongestnew = leaders[index].get();
-	int position_temp = -1;
-	int size_strongest = strong->getSubordinates().size();
-	while (index < leaders.size()) {
-		strong = dynamic_cast<Strong*>(leaders[index]->getState());
-		if (strong == NULL) {
-			printf("ERROR: Cannot find a subordinate for a Weak Individual.");
-			return;
-		}
-		if (strong->getSubordinates().size() > size_strongest) {
-			position_temp = findSubPosition(*individual.get(), *strong);
-			if (position_temp != -1) {
-				position = position_temp;
-				strongestnew = leaders[index].get();
-				size_strongest = strong->getSubordinates().size();
-			}
+	else {
+		if (!stillInGroup(my_position,*actual_lead)) {
+			makeLeader(individual);
+			actual_lead->eraseSubordinate(my_position);
 		}
 	}
 
-	strong = dynamic_cast<Strong*>(strongestnew->getState());
-	strong->addSubordinate(individual); //PROBLEM NEED SORT INSERT VECTOR (cannot use default because copy unique_ptr)
-
-	return;*/
 }
 
 void Map::findStrongerLeader(std::unique_ptr<Individual>& individual, int position) {
+	if (leaders.size() == 1) {
+		return;
+	}
 	int index = position;
 	Strong* strong = dynamic_cast<Strong*>(individual->getState());
 	int size_strongest = strong->getSubordinates().size();
@@ -219,10 +211,16 @@ void Map::findStrongerLeader(std::unique_ptr<Individual>& individual, int positi
 	}
 
 	Strong* strong_lead;
-	for (int i = position+1; i == position; i++) {
-		if (i == leaders.size()) {
-			i = 0;
+	for (int i = position+1; i < leaders.size(); i++) {
+		strong_lead = dynamic_cast<Strong*>(leaders[i]->getState());
+		if ((size_strongest <= strong_lead->getSubordinates().size())
+			&& (leaders[i].get()->distanceToIndividual(*individual) < GROUP_LEAD_RANGE))
+		{
+			index = i;
+			size_strongest = strong_lead->getSubordinates().size();
 		}
+	}
+	for (int i = 0; i != position; i++) {
 		strong_lead = dynamic_cast<Strong*>(leaders[i]->getState());
 		if ((size_strongest <= strong_lead->getSubordinates().size())
 			&& (leaders[i].get()->distanceToIndividual(*individual) < GROUP_LEAD_RANGE))
@@ -260,13 +258,15 @@ void Map::makeSubordinate(std::unique_ptr<Individual>& individual, std::unique_p
 		printf("ERROR: the new_leader cannot be weak.");
 		return;
 	}
-
+	Weak* weak;
 	for (auto& subordinate : individual_subordinates) {
+		weak = dynamic_cast<Weak*>(subordinate.get()->getState());
+		weak->setLeader(leader.get());
 		new_leader->addSubordinate(subordinate);
 	}
 	individual->changeState();
 	individual->changeColor(new_leader->getSprite()->getFillColor());
-	Weak* weak = dynamic_cast<Weak*>(individual.get()->getState());
+	weak = dynamic_cast<Weak*>(individual.get()->getState());
 	if (weak == NULL) {
 		printf("ERROR: the individual is not weak.");
 		return;
