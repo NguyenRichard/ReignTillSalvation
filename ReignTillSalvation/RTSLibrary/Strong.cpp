@@ -51,3 +51,14 @@ void Strong::updatePositionChaos() {
 void Strong::eraseSubordinate(int index) {
 	subordinates.erase(subordinates.begin() + index);
 }
+
+void Strong::insertSubordinate(const int &index, std::unique_ptr<Individual> &new_sub) {
+	if (subordinates.size() == subordinates.max_size())
+		subordinates.resize(2 * subordinates.size());
+
+	for (int i = subordinates.size() - 1; i >= index; i--) {
+		subordinates[i + 1] = std::move(subordinates[i]);
+	}
+
+	subordinates[index] = std::move(new_sub);
+}
