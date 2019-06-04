@@ -1,5 +1,6 @@
 #include "Strong.h"
 #include "Weak.h"
+#include "OtherFunctions.h"
 
 
 
@@ -9,7 +10,9 @@ Weak::Weak()
 };
 
 std::unique_ptr<IndividualState> Weak::changeState() {
-	return std::make_unique<Strong>(*this);
+	std::unique_ptr<IndividualState> weak = std::make_unique<Strong>(*this);
+	weak->changeColor(sf::Color(randomint(255), randomint(255), randomint(255)));
+	return move(weak);
 }
 
 void Weak::action() {
@@ -22,4 +25,8 @@ void Weak::updatePositionChaos() {
 
 	coord += sf::Vector2f(ATTRACTION_TO_LEADER * direction.x,
 		ATTRACTION_TO_LEADER * direction.y);
+}
+
+void Weak::setLeader(Individual* individual) {
+	leader = individual;
 }

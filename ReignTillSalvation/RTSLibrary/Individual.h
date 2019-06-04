@@ -5,9 +5,7 @@
 
 class Individual {
 public:
-	Individual(std::unique_ptr<IndividualState> state, sf::Vector2f coord) :
-		state{ std::move(state) }
-	{};
+	Individual(std::unique_ptr<IndividualState>, sf::Vector2f);
 	void changeState();
 	void updatePosition();
 	void action();

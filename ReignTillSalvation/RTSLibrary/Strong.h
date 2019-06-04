@@ -17,9 +17,10 @@ public:
 	Strong(const IndividualState & state);
 	std::unique_ptr<IndividualState> changeState() override;
 	void action() override;
-	void addSubordinate(std::unique_ptr<Individual>);
-	std::vector<std::unique_ptr<Individual>>& getSubordinate();
+	void addSubordinate(std::unique_ptr<Individual>&);
+	std::vector<std::unique_ptr<Individual>>& getSubordinates();
 	void updatePositionChaos();
+	void eraseSubordinate(int);
 
 	float PI = 3.14159265358979323846f;
 	int MAX_TURN = 30;

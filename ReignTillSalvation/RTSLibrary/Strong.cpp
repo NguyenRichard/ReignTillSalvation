@@ -7,7 +7,8 @@ Strong::Strong() {
 	sprite.setRadius(CIRCLE_S_RADIUS);
 }
 
-Strong::Strong(const IndividualState & state) :
+Strong::Strong(const IndividualState & state) : 
+	IndividualState(state),
 	subordinates() {}
 
 std::unique_ptr<IndividualState> Strong::changeState() {
@@ -18,12 +19,12 @@ void Strong::action() {
 	std::cout << "I am strong.\n";
 }
 
-void Strong::addSubordinate(std::unique_ptr<Individual> subordinate) {
+void Strong::addSubordinate(std::unique_ptr<Individual>& subordinate) {
 	subordinate.get()->changeColor(sprite.getFillColor());
 	subordinates.push_back(move(subordinate));
 }
 
-std::vector<std::unique_ptr<Individual>>& Strong::getSubordinate() { return subordinates; }
+std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
 void Strong::updatePositionChaos() {
 	srand(time(0));
@@ -45,4 +46,8 @@ void Strong::updatePositionChaos() {
 
 	coord.x = new_x;
 	coord.y = new_y;
+}
+
+void Strong::eraseSubordinate(int index) {
+	subordinates.erase(subordinates.begin() + index);
 }

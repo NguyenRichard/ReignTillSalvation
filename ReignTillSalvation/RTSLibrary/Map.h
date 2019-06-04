@@ -20,8 +20,13 @@ public:
 	void updatePositions();
 	std::vector<std::unique_ptr<Individual>>& getLeaders() { return leaders; };
 	std::vector<std::unique_ptr<Element>>& getElements() { return elements; };
-	Individual* findLeader(const Individual& individual);
+	void findGroup(std::unique_ptr<Individual>&, int);
+	void findStrongerLeader(std::unique_ptr<Individual>&, int);
+	void makeLeader(std::unique_ptr<Individual>&);
+	void makeSubordinate(std::unique_ptr<Individual>&, std::unique_ptr<Individual>&);
+	int findSubPositionDicho(const Individual&, Strong&);
 	int findSubPosition(const Individual&, Strong&);
 	void updateGroup();
+	void eraseLeader(int);
 };
 

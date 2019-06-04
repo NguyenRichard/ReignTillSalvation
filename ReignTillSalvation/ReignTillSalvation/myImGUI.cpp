@@ -67,6 +67,7 @@ int imGUImain(){
 
 		window.clear();
 		ImGui::SFML::Render(window);
+		rts.update();
 		rts.render(window);
 		window.display();
 	}
@@ -90,9 +91,11 @@ void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	ImGui::SetWindowFontScale(window.getSize().y / 450);
 
 	ImGui::Text("Mouse position:");
-	std::string string = "x: " + std::to_string(sf::Mouse::getPosition(window).x);
+	sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+	sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+	std::string string = "x: " + std::to_string(mouseWorldPosition.x);
 	ImGui::Text(string.c_str());
-	string = "y: " + std::to_string(sf::Mouse::getPosition(window).y);
+	string = "y: " + std::to_string(mouseWorldPosition.y);
 	ImGui::Text(string.c_str());
 
 	if (ImGui::Button("Change State")) {
@@ -157,7 +160,7 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 	ImGui::NextColumn();
 	if (node_open)
 	{
-		sf::Vector2f coord = individual.getCoord();
+		sf::Vector2f& coord = individual.getCoord();
 		ImGui::PushID(1);
 		// Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
 		ImGui::AlignTextToFramePadding();
@@ -173,7 +176,7 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 
 		if (dynamic_cast<Strong*>(individual.getState())) {
 			Strong* strong = dynamic_cast<Strong*>(individual.getState());
-			std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinate();
+			std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinates();
 			int i = 1;
 			for (auto& subordinate : subordinates)
 			{

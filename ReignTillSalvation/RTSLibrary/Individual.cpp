@@ -1,7 +1,13 @@
 #include "Individual.h"
 
+Individual::Individual(std::unique_ptr<IndividualState> new_state, sf::Vector2f coord) :
+	state (std::move(new_state))
+{
+	state->setCoord(coord);
+}
+
 void Individual::changeState() {
-	state = move(state->changeState());
+	state = std::move(state->changeState());
 }
 
 void Individual::action() {
