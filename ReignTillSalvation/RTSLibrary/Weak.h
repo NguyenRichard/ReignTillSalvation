@@ -13,8 +13,8 @@ public:
 	std::unique_ptr<IndividualState> changeState() override;
 	void action() override;
 	void updatePositionChaos();
-	float distanceToLeader() const { return distanceTo(leader->getCoord()); };
+	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
 private:
 	float ATTRACTION_TO_LEADER = 1;
-	std::unique_ptr<Individual> leader;
+	Individual* leader;
 };

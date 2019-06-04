@@ -15,7 +15,7 @@ void Individual::changeColor(sf::Color color) {
 void Individual::updatePositionAttraction() {
 	for (std::unique_ptr<Attraction> &attraction : attractions)
 		for (sf::Vector2f coord : attraction->getElement().getCoords())
-			if (distanceTo(coord) < attraction->getElement().getRangeUnmutable()) {
+			if (distanceToPoint(coord) < attraction->getElement().getRangeUnmutable()) {
 				sf::Vector2f direction = directionToward(coord);
 				int power = attraction->getPower();
 				coord += sf::Vector2f(power * direction.x / ATTRACTION_DIVIDER,
@@ -26,4 +26,15 @@ void Individual::updatePositionAttraction() {
 void Individual::updatePosition() {
 	updatePositionAttraction();
 	state->updatePositionChaos();
+}
+
+
+
+float Individual::distanceToIndividual(const Individual & individual) const {
+	return state->distanceToIndividual(*individual.state.get());
+}
+
+
+float Individual::distanceToIndividual(const IndividualState& individual) const {
+	return state->distanceToIndividual(individual);
 }
