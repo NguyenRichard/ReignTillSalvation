@@ -31,19 +31,21 @@ void Strong::addSubordinate(std::unique_ptr<Individual>& subordinate) {
 std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
 void Strong::updatePositionChaos() {
-	float degree = static_cast <float> (randomint(RAND_MAX)) / (static_cast <float> (RAND_MAX / 99)) + 0.1;
+	float degree = 0.01 + (1 - 0.01) * randomint(RAND_MAX) / (float) RAND_MAX;
 	// between 1 and 10
 
-	degree = log10(degree); // between 0 and 1
+	degree = -log10(degree); // between 0 and 1
+	if (randomint(1) == 0)
+		degree = -degree;
+	printf("%f\n", degree);
 	degree *= MAX_TURN;
-	sf::Vector2f direction = -directionToward(old_coord);
-	float theta = degree / 18 * PI;
+	float theta = degree / 1800.0f * PI;
 	float cs = cos(theta);
 	float sn = sin(theta);
 
+	sf::Vector2f direction = -directionToward(old_coord);
 	float direction_x = direction.x * cs - direction.y * sn;
 	float direction_y = direction.x * sn + direction.y * cs;
-	printf("%f, %f\n", direction_x, direction_y);
 
 	old_coord = coord;
 
@@ -52,6 +54,11 @@ void Strong::updatePositionChaos() {
 
 	for (std::unique_ptr<Individual> &subordinate : subordinates)
 		subordinate->updatePosition();
+
+	std::sort(subordinates.begin(), subordinates.end(), [](const Individual& a, const Individual& b)->bool {
+		Weak* a_weak = dynamic_cast<Weak*>(a.getState());
+		Weak* b_weak = dynamic_cast<Weak*>(b.getState());
+		return a.distanceToIndividual(*a_weak->getLeader()) < b.distanceToIndividual(*b_weak->getLeader());  });
 }
 
 void Strong::eraseSubordinate(int index) {
