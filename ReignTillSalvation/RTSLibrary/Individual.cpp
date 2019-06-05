@@ -1,4 +1,5 @@
 #include "Individual.h"
+#include "Value.h"
 
 Individual::Individual(std::unique_ptr<IndividualState> new_state, sf::Vector2f coord) :
 	state (std::move(new_state))
@@ -43,4 +44,16 @@ float Individual::distanceToIndividual(const Individual & individual) const {
 
 float Individual::distanceToIndividual(const IndividualState& individual) const {
 	return state->distanceToIndividual(individual);
+}
+
+void Individual::applyCollision(const Individual& individual) {
+
+	float dist = this->distanceToIndividual(individual);
+	if (dist < CIRCLE_S_RADIUS) {
+		sf::Vector2f direction = this->directionToward(individual.getCoord());
+		sf::Vector2f my_coord = this->getCoord();
+		float direction_x = my_coord.x - (CIRCLE_S_RADIUS - dist)*direction.x;
+		float direction_y = my_coord.y - (CIRCLE_S_RADIUS - dist)*direction.y;
+		this->setCoord(sf::Vector2f(direction_x, direction_y));
+	}
 }
