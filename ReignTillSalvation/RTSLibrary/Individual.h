@@ -13,7 +13,7 @@ public:
 	IndividualState* getState() const { return state.get(); };
 	void setCoord(const sf::Vector2f& new_coord) { state->setCoord(new_coord); };
 	sf::Vector2f& getCoord() const { return state->getCoord(); };
-	void changeColor(sf::Color color);
+	void changeColor(const sf::Color& color);
 	float distanceToPoint(const sf::Vector2f &point) const { return state->distanceToPoint(point); };
 	float distanceToIndividual(const Individual &individual) const;
 	float distanceToIndividual(const IndividualState& const individual) const;
