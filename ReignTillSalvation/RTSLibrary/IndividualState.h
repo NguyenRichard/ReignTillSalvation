@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include "SFML/Graphics.hpp"
+#include "Value.h"
 
 
 class IndividualState {

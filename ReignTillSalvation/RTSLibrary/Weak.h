@@ -1,6 +1,6 @@
 #pragma once
+#include "Individual.h"
 #include "IndividualState.h"
-#include "Value.h"
 
 
 class Weak : public IndividualState {
