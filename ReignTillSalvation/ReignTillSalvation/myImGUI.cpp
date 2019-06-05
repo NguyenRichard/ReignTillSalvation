@@ -1,5 +1,4 @@
 #include "myImGUI.h"
-#include "SFMLOrthogonalLayer.hpp"
 
 #define MAX_INPUT_NAME 50
 
@@ -28,7 +27,12 @@ int imGUImain(){
 	sf::Clock globalClock;
 
 	sf::Clock deltaClock;
+
+	float offset;
+	sf::Time time = sf::Time::Time();
 	while (window.isOpen()) {
+		offset = time.asSeconds();
+
 		sf::Event event;
 
 		while (window.pollEvent(event)) {
@@ -90,6 +94,9 @@ int imGUImain(){
 		rts.render(window);
 
 		window.display();
+
+		offset = time.asSeconds() - offset;
+		Sleep(MS_PER_UPDATE - 1000 * offset);
 	}
 
 	ImGui::SFML::Shutdown();

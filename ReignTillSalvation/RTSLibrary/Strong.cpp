@@ -31,25 +31,27 @@ void Strong::addSubordinate(std::unique_ptr<Individual>& subordinate) {
 std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
 void Strong::updatePositionChaos() {
-	srand(time(0));
-	float degree = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 9)) + 1;
+	float degree = static_cast <float> (randomint(RAND_MAX)) / (static_cast <float> (RAND_MAX / 99)) + 0.1;
 	// between 1 and 10
 
 	degree = log10(degree); // between 0 and 1
 	degree *= MAX_TURN;
-
 	sf::Vector2f direction = -directionToward(old_coord);
-	float theta = degree / 180 * PI;
+	float theta = degree / 18 * PI;
 	float cs = cos(theta);
 	float sn = sin(theta);
 
-	float new_x = coord.x * cs - coord.y * sn;
-	float new_y = coord.x * sn + coord.y * cs;
+	float direction_x = direction.x * cs - direction.y * sn;
+	float direction_y = direction.x * sn + direction.y * cs;
+	printf("%f, %f\n", direction_x, direction_y);
 
 	old_coord = coord;
 
-	coord.x = new_x;
-	coord.y = new_y;
+	coord.x += direction_x * DISTANCE_RUN;
+	coord.y += direction_y * DISTANCE_RUN;
+
+	for (std::unique_ptr<Individual> &subordinate : subordinates)
+		subordinate->updatePosition();
 }
 
 void Strong::eraseSubordinate(int index) {

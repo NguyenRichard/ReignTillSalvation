@@ -80,6 +80,7 @@ void::Game::init() {
 
 void Game::update() {
 	map.updateGroup();
+	map.updatePositions();
 }
 
 
