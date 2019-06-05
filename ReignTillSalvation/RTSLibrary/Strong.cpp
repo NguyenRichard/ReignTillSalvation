@@ -64,8 +64,16 @@ void Strong::updatePositionChaos() {
 	if (outside_mvt_y > 0)
 		coord.y -= outside_mvt_y;
 
-	for (std::unique_ptr<Individual> &subordinate : subordinates)
-		subordinate->updatePosition();
+	for (int i = 0; i < subordinates.size();i++) {
+		subordinates[i]->updatePosition();
+		subordinates[i]->applyCollision(coord);
+		for (int j = 0; j < i; j++) {
+			subordinates[i]->applyCollision(subordinates[j]->getCoord());
+		}
+		for (int j = i+1; j < subordinates.size(); j++) {
+			subordinates[i]->applyCollision(subordinates[j]->getCoord());
+		}
+	}
 
 	std::sort(subordinates.begin(), subordinates.end(), [](const std::unique_ptr<Individual>& a, const std::unique_ptr<Individual>& b)->bool {
 		Weak* a_weak = dynamic_cast<Weak*>(a->getState());

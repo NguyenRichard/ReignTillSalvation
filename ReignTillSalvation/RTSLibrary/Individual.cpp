@@ -59,14 +59,14 @@ float Individual::distanceToIndividual(const IndividualState& individual) const 
 	return state->distanceToIndividual(individual);
 }
 
-void Individual::applyCollision(const Individual& individual) {
+void Individual::applyCollision(const sf::Vector2f& coord) {
 
-	float dist = this->distanceToIndividual(individual);
-	if (dist < CIRCLE_S_RADIUS) {
-		sf::Vector2f direction = this->directionToward(individual.getCoord());
+	float dist = this->distanceToPoint(coord);
+	if (dist < DIST_BETWEEN_INDIVIDUAL) {
+		sf::Vector2f direction = this->directionToward(coord);
 		sf::Vector2f my_coord = this->getCoord();
-		float direction_x = my_coord.x - (CIRCLE_S_RADIUS - dist)*direction.x;
-		float direction_y = my_coord.y - (CIRCLE_S_RADIUS - dist)*direction.y;
+		float direction_x = my_coord.x - (DIST_BETWEEN_INDIVIDUAL - dist)*direction.x;
+		float direction_y = my_coord.y - (DIST_BETWEEN_INDIVIDUAL - dist)*direction.y;
 		this->setCoord(sf::Vector2f(direction_x, direction_y));
 	}
 }
