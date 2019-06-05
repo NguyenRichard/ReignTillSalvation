@@ -58,7 +58,8 @@ void Strong::updatePositionChaos() {
 	std::sort(subordinates.begin(), subordinates.end(), [](const Individual& a, const Individual& b)->bool {
 		Weak* a_weak = dynamic_cast<Weak*>(a.getState());
 		Weak* b_weak = dynamic_cast<Weak*>(b.getState());
-		return a.distanceToIndividual(*a_weak->getLeader()) < b.distanceToIndividual(*b_weak->getLeader());  });
+		return a.distanceToIndividual(*a_weak->getLeader()) < b.distanceToIndividual(*b_weak->getLeader());
+	});
 }
 
 void Strong::eraseSubordinate(int index) {
