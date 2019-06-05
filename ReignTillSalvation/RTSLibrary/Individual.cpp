@@ -15,7 +15,7 @@ void Individual::action() {
 	state->action();
 }
 
-void Individual::changeColor(sf::Color color) {
+void Individual::changeColor(const sf::Color& color) {
 	state->changeColor(color);
 }
 
