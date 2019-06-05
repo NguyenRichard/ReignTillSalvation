@@ -25,7 +25,7 @@ public:
 
 	float PI = 3.14159265358979323846f;
 	int MAX_TURN = 180;
-	float DISTANCE_RUN = 5;
+	float DISTANCE_RUN = 1;
 private:
 	std::vector<std::unique_ptr<Individual>> subordinates;
 };
