@@ -12,9 +12,8 @@ public:
 	void updatePositionChaos();
 	void setLeader(Individual* leader);
 	const Individual* getLeader() const { return leader; };
+	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
 private:
 	float ATTRACTION_TO_LEADER = 1;
 	Individual* leader;
-
-	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
 };

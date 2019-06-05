@@ -55,10 +55,10 @@ void Strong::updatePositionChaos() {
 	for (std::unique_ptr<Individual> &subordinate : subordinates)
 		subordinate->updatePosition();
 
-	std::sort(subordinates.begin(), subordinates.end(), [](const Individual& a, const Individual& b)->bool {
-		Weak* a_weak = dynamic_cast<Weak*>(a.getState());
-		Weak* b_weak = dynamic_cast<Weak*>(b.getState());
-		return a.distanceToIndividual(*a_weak->getLeader()) < b.distanceToIndividual(*b_weak->getLeader());  });
+	std::sort(subordinates.begin(), subordinates.end(), [](const std::unique_ptr<Individual>& a, const std::unique_ptr<Individual>& b)->bool {
+		Weak* a_weak = dynamic_cast<Weak*>(a->getState());
+		Weak* b_weak = dynamic_cast<Weak*>(b->getState());
+		return a->distanceToIndividual(*a_weak->getLeader()) < b->distanceToIndividual(*b_weak->getLeader());  });
 }
 
 void Strong::eraseSubordinate(int index) {
