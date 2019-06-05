@@ -12,6 +12,7 @@
 
 #include "imgui.h"
 #include "imgui-SFML.h"
+#include "../RTSLibrary/Value.h"
 #include "SFMLOrthogonalLayer.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -20,8 +21,6 @@
 #pragma endregion include
 
 #pragma region define
-#define WINDOW_HEIGHT 1000
-#define WINDOW_WIDTH 1500
 #define MS_PER_UPDATE 2
 #pragma endregion define
 
