@@ -1,4 +1,4 @@
-// ReignTillSalvation.cpp : Ce fichier contient la fonction 'main'. L'exÃ©cution du programme commence et se termine Ã  cet endroit.
+// ReignTillSalvation.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
 
 #pragma region include
@@ -9,5 +9,4 @@
 int main()
 {
 	return imGUImain();
-
 }
