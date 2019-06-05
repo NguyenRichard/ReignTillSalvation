@@ -5,6 +5,7 @@
 
 #include "../RTSLibrary/Individual.h"
 #include "../RTSLibrary/Strong.h"
+#include "../RTSLibrary/Weak.h"
 #include "../RTSLibrary/MainMenu.h"
 #include "../RTSLibrary/RTS.h"
 #include "../RTSLibrary/Game.h"

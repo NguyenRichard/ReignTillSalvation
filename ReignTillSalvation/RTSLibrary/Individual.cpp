@@ -26,6 +26,19 @@ void Individual::updatePositionAttraction() {
 				int power = attraction->getPower();
 				coord += sf::Vector2f(power * direction.x / ATTRACTION_DIVIDER,
 					power * direction.y / ATTRACTION_DIVIDER);
+
+				if (coord.x < 0)
+					coord.x = 0;
+				if (coord.y < 0)
+					coord.y = 0;
+
+				float outside_mvt_x = coord.x - WINDOW_WIDTH;
+				float outside_mvt_y = coord.y - WINDOW_HEIGHT;
+
+				if (outside_mvt_x > 0)
+					coord.x -= outside_mvt_x;
+				if (outside_mvt_y > 0)
+					coord.y -= outside_mvt_y;
 			}
 }
 
