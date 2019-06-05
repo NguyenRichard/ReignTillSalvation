@@ -1,4 +1,5 @@
 #include "myImGUI.h"
+#include "SFMLOrthogonalLayer.hpp"
 
 #define MAX_INPUT_NAME 50
 
@@ -17,6 +18,14 @@ int imGUImain(){
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
+	tmx::Map map;
+	map.load("C:/Users/cypri/Desktop/tmxlite/SFMLExample/assets/demo.tmx");
+
+	MapLayer layerZero(map, 0);
+	MapLayer layerOne(map, 1);
+	MapLayer layerTwo(map, 2);
+
+	sf::Clock globalClock;
 
 	sf::Clock deltaClock;
 	while (window.isOpen()) {
@@ -33,6 +42,7 @@ int imGUImain(){
 			}
 
 		}
+
 		ImGui::SFML::Update(window, deltaClock.restart());
 
 		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
@@ -66,9 +76,19 @@ int imGUImain(){
 		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
 		window.clear();
+
+		sf::Time duration = globalClock.getElapsedTime();
+		layerZero.update(duration);
+
+		window.clear(sf::Color::Black);
+		window.draw(layerZero);
+		window.draw(layerOne);
+		window.draw(layerTwo);
+
 		ImGui::SFML::Render(window);
 		rts.update();
 		rts.render(window);
+
 		window.display();
 	}
 
