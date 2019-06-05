@@ -17,7 +17,7 @@ public:
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
 	sf::CircleShape* getSprite() { return &sprite; };
-	void changeColor(sf::Color color) { sprite.setFillColor(color); };
+	void changeColor(const sf::Color& color) { sprite.setFillColor(color); };
 	virtual void updatePositionChaos() = 0;
 
 	void setCoord(const sf::Vector2f& new_coord) { coord = new_coord; };

@@ -117,14 +117,14 @@ int Strong::findSubPosition(const Individual& individual) {
 		//If we arrive here, it means that all the other subordinates are farther from the leader.
 		return subordinates.size();
 	}
-	for (int position = 0; position < subordinates.size(); position++) {
-		if (subordinates[position]->distanceToIndividual(individual) < GROUP_SUB_RANGE) {
-			if (subordinates[position]->distanceToIndividual(*this) < individual.distanceToIndividual(*this)) {
-				return position+1;
-			}
-			else {
-				return position;
-			}
+	int position = subordinates.size();
+	for (int i = subordinates.size()-1; i > 0; i--) {
+		if (subordinates[i]->distanceToIndividual(*this) > individual.distanceToIndividual(*this)) {
+			position = i;
+		}
+		if (subordinates[i]->distanceToIndividual(individual) < GROUP_SUB_RANGE 
+			&& stillInGroup(i)) {
+			return position;
 		}
 	}
 	return -1;

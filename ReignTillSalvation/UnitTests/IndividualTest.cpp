@@ -101,16 +101,67 @@ TEST(TestMap, findSubPositionSuccess) {
 	Strong* strong = static_cast<Strong*>(master.getState());
 	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(980, 970))); //dist 36
 	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(950, 1000))); //dist 50 
+	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1059))); //dist 59
 	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(940, 1020))); //dist 63 
-	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1060))); //dist 60
 
 	Individual individual1{ std::make_unique<Strong>(), sf::Vector2f(1000,971) }; //dist 29
 	Individual individual2{ std::make_unique<Strong>(), sf::Vector2f(960,990) }; //dist 41.2
 	Individual individual3{ std::make_unique<Strong>(), sf::Vector2f(1030,1045) }; //dist 54
 	Individual individual4{ std::make_unique<Strong>(), sf::Vector2f(1000,1070) }; //dist 70
 
+
 	EXPECT_EQ(0, strong->findSubPosition(individual1));
 	EXPECT_EQ(1, strong->findSubPosition(individual2));
 	EXPECT_EQ(2, strong->findSubPosition(individual3));
 	EXPECT_EQ(4, strong->findSubPosition(individual4));
+
+
+}
+
+
+TEST(TestMap, findSubPositionFailure) {
+	Individual master{ std::make_unique<Strong>(), sf::Vector2f(1000,1000) };
+	Strong* strong = static_cast<Strong*>(master.getState());
+	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(980, 970))); //dist 36
+	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(950, 1000))); //dist 50 
+	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1060))); //dist 61
+	strong->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(940, 1020))); //dist 63 
+
+	Individual individual2{ std::make_unique<Strong>(), sf::Vector2f(1200,1070) }; 
+	Individual individual1{ std::make_unique<Strong>(), sf::Vector2f(1000,1070) };
+
+	EXPECT_EQ(-1, strong->findSubPosition(individual1));
+	EXPECT_EQ(-1, strong->findSubPosition(individual2));
+	//Because individual4 is linked to the group by subordinates[2] but this subordinate is no longer part of the group.
+}
+
+TEST(TestMap, stillInGroup) {
+	Individual master1{ std::make_unique<Strong>(), sf::Vector2f(1000,1000) };
+	Strong* strong1 = static_cast<Strong*>(master1.getState());
+	strong1->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(980, 970)));
+	strong1->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(950, 1000)));
+	strong1->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1060)));
+	strong1->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(940, 1020)));
+	strong1->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1070)));
+
+	EXPECT_TRUE(strong1->stillInGroup(0));
+	EXPECT_TRUE(strong1->stillInGroup(1));
+	EXPECT_FALSE(strong1->stillInGroup(2));
+	EXPECT_TRUE(strong1->stillInGroup(3));
+	EXPECT_FALSE(strong1->stillInGroup(4));
+
+	Individual master2{ std::make_unique<Strong>(), sf::Vector2f(1000,1000) };
+	Strong* strong2 = static_cast<Strong*>(master2.getState());
+	strong2->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1010, 1070)));
+	strong2->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1020, 1060)));
+	strong2->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1060)));
+	strong2->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1040, 1050)));
+	strong2->addSubordinate(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1070)));
+
+	EXPECT_FALSE(strong2->stillInGroup(0));
+	EXPECT_FALSE(strong2->stillInGroup(1));
+	EXPECT_FALSE(strong2->stillInGroup(2));
+	EXPECT_FALSE(strong2->stillInGroup(3));
+	EXPECT_FALSE(strong2->stillInGroup(4));
+
 }
