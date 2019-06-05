@@ -213,6 +213,17 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 				ImGui::PopID();
 			}
 		}
+		else {
+			Weak* weak = dynamic_cast<Weak*>(individual.getState());
+			ImGui::PushID(1);
+			ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "DistanceToLead");
+			ImGui::NextColumn();
+			ImGui::SetNextItemWidth(-1);
+			std::string string = "d: " + std::to_string(weak->distanceToLeader());
+			ImGui::Text(string.c_str());
+			ImGui::NextColumn();
+			ImGui::PopID();
+		}
 
 	
 		ImGui::TreePop();

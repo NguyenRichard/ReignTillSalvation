@@ -22,10 +22,6 @@ public:
 	void insertSubordinate(const int&, std::unique_ptr<Individual>&);
 	int findSubPosition(const Individual&);
 	bool stillInGroup(int);
-
-	float PI = 3.14159265358979323846f;
-	int MAX_TURN = 180;
-	float DISTANCE_RUN = 1;
 private:
 	std::vector<std::unique_ptr<Individual>> subordinates;
 };

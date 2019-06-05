@@ -37,7 +37,6 @@ void Strong::updatePositionChaos() {
 	degree = -log10(degree); // between 0 and 1
 	if (randomint(1) == 0)
 		degree = -degree;
-	printf("%f\n", degree);
 	degree *= MAX_TURN;
 	float theta = degree / 1800.0f * PI;
 	float cs = cos(theta);
@@ -49,16 +48,29 @@ void Strong::updatePositionChaos() {
 
 	old_coord = coord;
 
-	coord.x += direction_x * DISTANCE_RUN;
-	coord.y += direction_y * DISTANCE_RUN;
+	coord.x += direction_x * DISTANCE_RUN_LEADER;
+	coord.y += direction_y * DISTANCE_RUN_LEADER;
+
+	if (coord.x < 0)
+		coord.x = 0;
+	if (coord.y < 0)
+		coord.y = 0;
+
+	float outside_mvt_x = coord.x - WINDOW_WIDTH;
+	float outside_mvt_y = coord.y - WINDOW_HEIGHT;
+
+	if (outside_mvt_x > 0)
+		coord.x -= outside_mvt_x;
+	if (outside_mvt_y > 0)
+		coord.y -= outside_mvt_y;
 
 	for (std::unique_ptr<Individual> &subordinate : subordinates)
 		subordinate->updatePosition();
 
-	std::sort(subordinates.begin(), subordinates.end(), [](const Individual& a, const Individual& b)->bool {
-		Weak* a_weak = dynamic_cast<Weak*>(a.getState());
-		Weak* b_weak = dynamic_cast<Weak*>(b.getState());
-		return a.distanceToIndividual(*a_weak->getLeader()) < b.distanceToIndividual(*b_weak->getLeader());
+	std::sort(subordinates.begin(), subordinates.end(), [](const std::unique_ptr<Individual>& a, const std::unique_ptr<Individual>& b)->bool {
+		Weak* a_weak = dynamic_cast<Weak*>(a->getState());
+		Weak* b_weak = dynamic_cast<Weak*>(b->getState());
+		return a->distanceToIndividual(*a_weak->getLeader()) < b->distanceToIndividual(*b_weak->getLeader());
 	});
 }
 
@@ -115,22 +127,30 @@ int Strong::findSubPosition(const Individual& individual) {
 -return its position if he is.
 -return -1 if the individual is not in the group. */
 bool Strong::stillInGroup(int position) {
-	//Problem if nobody is linked to the leader!!!!!!!!!!!!!
-	int count_link_lead = 0;
+	std::vector<Individual*> members;
 	//For ascending list, comparing distance to leader.
 	float distanceToLead = subordinates[position]->distanceToIndividual(*this);
 	if (distanceToLead < GROUP_LEAD_RANGE) {
 		return true;
 	}
-	for (int i = position + 1; i < subordinates.size(); i++) {
-		if (subordinates[i]->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
-			return true;
-		}
-	}
 	for (int i = 0; i < position; i++) {
-		if (subordinates[i]->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
+		if (subordinates[i]->distanceToIndividual(*this) < GROUP_LEAD_RANGE) {
+			members.push_back(subordinates[i].get());
+		}
+		else {
+			for (const auto& member : members) {
+				if (member->distanceToIndividual(*subordinates[i]) < GROUP_SUB_RANGE) {
+					members.push_back(subordinates[i].get());
+					break;
+				}
+			}
+		}
+	}
+	for (auto& member : members) {
+		if (member->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
 			return true;
 		}
 	}
+
 	return false;
 }

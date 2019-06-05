@@ -2,6 +2,7 @@
 #include "IndividualState.h"
 #include "Attraction.h"
 #include "SFML/Graphics.hpp"
+#include "Value.h"
 
 class Individual {
 public:
