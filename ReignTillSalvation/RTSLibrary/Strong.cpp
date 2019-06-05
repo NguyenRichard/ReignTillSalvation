@@ -105,22 +105,30 @@ int Strong::findSubPosition(const Individual& individual) {
 -return its position if he is.
 -return -1 if the individual is not in the group. */
 bool Strong::stillInGroup(int position) {
-	//Problem if nobody is linked to the leader!!!!!!!!!!!!!
-	int count_link_lead = 0;
+	std::vector<Individual*> members;
 	//For ascending list, comparing distance to leader.
 	float distanceToLead = subordinates[position]->distanceToIndividual(*this);
 	if (distanceToLead < GROUP_LEAD_RANGE) {
 		return true;
 	}
-	for (int i = position + 1; i < subordinates.size(); i++) {
-		if (subordinates[i]->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
-			return true;
-		}
-	}
 	for (int i = 0; i < position; i++) {
-		if (subordinates[i]->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
+		if (subordinates[i]->distanceToIndividual(*this) < GROUP_LEAD_RANGE) {
+			members.push_back(subordinates[i].get());
+		}
+		else {
+			for (const auto& member : members) {
+				if (member->distanceToIndividual(*subordinates[i]) < GROUP_SUB_RANGE) {
+					members.push_back(subordinates[i].get());
+					break;
+				}
+			}
+		}
+	}
+	for (auto& member : members) {
+		if (member->distanceToIndividual(*subordinates[position]) < GROUP_SUB_RANGE) {
 			return true;
 		}
 	}
+
 	return false;
 }

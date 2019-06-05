@@ -127,8 +127,7 @@ void Map::findStrongerLeader(std::unique_ptr<Individual>& individual, int positi
 	}
 
 	if (index != position) {
-		makeSubordinate(individual, leaders[index]);
-		eraseLeader(position);
+		makeSubordinate(individual, position, leaders[index]);
 	}
 }
 
@@ -141,9 +140,11 @@ void Map::makeLeader(std::unique_ptr<Individual>& individual) {
 	leaders.push_back(std::move(individual));
 }
 
-void Map::makeSubordinate(std::unique_ptr<Individual>& individual, std::unique_ptr<Individual>& leader) {
-	Strong* strong = dynamic_cast<Strong*>(individual->getState());
-	if (strong == NULL) {
+void Map::makeSubordinate(std::unique_ptr<Individual>& individual, int position,
+		std::unique_ptr<Individual>& leader	) 
+{
+	Strong* strong_individual = dynamic_cast<Strong*>(individual->getState());
+	if (strong_individual == NULL) {
 		printf("ERROR: the individual is already a subordinate.");
 		return;
 	}
@@ -153,20 +154,22 @@ void Map::makeSubordinate(std::unique_ptr<Individual>& individual, std::unique_p
 		return;
 	}
 
-	std::vector<std::unique_ptr<Individual>>& individual_subordinates = strong->getSubordinates();
+	std::vector<std::unique_ptr<Individual>>& individual_subordinates = strong_individual->getSubordinates();
 
 	Weak* weak;
+	int new_position = -1;
+	int my_position = 0;
 	for (auto& subordinate : individual_subordinates) {
-		weak = dynamic_cast<Weak*>(subordinate->getState());
-		weak->setLeader(leader.get());
-		new_leader->addSubordinate(subordinate);
+		findGroup(subordinate,my_position);
+		my_position++;
 	}
 	individual->changeState();
 	individual->changeColor(new_leader->getSprite()->getFillColor());
-	int position = new_leader->findSubPosition(*individual);
+	new_position = new_leader->findSubPosition(*individual);
 	weak = dynamic_cast<Weak*>(individual->getState());
 	weak->setLeader(leader.get());
-	new_leader->insertSubordinate(position,individual);
+	new_leader->insertSubordinate(new_position,individual);
+	eraseLeader(position);
 }
 
 void Map::eraseLeader(int index) {

@@ -22,7 +22,7 @@ public:
 	void findGroup(std::unique_ptr<Individual>&, int);
 	void findStrongerLeader(std::unique_ptr<Individual>&, int);
 	void makeLeader(std::unique_ptr<Individual>&);
-	void makeSubordinate(std::unique_ptr<Individual>&, std::unique_ptr<Individual>&);
+	void makeSubordinate(std::unique_ptr<Individual>&, int, std::unique_ptr<Individual>&);
 	void updateGroup();
 	void eraseLeader(int);
 };
