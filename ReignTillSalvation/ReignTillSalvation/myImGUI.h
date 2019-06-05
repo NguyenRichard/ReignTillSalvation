@@ -12,6 +12,7 @@
 
 #include "imgui.h"
 #include "imgui-SFML.h"
+#include "SFMLOrthogonalLayer.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
@@ -21,7 +22,7 @@
 #pragma region define
 #define WINDOW_HEIGHT 1000
 #define WINDOW_WIDTH 1500
-#define MS_PER_UPDATE 60
+#define MS_PER_UPDATE 2
 #pragma endregion define
 
 int imGUImain();

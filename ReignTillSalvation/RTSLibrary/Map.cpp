@@ -22,8 +22,8 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 }
 
 void Map::updatePositions() {
-	//for (std::unique_ptr<Individual> &leader : leaders)
-		//leader.updatePosition();
+	for (std::unique_ptr<Individual> &leader : leaders)
+		leader->updatePosition();
 }
 
 void Map::updateGroup() {

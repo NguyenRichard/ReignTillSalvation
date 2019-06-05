@@ -6,6 +6,7 @@
 #include "IndividualState.h"
 #include "Individual.h"
 #include "Value.h"
+#include "OtherFunctions.h"
 
 
 class Strong : public IndividualState {
@@ -23,7 +24,8 @@ public:
 	bool stillInGroup(int);
 
 	float PI = 3.14159265358979323846f;
-	int MAX_TURN = 30;
+	int MAX_TURN = 180;
+	float DISTANCE_RUN = 5;
 private:
 	std::vector<std::unique_ptr<Individual>> subordinates;
 };
