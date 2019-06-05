@@ -97,7 +97,7 @@ void Strong::insertSubordinate(const int &index, std::unique_ptr<Individual> &ne
 		subordinates[i + 1] = std::move(subordinates[i]);
 	}
 	subordinates[index] = std::move(new_sub);
-	subordinates[index].get()->changeColor(sprite.getFillColor());
+	subordinates[index]->changeColor(sprite.getFillColor());
 }
 
 /*Searching if the individual is in this group with a linear search, and

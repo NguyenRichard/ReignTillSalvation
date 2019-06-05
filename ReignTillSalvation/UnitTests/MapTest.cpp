@@ -1,6 +1,4 @@
 #include "pch.h"
-#include "../RTSLibrary/Individual.h"
-#include "../RTSLibrary/Strong.h"
 #include "../RTSLibrary/Weak.h"
 #include "../RTSLibrary/Map.h"
 #include "SFML/Graphics.hpp"
@@ -40,7 +38,57 @@ TEST(TestMap, makeLeaderFailure) {
 
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
 	EXPECT_EQ(0, leaders.size());
-
 }
 
 
+TEST(TestMap, onlyStrongs) {
+	Map map;
+	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
+	map.updateGroup();
+	EXPECT_EQ(5, map.getLeaders().size());
+	for (const std::unique_ptr<Individual> &leader : map.getLeaders())
+		EXPECT_EQ(0, dynamic_cast<Strong*>(leader->getState())->getSubordinates().size());
+}
+
+TEST(TestMap, SimpleGroup) {
+	Map map;
+	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE / 2));
+	// ^ under first strong
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE / 2));
+	// ^ under first strong
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE));
+	// ^ independent
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
+	// ^ independent
+	map.findStrongerLeader(map.getLeaders()[1], 1);
+	map.updateGroup();
+	EXPECT_EQ(3, map.getLeaders().size());
+
+	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
+	EXPECT_EQ(2, dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates().size());
+	EXPECT_EQ(0, dynamic_cast<Strong*>(leaders[1]->getState())->getSubordinates().size());
+	EXPECT_EQ(0, dynamic_cast<Strong*>(leaders[2]->getState())->getSubordinates().size());
+
+	sf::Vector2f &leader_coord = leaders[0]->getCoord();
+	for (std::unique_ptr<Individual> &sub :
+			dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates()) {
+		EXPECT_TRUE(sub->distanceToPoint(leader_coord) < GROUP_LEAD_RANGE);
+	}
+}
+
+TEST(TestMap, ComplexGroup) {
+
+}

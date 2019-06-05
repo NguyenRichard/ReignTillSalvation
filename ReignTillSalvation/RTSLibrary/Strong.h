@@ -5,7 +5,6 @@
 
 #include "IndividualState.h"
 #include "Individual.h"
-#include "Value.h"
 #include "OtherFunctions.h"
 
 
