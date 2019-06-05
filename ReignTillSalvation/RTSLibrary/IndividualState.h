@@ -20,11 +20,11 @@ public:
 	void changeColor(sf::Color color) { sprite.setFillColor(color); };
 	virtual void updatePositionChaos() = 0;
 
+	void setCoord(const sf::Vector2f& new_coord) { coord = new_coord; };
 	sf::Vector2f& getCoord() { return coord; };
 	float distanceToPoint(const sf::Vector2f&) const;
 	float distanceToIndividual(const IndividualState& individual) const;
 	sf::Vector2f directionToward(const sf::Vector2f&) const;
-	void setCoord(const sf::Vector2f &new_coord) { coord = new_coord; };
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
 
 protected:
