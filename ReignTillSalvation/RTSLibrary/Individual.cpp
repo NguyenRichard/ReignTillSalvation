@@ -7,8 +7,8 @@ Individual::Individual(std::unique_ptr<IndividualState> new_state, sf::Vector2f 
 	state->setCoord(coord);
 }
 
-void Individual::changeState() {
-	state = std::move(state->changeState());
+void Individual::changeState(std::unique_ptr<IndividualState> new_state) {
+	state = std::move(new_state);
 }
 
 void Individual::action() {
@@ -69,4 +69,47 @@ void Individual::applyCollision(const sf::Vector2f& coord) {
 		float direction_y = my_coord.y - (DIST_BETWEEN_INDIVIDUAL - dist)*direction.y;
 		this->setCoord(sf::Vector2f(direction_x, direction_y));
 	}
+}
+
+void Individual::updateMyGroup(std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
+	state->updateMyGroup(this,leaders, my_position);
+
+	/*individual->changeState();
+	individual->changeColor(new_leader->getSprite()->getFillColor());
+	new_position = new_leader->findSubPosition(*individual);
+	weak = dynamic_cast<Weak*>(individual->getState());
+	weak->setLeader(leader.get());*/
+}
+
+void Individual::findMyGroup(std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
+	state->findGroup(leaders, my_position);
+}
+
+int Individual::findSubPosition(const Individual& individual) {
+	return state->findSubPosition(*individual.state);
+}
+
+bool Individual:: operator <(const Individual& individual) {
+	return state < individual.state;
+}
+
+
+std::vector<std::unique_ptr<Individual>>& Individual::getSubordinates() {
+	return state->getSubordinates();
+}
+
+
+void moveIndividuals(std::vector<std::unique_ptr<Individual>>& vect1, 
+	std::vector<std::unique_ptr<Individual>>& vect2, int pos1, int pos2) {
+	if (vect2.size() == pos2) {
+		vect2.push_back(std::move(vect1[pos1]));
+		return;
+	}
+	vect2.resize(1 + vect2.size());
+
+	for (int i = vect2.size() - 2; i >= pos2; i--) {
+		vect2[i + 1] = std::move(vect2[i]);
+	}
+	vect2[pos2] = std::move(vect1[pos1]);
+	vect1.erase(vect1.begin() + pos1);
 }
