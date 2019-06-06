@@ -4,6 +4,8 @@
 #include "SFML/Graphics.hpp"
 #include "gtest/gtest.h"
 
+/*
+
 TEST(TestMap, makeLeaderSuccess) {
 	Map map;
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>( std::make_unique<Weak>(), sf::Vector2f(20,300) );
@@ -137,3 +139,5 @@ TEST(TestMap, LeaderMove) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
 	EXPECT_EQ(4, dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates().size());
 }
+
+*/
