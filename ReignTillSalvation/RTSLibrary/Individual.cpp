@@ -1,5 +1,4 @@
 #include "Individual.h"
-#include "Value.h"
 
 Individual::Individual(std::unique_ptr<IndividualState> new_state, sf::Vector2f coord) :
 	state (std::move(new_state))

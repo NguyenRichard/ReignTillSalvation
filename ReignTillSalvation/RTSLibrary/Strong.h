@@ -6,6 +6,7 @@
 #include "IndividualState.h"
 #include "Individual.h"
 #include "OtherFunctions.h"
+#include "Weak.h"
 
 
 class Strong : public IndividualState {

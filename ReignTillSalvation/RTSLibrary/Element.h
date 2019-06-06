@@ -2,6 +2,8 @@
 
 #include <SFML\Graphics.hpp>
 
+#include "OtherFunctions.h"
+
 class Attraction;
 
 #pragma region define

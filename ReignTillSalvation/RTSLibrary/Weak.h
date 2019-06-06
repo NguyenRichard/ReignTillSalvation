@@ -1,6 +1,8 @@
 #pragma once
 #include "Individual.h"
 #include "IndividualState.h"
+#include "OtherFunctions.h"
+#include "Strong.h"
 
 
 class Weak : public IndividualState {

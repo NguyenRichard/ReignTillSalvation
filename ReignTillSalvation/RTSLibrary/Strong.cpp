@@ -1,5 +1,4 @@
 #include "Strong.h"
-#include "Weak.h"
 #include "OtherFunctions.h"
 
 Strong::Strong() {

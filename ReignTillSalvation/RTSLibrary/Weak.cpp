@@ -1,8 +1,4 @@
-#include "Strong.h"
 #include "Weak.h"
-#include "OtherFunctions.h"
-
-
 
 Weak::Weak()
 {
