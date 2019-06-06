@@ -18,3 +18,7 @@ float IndividualState::distanceToPoint(const sf::Vector2f &point) const {
 float IndividualState::distanceToIndividual(const IndividualState& individual) const {
 	return std::hypot((individual.coord.x - coord.x), (individual.coord.y - coord.y));
 }
+
+bool IndividualState:: operator <(const IndividualState& individual) {
+	return myStrength() < individual.myStrength();
+}

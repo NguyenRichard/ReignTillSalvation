@@ -14,9 +14,9 @@ Weak::Weak(const IndividualState & state) : IndividualState(state) {
 }
 
 std::unique_ptr<IndividualState> Weak::changeState() {
-	std::unique_ptr<IndividualState> weak = std::make_unique<Strong>(*this);
-	weak->changeColor(sf::Color(randomint(255), randomint(255), randomint(255)));
-	return move(weak);
+	std::unique_ptr<Strong> strong = std::make_unique<Strong>(*this);
+	strong->changeColor(sf::Color(randomint(255), randomint(255), randomint(255)));
+	return move(strong);
 }
 
 void Weak::action() {
@@ -46,4 +46,55 @@ void Weak::updatePositionChaos() {
 
 void Weak::setLeader(Individual* individual) {
 	leader = individual;
+}
+
+void Weak::updateMyGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders,int my_position) {
+
+	findGroup(leaders, my_position);
+}
+
+void Weak::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
+
+	Individual* new_leader = NULL;
+	int temp = -1;
+
+	int index_new_leader = -1;
+	int position_in_subordinate = -1;
+	int strongest_strength = leader->myStrength();
+	for (int i = 0; i < leaders.size(); i++) {
+		if (strongest_strength < leaders[i]->myStrength())
+		{
+			temp = leaders[i]->getState()->findSubPosition(*this);
+			if (temp != -1) {
+				index_new_leader = i;
+				position_in_subordinate = temp;
+			}
+		}
+	}
+
+	if (index_new_leader != -1) {
+		strong_lead->insertSubordinate(position_in_subordinate, individual);
+		changeGroupInfo(leaders[index_new_leader]);
+		actual_lead->eraseSubordinate(my_position);
+	}
+	else {
+		if (!actual_lead->stillInGroup(my_position)) {
+			makeLeader(individual);
+			me->changeState(changeState());
+			actual_lead->eraseSubordinate(my_position);
+		}
+	}
+}
+
+void Weak::changeGroupInfo(std::unique_ptr<Individual>& new_leader, int old_position) {
+	leader = new_leader.get();
+}
+
+
+void Weak::makeSubordinate(std::vector<std::unique_ptr<Individual>>& leaders, int new_leader_position,int my_position) {
+
+	int new_position = leaders[new_leader_position]->getState()->findSubPosition(*this);
+	leaders[new_leader_position]->changeGroupInfo(, new_position);
+	leaders.erase(leaders.begin() + my_position);
+
 }

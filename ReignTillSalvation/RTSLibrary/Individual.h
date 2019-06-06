@@ -7,7 +7,7 @@
 class Individual {
 public:
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f);
-	void changeState();
+	void changeState(std::unique_ptr<IndividualState>);
 	void updatePosition();
 	void action();
 	IndividualState* getState() const { return state.get(); };
@@ -21,6 +21,14 @@ public:
 	sf::Vector2f directionToward(const sf::Vector2f &point) const 
 		{ return state->directionToward(point); };
 
+	void updateMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
+	void findMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
+	int findSubPosition(const Individual&);
+	int myStrength() const { return state->myStrength(); };
+	std::vector<std::unique_ptr<Individual>>& getSubordinates();
+
+	bool operator <(const Individual&);
+
 private:
 	int ATTRACTION_DIVIDER = 1;
 	std::unique_ptr<IndividualState> state;
@@ -28,3 +36,7 @@ private:
 	
 	void updatePositionAttraction();
 };
+
+
+
+void moveIndividuals(std::vector<std::unique_ptr<Individual>>&, std::vector<std::unique_ptr<Individual>>&, int, int);

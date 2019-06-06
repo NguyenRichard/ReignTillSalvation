@@ -15,8 +15,11 @@ Strong::Strong(const IndividualState & state) :
 	sprite.setRadius(CIRCLE_S_RADIUS);
 }
 
-std::unique_ptr<IndividualState> Strong::changeState() {
-	return std::make_unique<Weak>(*this);
+std::unique_ptr<IndividualState> Strong::changeState(Individual* new_leader) {
+	std::unique_ptr<Weak> weak = std::make_unique<Weak>(*this);
+	weak->changeColor(new_leader->getState()->getSprite()->getFillColor());
+	weak->setLeader(new_leader);
+	return move(weak);
 }
 
 void Strong::action() {
@@ -103,7 +106,7 @@ void Strong::insertSubordinate(const int &index, std::unique_ptr<Individual> &ne
 /*Searching if the individual is in this group with a linear search, and
 -return its position if he is.
 -return -1 if the individual is not in the group. */
-int Strong::findSubPosition(const Individual& individual) {
+int Strong::findSubPosition(const IndividualState& individual) {
 
 	//For ascending list, comparing distance to leader.
 	float distanceToLead = individual.distanceToIndividual(*this);
@@ -162,3 +165,58 @@ bool Strong::stillInGroup(int position) {
 
 	return false;
 }
+
+void Strong::updateMyGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
+	int sub_position = 0;
+	for (auto & subordinate : subordinates) {
+		subordinate->updateMyGroup(leaders, sub_position);
+		sub_position++;
+	}
+	findGroup(me,leaders, my_position);
+}
+
+void Strong::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
+	if (leaders.size() == 1) {
+		return;
+	}
+
+	int index_strongest = my_position;
+	int strongest_strength = myStrength();
+	for (int i = my_position + 1; i < leaders.size(); i++) {
+		if ((strongest_strength < leaders[i]->myStrength())
+			&& (leaders[i]->distanceToIndividual(*this) < GROUP_LEAD_RANGE))
+		{
+			index_strongest = i;
+			strongest_strength = leaders[i]->myStrength();
+		}
+	}
+	for (int i = 0; i != my_position; i++) {
+		if ((strongest_strength < leaders[i]->myStrength())
+			&& (leaders[i]->distanceToIndividual(*this) < GROUP_LEAD_RANGE))
+		{
+			index_strongest = i;
+			strongest_strength = leaders[i]->myStrength();
+		}
+	}
+
+	if (index_strongest != my_position) {
+		me->changeState(makeSubordinate(individual, my_position, leaders[index_strongest]));
+	}
+
+}
+
+std::unique_ptr<IndividualState> Strong::makeSubordinate(std::vector<std::unique_ptr<Individual>>& leaders, std::unique_ptr<Individual>& new_leader, int position) {
+
+
+	int my_position = 0;
+	for (auto& subordinate : subordinates) {
+		subordinate->findMyGroup(leaders,my_position);
+		my_position++;
+	}
+
+	int new_position = new_leader->getState()->findSubPosition(*this);
+	moveIndividuals(leaders, new_leader->getGroup(), position, new_position);
+	return changeState(new_leader.get());
+}
+
+
