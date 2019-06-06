@@ -63,10 +63,10 @@ TEST(TestMap, SimpleGroup) {
 	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE / 2));
-	// ^ under first strong
+	// ^ in the first individual's range
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE / 2));
-	// ^ under first strong
+	// ^ in the first individual's range
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE));
 	// ^ independent
@@ -90,5 +90,106 @@ TEST(TestMap, SimpleGroup) {
 }
 
 TEST(TestMap, ComplexGroup) {
+	Map map;
+	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (9 / 10) * GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2));
+	// ^ in the first individual's range
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (9 / 10) * GROUP_LEAD_RANGE / 2 + GROUP_SUB_RANGE / 2, WINDOW_HEIGHT / 2));
+	// ^ in the second individual's range
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (9 / 10) * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	// ^ in the third individual's range
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
+	// ^ independent
 
+	map.findStrongerLeader(map.getLeaders()[1], 1);
+	map.updateGroup();
+	EXPECT_EQ(2, map.getLeaders().size());
+
+	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
+	EXPECT_EQ(3, dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates().size());
+	EXPECT_EQ(0, dynamic_cast<Strong*>(leaders[1]->getState())->getSubordinates().size());
+}
+
+TEST(TestMap, SubsMove) {
+	Map map;
+	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (9 / 10) * GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2));
+	// ^ in the first individual's range
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (9 / 10) * GROUP_LEAD_RANGE / 2 + GROUP_SUB_RANGE / 2, WINDOW_HEIGHT / 2));
+	// ^ in the second individual's range
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (9 / 10) * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	// ^ in the third individual's range
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
+	// ^ independent
+
+	map.findStrongerLeader(map.getLeaders()[1], 1);
+	map.updateGroup();
+	
+	// only 2 leaders in map now
+
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + (3 / 2) * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	// ^ new leader soon stronger than the other
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + 2 * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	map.findStrongerLeader(map.getLeaders()[3], 3);
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + 2 * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	map.findStrongerLeader(map.getLeaders()[3], 3);
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + 2 * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	map.findStrongerLeader(map.getLeaders()[3], 3);
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + 2 * GROUP_LEAD_RANGE + GROUP_SUB_RANGE, WINDOW_HEIGHT / 2));
+	map.findStrongerLeader(map.getLeaders()[3], 3);
+
+	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
+	EXPECT_EQ(3, dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates().size());
+	EXPECT_EQ(0, dynamic_cast<Strong*>(leaders[1]->getState())->getSubordinates().size());
+	EXPECT_EQ(4, dynamic_cast<Strong*>(leaders[2]->getState())->getSubordinates().size());
+
+	std::unique_ptr<Individual> &old_leader = leaders[0];
+	
+	map.updateGroup();
+
+	ASSERT_TRUE(old_leader != NULL);
+	/*
+	std::vector<std::unique_ptr<Individual>>& new_leaders = map.getLeaders();
+	EXPECT_EQ(0, dynamic_cast<Strong*>(new_leaders[0]->getState())->getSubordinates().size());
+	EXPECT_EQ(0, dynamic_cast<Strong*>(new_leaders[1]->getState())->getSubordinates().size());
+	EXPECT_EQ(7, dynamic_cast<Strong*>(new_leaders[2]->getState())->getSubordinates().size());
+	*/
+	// now the new leader is stronger
+}
+
+TEST(TestMap, LeaderMove) {
+	Map map;
+	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2));
+	map.updateGroup();
+	// now only one leader with two subordinates
+
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2  - (9 / 10) * GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2));
+	map.createIndividual(sf::Vector2f(
+		WINDOW_WIDTH / 2 - (9 / 10) * GROUP_LEAD_RANGE - GROUP_SUB_RANGE / 2, WINDOW_HEIGHT / 2));
+	map.findStrongerLeader(map.getLeaders()[2], 2);
+
+	map.updateGroup();
+
+	EXPECT_EQ(1, map.getLeaders().size());
+
+	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
+	EXPECT_EQ(4, dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates().size());
 }
