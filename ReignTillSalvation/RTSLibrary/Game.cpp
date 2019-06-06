@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "MainMenu.h"
-#include <iostream> 
 
 #pragma region GameFunctions
 
@@ -76,11 +74,29 @@ void::Game::init() {
 	//SFML draw with the top-left corner as origin, so we have to center the position.
 	text.setPosition(sf::Vector2f(width / 2 - rect.width / 2, height / 2 - rect.height / 2));
 
+	parseXML();
 }
 
 void Game::update() {
 	map.updateGroup();
 	map.updatePositions();
+}
+
+void Game::parseXML() {
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(XML_FILE_PATH.c_str());
+
+	pugi::xpath_node_set elements = doc.select_nodes("/ElementsResource/Element");
+	for (pugi::xpath_node_set::const_iterator it = elements.begin(); it != elements.end(); ++it)
+	{
+		pugi::xpath_node node = *it;
+		std::string name = node.node().child("name").value();
+		float range = std::stof(node.node().child("range").value());
+		sf::Color color = stringToColor(node.node().child("color").value());
+		std::string attractionMessage = node.node().child("attractionMessage").value();
+		std::string repulsionMessage = node.node().child("repulsionMessage").value();
+		map.addElementType(name, range, color, attractionMessage, repulsionMessage);
+	}
 }
 
 

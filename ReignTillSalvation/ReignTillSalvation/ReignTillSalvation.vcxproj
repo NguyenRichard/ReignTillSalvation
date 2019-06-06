@@ -180,6 +180,9 @@
   <ItemGroup>
     <ResourceCompile Include="ReignTillSalvation.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="resources.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

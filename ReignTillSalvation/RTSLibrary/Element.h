@@ -17,6 +17,8 @@ class Element
 public:
 	Element(std::string name);
 	Element(std::string name, float range);
+	Element(std::string name, float range, sf::Color color,
+		std::string attractionMessage, std::string repulsionMessage);
 	void addCoord(sf::Vector2f);
 	void updateRejections();
 	void updateAttractions();
@@ -33,4 +35,6 @@ private:
 	float range;
 	std::vector<Attraction*> attractions;
 	sf::CircleShape sprite;
+	std::string attractionMessage;
+	std::string repulsionMessage;
 };
