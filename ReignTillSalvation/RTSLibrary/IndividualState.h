@@ -14,7 +14,6 @@ class IndividualState {
 public:
 	IndividualState() = default;
 	IndividualState(const IndividualState & state) : coord(state.coord) {};
-	virtual std::unique_ptr<IndividualState> changeState() = 0;
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
 	sf::CircleShape* getSprite() { return &sprite; };
@@ -27,6 +26,14 @@ public:
 	float distanceToIndividual(const IndividualState& individual) const;
 	sf::Vector2f directionToward(const sf::Vector2f&) const;
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
+
+	virtual void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
+	virtual void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) = 0;
+	virtual int findSubPosition(const IndividualState&) = 0;
+	virtual int myStrength() const = 0;
+	virtual std::vector<std::unique_ptr<Individual>>& getSubordinates() = 0;
+
+	bool operator <(const IndividualState&);
 
 protected:
 	sf::CircleShape sprite;
