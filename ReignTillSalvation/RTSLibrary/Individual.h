@@ -25,7 +25,6 @@ public:
 	void findMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	int findSubPosition(const Individual&);
 	int myStrength() const { return state->myStrength(); };
-	std::vector<std::unique_ptr<Individual>>& getSubordinates();
 
 	bool operator <(const Individual&);
 

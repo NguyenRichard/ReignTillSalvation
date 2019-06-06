@@ -9,6 +9,7 @@
 #include "SFML/Graphics.hpp"
 #include "Value.h"
 
+class Individual;
 
 class IndividualState {
 public:
@@ -31,7 +32,6 @@ public:
 	virtual void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) = 0;
 	virtual int findSubPosition(const IndividualState&) = 0;
 	virtual int myStrength() const = 0;
-	virtual std::vector<std::unique_ptr<Individual>>& getSubordinates() = 0;
 
 	bool operator <(const IndividualState&);
 

@@ -200,13 +200,13 @@ void Strong::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& 
 	}
 
 	if (index_strongest != my_position) {
-		me->changeState(makeSubordinate(individual, my_position, leaders[index_strongest]));
+		makeSubordinate(leaders, leaders[index_strongest], my_position);
+		me->changeState(changeState(leaders[index_strongest].get()));
 	}
 
 }
 
-std::unique_ptr<IndividualState> Strong::makeSubordinate(std::vector<std::unique_ptr<Individual>>& leaders, std::unique_ptr<Individual>& new_leader, int position) {
-
+void Strong::makeSubordinate(std::vector<std::unique_ptr<Individual>>& leaders, std::unique_ptr<Individual>& new_leader, int position) {
 
 	int my_position = 0;
 	for (auto& subordinate : subordinates) {
@@ -214,9 +214,9 @@ std::unique_ptr<IndividualState> Strong::makeSubordinate(std::vector<std::unique
 		my_position++;
 	}
 
+	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
-	moveIndividuals(leaders, new_leader->getGroup(), position, new_position);
-	return changeState(new_leader.get());
+	moveIndividuals(leaders, strong->getSubordinates(), position, new_position);
 }
 
 
