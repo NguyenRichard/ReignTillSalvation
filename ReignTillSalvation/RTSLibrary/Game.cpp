@@ -95,7 +95,7 @@ void Game::parseXML() {
 		sf::Color color = stringToColor(node.node().child("color").value());
 		std::string attractionMessage = node.node().child("attractionMessage").value();
 		std::string repulsionMessage = node.node().child("repulsionMessage").value();
-		map.addElementType(name, range, color, attractionMessage, repulsionMessage);
+		map.createElement(name, range, color, attractionMessage, repulsionMessage);
 	}
 }
 

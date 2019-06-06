@@ -21,6 +21,13 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 	elements.back()->addCoord(coord);
 }
 
+void Map::createElement(std::string name, float range, sf::Color color,
+	std::string attractionMessage, std::string repulsionMessage) {
+	elements.push_back(std::make_unique<Element>(
+		name, range, color, attractionMessage, repulsionMessage
+		));
+}
+
 void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
 		leader->updatePosition();
