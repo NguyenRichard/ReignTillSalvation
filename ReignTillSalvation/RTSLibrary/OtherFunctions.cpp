@@ -7,7 +7,7 @@ int randomint(int const &n) {
 	return distribution(engine);
 }
 
-sf::Color stringToColor(std::string color) {
+sf::Color stringToColor(const std::string &color) {
 	if (color == "Black")
 		return sf::Color::Black;
 	if (color == "White")

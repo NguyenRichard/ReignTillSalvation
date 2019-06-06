@@ -33,4 +33,3 @@ void individualWindow(sf::RenderWindow &, RTS&, bool*);
 void showIndividual(Individual&, const char*, int);
 void elementWindow(sf::RenderWindow &, RTS&, bool*,char*);
 void showElement(Element&, int);
-void parseXML(Map &map);

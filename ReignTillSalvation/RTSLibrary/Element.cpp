@@ -1,8 +1,5 @@
 #include "Attraction.h"
 #include "Element.h"
-#include "OtherFunctions.h"
-
-
 
 Element::Element(std::string name) :
 	name(name), coords(), range(DEFAULT_RANGE) {

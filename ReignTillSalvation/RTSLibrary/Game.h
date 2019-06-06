@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <pugixml.hpp>
+#include <iostream> 
+
 #include "RTSState.h"
 #include "Map.h"
 #include "MainMenu.h"
-#include <iostream> 
 
 class Game : public RTSState{
 public:

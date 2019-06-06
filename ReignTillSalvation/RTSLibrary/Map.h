@@ -4,7 +4,7 @@
 #include "Strong.h"
 #include "Element.h"
 #include "Value.h"
-
+#include "Weak.h"
 
 class Map
 {
@@ -14,7 +14,7 @@ private:
 public:
 	Map() = default;
 	void createIndividual(sf::Vector2f);
-	void createElement(std::string, int);
+	void createElement(std::string, float);
 	void createElement(std::string, float, sf::Color, std::string, std::string);
 	void addElementInMap(std::string, sf::Vector2f);
 	void updatePositions();

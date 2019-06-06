@@ -1,12 +1,10 @@
 #include "Map.h"
-#include "Strong.h"
-#include "Weak.h"
 
 void Map::createIndividual(sf::Vector2f coord) {
 	leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(),coord));
 }
 
-void Map::createElement(std::string name, int range) {
+void Map::createElement(std::string name, float range) {
 	elements.push_back(std::make_unique<Element>(name, range));
 }
 
@@ -20,14 +18,14 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 	createElement(name,DEFAULT_RANGE);
 	elements.back()->addCoord(coord);
 }
-/*
+
 void Map::createElement(std::string name, float range, sf::Color color,
 	std::string attractionMessage, std::string repulsionMessage) {
 	elements.push_back(std::make_unique<Element>(
 		name, range, color, attractionMessage, repulsionMessage
-		));
+	));
 }
-*/
+
 void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
 		leader->updatePosition();
