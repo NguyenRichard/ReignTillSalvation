@@ -18,6 +18,7 @@ int imGUImain(){
 	ImGui::SFML::Init(window);
 
 	tmx::Map map;
+
 	map.load("C:/Users/cypri/Desktop/tmxlite/SFMLExample/assets/demo.tmx");
 
 	MapLayer layerZero(map, 0);
@@ -317,4 +318,21 @@ void showElement(Element& element, int uid)
 		ImGui::TreePop();
 	}
 	ImGui::PopID();
+}
+
+void parseXML(Map &map) {
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("resources.xml");
+
+	pugi::xpath_node_set elements = doc.select_nodes("/ElementsResource/Element");
+	for (pugi::xpath_node_set::const_iterator it = elements.begin(); it != elements.end(); ++it)
+	{
+		pugi::xpath_node node = *it;
+		std::string name = node.node().child("name").value();
+		float range = std::stof(node.node().child("range").value());
+		sf::Color color = stringToColor(node.node().child("color").value());
+		std::string attractionMessage = node.node().child("attractionMessage").value();
+		std::string repulsionMessage = node.node().child("repulsionMessage").value();
+		map.addElementType(name, range, color, attractionMessage, repulsionMessage);
+	}
 }

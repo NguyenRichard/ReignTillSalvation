@@ -19,6 +19,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
+
+#include <pugixml.hpp>
 #pragma endregion include
 
 #pragma region define
@@ -31,3 +33,4 @@ void individualWindow(sf::RenderWindow &, RTS&, bool*);
 void showIndividual(Individual&, const char*, int);
 void elementWindow(sf::RenderWindow &, RTS&, bool*,char*);
 void showElement(Element&, int);
+void parseXML(Map &map)

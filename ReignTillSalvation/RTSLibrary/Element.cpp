@@ -17,6 +17,14 @@ Element::Element(std::string name, float new_range) :
 	range = new_range;
 }
 
+Element::Element(std::string name, float range, sf::Color color, std::string attractionMessage,
+		std::string repulsionMessage) : name(name), coords(), range(range),
+		attractionMessage(attractionMessage), repulsionMessage(repulsionMessage) {
+	sprite = sf::CircleShape(range);
+	sprite.setFillColor(FILL_COLOR);
+	sprite.setOutlineThickness(2);
+	sprite.setOutlineColor(color);
+}
 
 void Element::updateRejections() {
 	for (Attraction* attraction : attractions)
