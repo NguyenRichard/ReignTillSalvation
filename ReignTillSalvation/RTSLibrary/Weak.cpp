@@ -50,7 +50,7 @@ void Weak::setLeader(Individual* individual) {
 
 void Weak::updateMyGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders,int my_position) {
 
-	findGroup(leaders, my_position);
+	findGroup(me, leaders, my_position);
 }
 
 void Weak::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
@@ -71,30 +71,22 @@ void Weak::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& le
 			}
 		}
 	}
-
+	Strong* strong = static_cast<Strong*>(leader->getState());
 	if (index_new_leader != -1) {
-		strong_lead->insertSubordinate(position_in_subordinate, individual);
-		changeGroupInfo(leaders[index_new_leader]);
-		actual_lead->eraseSubordinate(my_position);
+		makeSubordinate(strong->getSubordinates(), leaders[index_new_leader], my_position);
 	}
 	else {
-		if (!actual_lead->stillInGroup(my_position)) {
-			makeLeader(individual);
+		if (!strong->stillInGroup(my_position)) {
+			leaders.push_back(move(strong->getSubordinates()[my_position]));
 			me->changeState(changeState());
-			actual_lead->eraseSubordinate(my_position);
 		}
 	}
 }
 
-void Weak::changeGroupInfo(std::unique_ptr<Individual>& new_leader, int old_position) {
-	leader = new_leader.get();
-}
+void Weak::makeSubordinate(std::vector<std::unique_ptr<Individual>>& subordinates, std::unique_ptr<Individual>& new_leader,int my_position) {
 
-
-void Weak::makeSubordinate(std::vector<std::unique_ptr<Individual>>& leaders, int new_leader_position,int my_position) {
-
-	int new_position = leaders[new_leader_position]->getState()->findSubPosition(*this);
-	leaders[new_leader_position]->changeGroupInfo(, new_position);
-	leaders.erase(leaders.begin() + my_position);
+	Strong* strong = static_cast<Strong*>(new_leader->getState());
+	int new_position = new_leader->getState()->findSubPosition(*this);
+	moveIndividuals(subordinates, strong->getSubordinates(), my_position, new_position);
 
 }

@@ -82,7 +82,7 @@ void Individual::updateMyGroup(std::vector<std::unique_ptr<Individual>>& leaders
 }
 
 void Individual::findMyGroup(std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
-	state->findGroup(leaders, my_position);
+	state->findGroup(this,leaders, my_position);
 }
 
 int Individual::findSubPosition(const Individual& individual) {
@@ -91,11 +91,6 @@ int Individual::findSubPosition(const Individual& individual) {
 
 bool Individual:: operator <(const Individual& individual) {
 	return state < individual.state;
-}
-
-
-std::vector<std::unique_ptr<Individual>>& Individual::getSubordinates() {
-	return state->getSubordinates();
 }
 
 

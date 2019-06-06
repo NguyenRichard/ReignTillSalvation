@@ -26,8 +26,7 @@ public:
 	void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;
 	int myStrength() const override { return subordinates.size(); };
 	int findSubPosition(const IndividualState&);
-	std::vector<std::unique_ptr<Individual>>& getSubordinates() override { return subordinates; };
-	std::unique_ptr<IndividualState> makeSubordinate(std::vector<std::unique_ptr<Individual>>&,std::unique_ptr<Individual>&, int);
+	void makeSubordinate(std::vector<std::unique_ptr<Individual>>&,std::unique_ptr<Individual>&, int);
 
 
 private:
