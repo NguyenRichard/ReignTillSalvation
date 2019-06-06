@@ -53,7 +53,7 @@ TEST(TestIndividual, TestInsertSubordinates) {
 	EXPECT_TRUE((subordinates[2]->getCoord().y > -1));
 	EXPECT_TRUE((subordinates[2]->getCoord().y < 1));
 }
-
+/*
 TEST(TestIndividual, TestchangeStateWeaktoStrong) {
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(20, 300));
 	Weak* weak = dynamic_cast<Weak*>(individual->getState());
@@ -73,8 +73,8 @@ TEST(TestIndividual, TestchangeStateWeaktoStrong) {
 	EXPECT_TRUE(coord_after.y > coord_before.y - 0.1);
 	EXPECT_TRUE(coord_after.y < coord_before.y + 0.1);
 
-}
-
+}*/
+/*
 TEST(TestIndividual, TestchangeStateStrongtoWeak) {
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(20, 300));
 	Strong* strong = dynamic_cast<Strong*>(individual->getState());
@@ -94,8 +94,8 @@ TEST(TestIndividual, TestchangeStateStrongtoWeak) {
 	EXPECT_TRUE(coord_after.y > coord_before.y - 0.1);
 	EXPECT_TRUE(coord_after.y < coord_before.y + 0.1);
 
-}
-
+}*/
+/*
 TEST(TestMap, findSubPositionSuccess) {
 	Individual master{ std::make_unique<Strong>(), sf::Vector2f(1000,1000) };
 	Strong* strong = static_cast<Strong*>(master.getState());
@@ -116,9 +116,9 @@ TEST(TestMap, findSubPositionSuccess) {
 	EXPECT_EQ(4, strong->findSubPosition(individual4));
 
 
-}
+}*/
 
-
+/*
 TEST(TestMap, findSubPositionFailure) {
 	Individual master{ std::make_unique<Strong>(), sf::Vector2f(1000,1000) };
 	Strong* strong = static_cast<Strong*>(master.getState());
@@ -133,8 +133,8 @@ TEST(TestMap, findSubPositionFailure) {
 	EXPECT_EQ(-1, strong->findSubPosition(individual1));
 	EXPECT_EQ(-1, strong->findSubPosition(individual2));
 	//Because individual4 is linked to the group by subordinates[2] but this subordinate is no longer part of the group.
-}
-
+}*/
+/*
 TEST(TestMap, stillInGroup) {
 	Individual master1{ std::make_unique<Strong>(), sf::Vector2f(1000,1000) };
 	Strong* strong1 = static_cast<Strong*>(master1.getState());
@@ -164,4 +164,4 @@ TEST(TestMap, stillInGroup) {
 	EXPECT_FALSE(strong2->stillInGroup(3));
 	EXPECT_FALSE(strong2->stillInGroup(4));
 
-}
+}*/

@@ -20,19 +20,27 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 	createElement(name,DEFAULT_RANGE);
 	elements.back()->addCoord(coord);
 }
-
+/*
 void Map::createElement(std::string name, float range, sf::Color color,
 	std::string attractionMessage, std::string repulsionMessage) {
 	elements.push_back(std::make_unique<Element>(
 		name, range, color, attractionMessage, repulsionMessage
 		));
 }
-
+*/
 void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
 		leader->updatePosition();
 }
 
+void Map::updateGroup() {
+	int leaders_size = leaders.size();
+	for (int i = leaders_size-1; 0; i--) {
+		leaders[i]->updateMyGroup(leaders,i);
+	}
+}
+
+/*
 void Map::updateGroup() {
 	Strong* strong;
 	std::vector<std::unique_ptr<Individual>>* subordinates;
@@ -55,7 +63,9 @@ void Map::updateGroup() {
 		findStrongerLeader(leaders[i], i);
 	}
 
-}
+}*/
+
+/*
 
 void Map::findGroup(std::unique_ptr<Individual>& individual,int my_position) {
 	Individual* strongestnew = NULL;
@@ -182,3 +192,5 @@ void Map::makeSubordinate(std::unique_ptr<Individual>& individual, int position,
 void Map::eraseLeader(int index) {
 	leaders.erase(leaders.begin() + index);
 }
+
+*/
