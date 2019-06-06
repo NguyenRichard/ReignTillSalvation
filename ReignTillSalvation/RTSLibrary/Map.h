@@ -15,6 +15,7 @@ public:
 	Map() = default;
 	void createIndividual(sf::Vector2f);
 	void createElement(std::string, int);
+	void createElement(std::string, float, sf::Color, std::string, std::string);
 	void addElementInMap(std::string, sf::Vector2f);
 	void updatePositions();
 	std::vector<std::unique_ptr<Individual>>& getLeaders() { return leaders; };
