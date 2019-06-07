@@ -16,6 +16,7 @@ public:
 	virtual sf::Shape &getShape() = 0;
 	virtual void affectZone(std::vector<std::unique_ptr<Individual>>&) = 0;
 	
+	// returns true if countdown is finished
 	bool update();
 
 private:
@@ -24,6 +25,4 @@ private:
 	sf::Time duration;
 
 	virtual void updateOpacity(float opacity) = 0;
-
-	bool isInTheZone(const sf::Vector2f &coord);
 };
