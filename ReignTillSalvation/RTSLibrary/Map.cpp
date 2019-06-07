@@ -62,7 +62,10 @@ void Map::createLaw(Element* element, LawType type) {
 
 void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
+	{
 		leader->updatePosition();
+		leader->applyCollisionElements();
+	}
 }
 
 void Map::updateGroup() {
