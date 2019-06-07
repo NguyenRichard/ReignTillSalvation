@@ -15,8 +15,12 @@ Element::Element(std::string name, float new_range) :
 }
 
 Element::Element(std::string name, float range, sf::Color color, std::string attractionMessage,
-		std::string repulsionMessage) : name(name), coords(), range(range), power(0),
-		attractionMessage(attractionMessage), repulsionMessage(repulsionMessage) {
+		std::string repulsionMessage, std::string cancelMessage) :
+		name(name), coords(), range(range), power(0),
+		attractionMessage(attractionMessage),
+		repulsionMessage(repulsionMessage),
+		cancelMessage(cancelMessage)
+{
 	rangeShape = sf::CircleShape(range);
 	rangeShape.setFillColor(FILL_COLOR);
 	rangeShape.setOutlineThickness(2);
