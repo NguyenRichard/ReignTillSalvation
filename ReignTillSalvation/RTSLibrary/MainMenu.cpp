@@ -1,5 +1,4 @@
 #include "MainMenu.h"
-#include <iostream> 
 
 #pragma region MenuFunctions
 MainMenu::MainMenu(int width, int height) :

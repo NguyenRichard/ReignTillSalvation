@@ -23,5 +23,8 @@
 
 #define MAX_INDIVIDUALS					100
 
+#define LAW_PROPORTION					600
+
+#define LAW_MENU_BACKGROUND_COLOR sf::Color(123,234,200)
 
 #pragma endregion define

@@ -21,11 +21,7 @@ public:
 	void updatePositions();
 	std::vector<std::unique_ptr<Individual>>& getLeaders() { return leaders; };
 	std::vector<std::unique_ptr<Element>>& getElements() { return elements; };
-	void findGroup(std::unique_ptr<Individual>&, int);
-	void findStrongerLeader(std::unique_ptr<Individual>&, int);
-	void makeLeader(std::unique_ptr<Individual>&);
-	void makeSubordinate(std::unique_ptr<Individual>&, int, std::unique_ptr<Individual>&);
 	void updateGroup();
-	void eraseLeader(int);
+	int individualsNumber();
 };
 
