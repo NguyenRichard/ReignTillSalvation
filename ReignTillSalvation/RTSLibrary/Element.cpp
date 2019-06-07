@@ -6,7 +6,10 @@ Element::Element(std::string name) :
 	rangeShape = sf::CircleShape(range);
 	rangeShape.setFillColor(FILL_COLOR);
 	rangeShape.setOutlineThickness(2);
-	rangeShape.setOutlineColor(sf::Color(randomint(255),randomint(255),randomint(255)));
+	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
+	rangeShape.setOutlineColor(color);
+	sprite = sf::RectangleShape(sf::Vector2f(ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+	rangeShape.setFillColor(color);
 }
 
 Element::Element(std::string name, float new_range) :
@@ -25,6 +28,10 @@ Element::Element(std::string name, float range, sf::Color color, std::string att
 	rangeShape.setFillColor(FILL_COLOR);
 	rangeShape.setOutlineThickness(2);
 	rangeShape.setOutlineColor(color);
+
+	sprite = sf::RectangleShape(sf::Vector2f(ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+	rangeShape.setFillColor(color);
+
 }
 
 void Element::addCoord(sf::Vector2f coord) {
