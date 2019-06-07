@@ -2,11 +2,11 @@
 
 Weak::Weak()
 {
-	sprite.setRadius(CIRCLE_W_RADIUS);
+	rangeShape.setRadius(CIRCLE_W_RADIUS);
 };
 
 Weak::Weak(const IndividualState & state) : IndividualState(state) {
-	sprite.setRadius(CIRCLE_W_RADIUS);
+	rangeShape.setRadius(CIRCLE_W_RADIUS);
 }
 
 std::unique_ptr<IndividualState> Weak::changeState() {
@@ -117,7 +117,7 @@ void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
 	setLeader(new_leader.get());
-	me->changeColor(new_leader->getState()->getSprite()->getFillColor());
+	me->changeColor(new_leader->getState()->getRangeShape()->getFillColor());
 	moveIndividuals(subordinates, strong->getSubordinates(), my_position, new_position);
 
 }
