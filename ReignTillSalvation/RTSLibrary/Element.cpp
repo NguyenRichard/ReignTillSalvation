@@ -2,7 +2,7 @@
 #include "Element.h"
 
 Element::Element(std::string name) :
-	name(name), coords(), range(DEFAULT_RANGE) {
+	name(name), coords(), range(DEFAULT_RANGE), power(0.0f) {
 	sprite = sf::CircleShape(range);
 	sprite.setFillColor(FILL_COLOR);
 	sprite.setOutlineThickness(2);
@@ -15,30 +15,12 @@ Element::Element(std::string name, float new_range) :
 }
 
 Element::Element(std::string name, float range, sf::Color color, std::string attractionMessage,
-		std::string repulsionMessage) : name(name), coords(), range(range),
+		std::string repulsionMessage) : name(name), coords(), range(range), power(0),
 		attractionMessage(attractionMessage), repulsionMessage(repulsionMessage) {
 	sprite = sf::CircleShape(range);
 	sprite.setFillColor(FILL_COLOR);
 	sprite.setOutlineThickness(2);
 	sprite.setOutlineColor(color);
-}
-
-void Element::updateRejections() {
-	for (Attraction* attraction : attractions)
-		attraction->updateRejection();
-}
-
-void Element::updateAttractions() {
-	for (Attraction* attraction : attractions)
-		attraction->updateAttraction();
-}
-
-void Element::deleteAttraction(Attraction *attraction) {
-	for (std::vector<Attraction*>::iterator it = attractions.begin(); it < attractions.end(); it++)
-		if (*it == attraction) {
-			attractions.erase(it);
-			break;
-		}
 }
 
 void Element::addCoord(sf::Vector2f coord) {
@@ -47,4 +29,8 @@ void Element::addCoord(sf::Vector2f coord) {
 
 std::vector<sf::Vector2f> Element::getCoords() const {
 	return coords;
+}
+
+bool Element:: operator ==(const Element &element) {
+	return name == element.getName();
 }
