@@ -29,8 +29,10 @@
 
 int imGUImain();
 void globalInformation(sf::RenderWindow &, RTS&, bool*);
-void individualWindow(sf::RenderWindow &, RTS&, bool*,bool*);
+void individualWindow(sf::RenderWindow &, RTS&, bool*);
 void showIndividual(Individual&, const char*, int);
-void elementWindow(sf::RenderWindow &, RTS&, bool*,char*,bool*);
+void elementWindow(sf::RenderWindow &, RTS&, bool*,char*);
 void showElement(Element&, int);
 void gameInformation(sf::RenderWindow &, RTS&, bool*);
+void showLaw(Law&, int);
+void lawWindow(sf::RenderWindow &, RTS&, bool*);
