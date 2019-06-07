@@ -25,11 +25,6 @@ void Strong::action() {
 	std::cout << "I am strong.\n";
 }
 
-void Strong::addSubordinate(std::unique_ptr<Individual>& subordinate) {
-	subordinate.get()->changeColor(sprite.getFillColor());
-	subordinates.push_back(move(subordinate));
-}
-
 std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
 void Strong::updatePositionChaos() {
@@ -88,19 +83,6 @@ void Strong::eraseSubordinate(int index) {
 	subordinates.erase(subordinates.begin() + index);
 }
 
-void Strong::insertSubordinate(const int &index, std::unique_ptr<Individual> &new_sub) {
-	if (subordinates.size() == index) {
-		subordinates.push_back(std::move(new_sub));
-		return;
-	}
-	subordinates.resize(1+subordinates.size());
-
-	for (int i = subordinates.size() - 2; i >= index; i--) {
-		subordinates[i + 1] = std::move(subordinates[i]);
-	}
-	subordinates[index] = std::move(new_sub);
-	subordinates[index]->changeColor(sprite.getFillColor());
-}
 
 /*Searching if the individual is in this group with a linear search, and
 -return its position if he is.

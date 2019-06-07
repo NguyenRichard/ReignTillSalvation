@@ -111,6 +111,8 @@ void Weak::findGroupNew(Individual* me, std::vector<std::unique_ptr<Individual>>
 }
 
 void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual>>& subordinates, std::unique_ptr<Individual>& new_leader,int my_position) {
+	//Only works if the weak can be part of the group otherwise new_position will be equal to -1.
+	//Careful MoveIndividuals erase the content of the subordinates vector. So if you loop on subordinates, the index might change.
 
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);

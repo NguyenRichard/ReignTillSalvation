@@ -99,17 +99,6 @@ bool Individual:: operator <(const Individual& individual) {
 
 void moveIndividuals(std::vector<std::unique_ptr<Individual>>& vect1, 
 	std::vector<std::unique_ptr<Individual>>& vect2, int pos1, int pos2) {
-	/*if (vect2.size() == pos2) {
-		vect2.push_back(std::move(vect1[pos1]));
-		vect1.erase(vect1.begin() + pos1);
-		return;
-	}
-	vect2.resize(1 + vect2.size());
-
-	for (int i = vect2.size() - 2; i >= pos2; i--) {
-		vect2[i + 1] = std::move(vect2[i]);
-	}
-	vect2[pos2] = std::move(vect1[pos1]);*/
 	vect2.insert(vect2.begin()+pos2,std::move(vect1[pos1]));
 	vect1.erase(vect1.begin() + pos1);
 }
