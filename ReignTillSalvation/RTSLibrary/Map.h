@@ -7,6 +7,7 @@
 #include "Weak.h"
 #include "OtherFunctions.h"
 #include "Law.h"
+#include "Danger.h"
 
 class Map
 {
@@ -14,9 +15,11 @@ private:
 	std::vector<std::unique_ptr<Individual>> leaders;
 	std::vector<std::unique_ptr<Element>> elements;
 	std::vector<std::unique_ptr<Law>> laws;
+	std::vector<std::unique_ptr<Danger>> dangers;
 	void updateGroup();
 	void updateLaws();
 	void updatePositions();
+	void updateDangers();
 
 public:
 	Map() = default;

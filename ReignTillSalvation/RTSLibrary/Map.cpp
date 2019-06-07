@@ -80,7 +80,7 @@ void Map::updateLaws() {
 				strong = dynamic_cast<Strong*>(leader->getState());
 				leader->deleteElement(laws[i]->getElement());
 				for (auto & subordinate : strong->getSubordinates()) {
-					subordinate->addElement(laws[i]->getElement());
+					subordinate->deleteElement(laws[i]->getElement());
 				}
 			}
 		}
@@ -90,6 +90,8 @@ void Map::updateLaws() {
 void Map::update() {
 	updatePositions();
 	updateGroup();
+	updateLaws();
+	updateDangers();
 }
 
 int Map::individualsNumber() {
@@ -98,4 +100,12 @@ int Map::individualsNumber() {
 		sum += leader->myStrength()+1;
 	}
 	return sum;
+}
+
+void Map::updateDangers() {
+	for (auto &danger : dangers) {
+		if (danger->update()) {
+			danger->affectZone(leaders);
+		}
+	}
 }
