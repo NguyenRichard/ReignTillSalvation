@@ -20,7 +20,7 @@ public:
 	Element(std::string name);
 	Element(std::string name, float range);
 	Element(std::string name, float range, sf::Color color,
-		std::string attractionMessage, std::string repulsionMessage);
+		std::string attractionMessage, std::string repulsionMessage, std::string cancelMessage);
 	void addCoord(sf::Vector2f);
 	std::string getName() const { return name; }
 	std::vector<sf::Vector2f>& getCoords() { return coords;  }
@@ -30,8 +30,12 @@ public:
 	std::vector<sf::Vector2f> getCoords() const;
 	float getPower() const { return power; };
 	void changePower(const float &offset) { power += offset; };
+	std::string getAttractionMessage() { return attractionMessage; };
+	std::string getRepulsionMessage() { return repulsionMessage; };
+	std::string getCancelMessage() { return cancelMessage; };
 
 	bool operator ==(const Element&);
+
 private:
 	std::string name;
 	std::vector<sf::Vector2f> coords;
@@ -39,5 +43,6 @@ private:
 	sf::CircleShape rangeShape;
 	std::string attractionMessage;
 	std::string repulsionMessage;
+	std::string cancelMessage;
 	float power;
 };

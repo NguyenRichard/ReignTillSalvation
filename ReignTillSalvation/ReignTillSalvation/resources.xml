@@ -5,18 +5,22 @@
 <Element name="Poney" range="200" color="White" sprite=""
          attractionMessage="placeholder Poney attraction"
          repulsionMessage="placeholder Poney repulsion"
+         cancelMessage="placeholder Poney cancel"
 />
 <Element name="Cactus" range="150" color="Yellow" sprite=""
          attractionMessage="placeholder Cactus attraction"
          repulsionMessage="placeholder Cactus repulsion"
+         cancelMessage="placeholder Cactus cancel"
 /> 
 <Element name="Arbre" range="100" color="Green" sprite=""
          attractionMessage="placeholder Arbre attraction"
          repulsionMessage="placeholder Arbre repulsion"
+         cancelMessage="placeholder Arbre cancel"
 />
 <Element name="Miku" range="250" color="Cyan" sprite=""
          attractionMessage="placeholder Miku attraction"
          repulsionMessage="placeholder Miku repulsion"
+         cancelMessage="placeholder Miku cancel"
 />
 
 </ElementsCollection>
