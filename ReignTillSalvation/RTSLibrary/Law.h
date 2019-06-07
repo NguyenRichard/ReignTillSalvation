@@ -13,5 +13,7 @@ private:
 public:
 	Law(Element*, LawType);
 	void updateElement();
+	bool done();
+	Element* getElement() { return element; };
 
 };

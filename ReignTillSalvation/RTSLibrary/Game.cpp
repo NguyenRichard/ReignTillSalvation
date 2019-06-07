@@ -105,6 +105,7 @@ void Game::renderMenu(sf::RenderWindow& window) {
 void Game::render(sf::RenderWindow& window) {
 	switch (state) {
 	case Running:
+	case Paused:
 		renderGame(window);
 		break;
 	case InMenu:
@@ -123,8 +124,7 @@ void::Game::init() {
 
 void Game::update() {
 	if (state == Running) {
-		map.updateGroup();
-		map.updatePositions();
+		map.update();
 	}
 }
 
@@ -146,7 +146,7 @@ void Game::parseXML() {
 }
 
 void Game::changeGameState() {
-	state = (GameState) ((state + 1) % MAX_NUMBER);
+	state = (GameState) ((state + 1) % 2);
 }
 
 void Game::changeGameState(GameState new_state) {

@@ -18,7 +18,8 @@ public:
 	float distanceToPoint(const sf::Vector2f &point) const { return state->distanceToPoint(point); };
 	float distanceToIndividual(const Individual &individual) const;
 	float distanceToIndividual(const IndividualState& const individual) const;
-	void applyCollision(const sf::Vector2f&);
+	void applyCollision(const sf::Vector2f&,float);
+	void applyCollisionElements();
 	sf::Vector2f directionToward(const sf::Vector2f &point) const 
 		{ return state->directionToward(point); };
 
@@ -28,10 +29,10 @@ public:
 	int findSubPosition(const Individual&);
 	int myStrength() const { return state->myStrength(); };
 
-	void setLiked(Element* &el_liked);
-	void setDisliked(Element* &el_disliked);
-	void addElement(Element* &element);
-	void deleteElement(Element* &element);
+	void setLiked(Element* el_liked);
+	void setDisliked(Element* el_disliked);
+	void addElement(Element* element);
+	void deleteElement(Element* element);
 
 	bool operator <(const Individual&);
 

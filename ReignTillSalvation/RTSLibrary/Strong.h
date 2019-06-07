@@ -16,7 +16,7 @@ public:
 	std::unique_ptr<IndividualState> changeState(Individual*);
 	void action() override;
 	std::vector<std::unique_ptr<Individual>>& getSubordinates();
-	void updatePositionChaos();
+	void updatePositionChaos() override;
 	void eraseSubordinate(int);
 	bool stillInGroup(int);
 
