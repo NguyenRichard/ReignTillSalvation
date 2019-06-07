@@ -23,6 +23,7 @@ public:
 
 	void updateMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
+	void findMyGroupNew(std::vector<std::unique_ptr<Individual>>&, int);
 	int findSubPosition(const Individual&);
 	int myStrength() const { return state->myStrength(); };
 

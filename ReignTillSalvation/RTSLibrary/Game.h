@@ -19,8 +19,6 @@ public:
 	Map* getMap() { return &map; }
 	const std::string XML_FILE_PATH = "resources.xml";
 private:
-	sf::Text text;
-	sf::Font font;
 	Map map;
 
 	void parseXML();

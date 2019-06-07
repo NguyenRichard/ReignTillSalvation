@@ -33,7 +33,7 @@ void Map::updatePositions() {
 
 void Map::updateGroup() {
 	int leaders_size = leaders.size();
-	for (int i = leaders_size-1; 0; i--) {
+	for (int i = leaders_size-1; i >= 0; i--) {
 		leaders[i]->updateMyGroup(leaders,i);
 	}
 }
