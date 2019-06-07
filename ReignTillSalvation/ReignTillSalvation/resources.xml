@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ElementsResource>
-  <Element>
-    <name>Poney</name>
-    <range>200</range>
-    <color>White</color>
-    <sprite></sprite>
-    <attractionMessage>"placeholder Poney attraction"</attractionMessage>
-    <repulsionMessage>"placeholder Poney repulsion"</repulsionMessage>
-  </Element>
-  <Element>
-    <name>Cactus</name>
-    <range>150</range>
-    <color>Yellow</color>
-    <sprite></sprite>
-    <attractionMessage>"placeholder Cactus attraction"</attractionMessage>
-    <repulsionMessage>"placeholder Cactus repulsion"</repulsionMessage>
-  </Element>
-  <Element>
-    <name>Tree</name>
-    <range>100</range>
-    <color>Green</color>
-    <sprite></sprite>
-    <attractionMessage>"placeholder Tree attraction"</attractionMessage>
-    <repulsionMessage>"placeholder Tree repulsion"</repulsionMessage>
-  </Element>
-<Element>
-    <name>Miku</name>
-    <range>250</range>
-    <color>Cyan</color>
-    <sprite></sprite>
-    <attractionMessage>"placeholder Miku attraction"</attractionMessage>
-    <repulsionMessage>"placeholder Miku repulsion"</repulsionMessage>
-  </Element>
-</ElementsResource>
+
+<ElementsCollection>
+
+<Element name="Poney" range="200" color="White" sprite=""
+         attractionMessage="placeholder Poney attraction"
+         repulsionMessage="placeholder Poney repulsion"
+/>
+<Element name="Cactus" range="150" color="Yellow" sprite=""
+         attractionMessage="placeholder Cactus attraction"
+         repulsionMessage="placeholder Cactus repulsion"
+/> 
+<Element name="Arbre" range="100" color="Green" sprite=""
+         attractionMessage="placeholder Arbre attraction"
+         repulsionMessage="placeholder Arbre repulsion"
+/>
+<Element name="Miku" range="250" color="Cyan" sprite=""
+         attractionMessage="placeholder Miku attraction"
+         repulsionMessage="placeholder Miku repulsion"
+/>
+
+</ElementsCollection>

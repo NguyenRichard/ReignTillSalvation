@@ -1,7 +1,20 @@
 #include "Map.h"
 
 void Map::createIndividual(sf::Vector2f coord) {
-	leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(),coord));
+	int nb_elements = elements.size();
+	if (nb_elements > 0) {
+		int rdm1 = randomint(nb_elements - 1);
+		Element* liked = elements[rdm1].get();
+		int rdm2 = randomint(nb_elements - 1);
+		if (nb_elements > 1)
+			while (rdm2 == rdm1)
+				rdm2 = randomint(nb_elements - 1);
+		Element* disliked = elements[rdm2].get();
+		leaders.push_back(
+			std::make_unique<Individual>(
+				std::make_unique<Strong>(), coord, liked, disliked
+				));
+	}
 }
 
 void Map::createElement(std::string name, float range) {

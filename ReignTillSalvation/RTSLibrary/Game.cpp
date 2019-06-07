@@ -60,11 +60,11 @@ void Game::render(sf::RenderWindow& window) {
 }
 
 void::Game::init() {
+	parseXML();
+
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
 		map.createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
-
-	//parseXML();
 }
 
 void Game::update() {
@@ -76,15 +76,14 @@ void Game::parseXML() {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(XML_FILE_PATH.c_str());
 
-	pugi::xpath_node_set elements = doc.select_nodes("/ElementsResource/Element");
-	for (pugi::xpath_node_set::const_iterator it = elements.begin(); it != elements.end(); ++it)
+	pugi::xpath_node_set elements = doc.select_nodes("/ElementsCollection/Element");
+	for (auto &node : elements)
 	{
-		pugi::xpath_node node = *it;
-		std::string name = node.node().child("name").value();
-		float range = std::stof(node.node().child("range").value());
-		sf::Color color = stringToColor(node.node().child("color").value());
-		std::string attractionMessage = node.node().child("attractionMessage").value();
-		std::string repulsionMessage = node.node().child("repulsionMessage").value();
+		std::string name = node.node().attribute("name").value();
+		float range = (float) atoi(node.node().attribute("range").value());
+		sf::Color color = stringToColor(node.node().attribute("color").value());
+		std::string attractionMessage = node.node().attribute("attractionMessage").value();
+		std::string repulsionMessage = node.node().attribute("repulsionMessage").value();
 		map.createElement(name, range, color, attractionMessage, repulsionMessage);
 	}
 }

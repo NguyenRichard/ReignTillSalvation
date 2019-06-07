@@ -17,6 +17,11 @@
 #define PI								3.14159265358979323846f
 #define MAX_TURN						180
 
-#define MAX_INDIVIDUALS 100
+#define MAX_RUN_ATTRACTION				2.0f
+#define MAX_POWER						3.0f
+#define NATURAL_ATTRACTION				3.0f
+
+#define MAX_INDIVIDUALS					100
+
 
 #pragma endregion define
