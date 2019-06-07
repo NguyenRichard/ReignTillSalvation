@@ -4,45 +4,6 @@
 #include "SFML/Graphics.hpp"
 #include "gtest/gtest.h"
 
-/*
-
-TEST(TestMap, makeLeaderSuccess) {
-	Map map;
-	std::unique_ptr<Individual> individual = std::make_unique<Individual>( std::make_unique<Weak>(), sf::Vector2f(20,300) );
-	Weak* weak = dynamic_cast<Weak*>(individual->getState());
-	sf::CircleShape* circle_before = weak->getSprite();
-	sf::Vector2f coord_before = weak->getCoord();
-	ASSERT_TRUE(weak != NULL);
-
-	map.makeLeader(individual);
-
-	EXPECT_TRUE(individual == NULL);
-	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
-	Strong* strong = dynamic_cast<Strong*>(leaders[0]->getState());
-	sf::CircleShape* circle_after = strong->getSprite();
-	sf::Vector2f coord_after = strong->getCoord();
-	EXPECT_TRUE(strong != NULL);
-	EXPECT_EQ(CIRCLE_S_RADIUS, circle_after->getRadius());
-	EXPECT_TRUE(coord_after.x > coord_before.x - 0.1);
-	EXPECT_TRUE(coord_after.x < coord_before.x + 0.1);
-	EXPECT_TRUE(coord_after.y > coord_before.y - 0.1);
-	EXPECT_TRUE(coord_after.y < coord_before.y + 0.1);
-
-}
-
-TEST(TestMap, makeLeaderFailure) {
-	Map map;
-	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(20, 300));
-
-	map.makeLeader(individual);
-
-	EXPECT_TRUE(individual != NULL);
-
-	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
-	EXPECT_EQ(0, leaders.size());
-}
-
-
 TEST(TestMap, onlyStrongs) {
 	Map map;
 	map.createIndividual(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2));
@@ -75,7 +36,6 @@ TEST(TestMap, SimpleGroup) {
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
 	// ^ independent
-	map.findStrongerLeader(map.getLeaders()[1], 1);
 	map.updateGroup();
 	EXPECT_EQ(3, map.getLeaders().size());
 
@@ -107,7 +67,6 @@ TEST(TestMap, ComplexGroup) {
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
 	// ^ independent
 
-	map.findStrongerLeader(map.getLeaders()[1], 1);
 	map.updateGroup();
 	EXPECT_EQ(2, map.getLeaders().size());
 
@@ -130,7 +89,6 @@ TEST(TestMap, LeaderMove) {
 		WINDOW_WIDTH / 2  - (9 / 10) * GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2));
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 - (9 / 10) * GROUP_LEAD_RANGE - GROUP_SUB_RANGE / 2, WINDOW_HEIGHT / 2));
-	map.findStrongerLeader(map.getLeaders()[2], 2);
 
 	map.updateGroup();
 
@@ -139,5 +97,3 @@ TEST(TestMap, LeaderMove) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
 	EXPECT_EQ(4, dynamic_cast<Strong*>(leaders[0]->getState())->getSubordinates().size());
 }
-
-*/
