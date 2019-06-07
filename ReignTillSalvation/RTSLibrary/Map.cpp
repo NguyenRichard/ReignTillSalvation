@@ -15,6 +15,7 @@ void Map::createIndividual(sf::Vector2f coord) {
 				std::make_unique<Strong>(), coord, liked, disliked
 				));
 	}
+	leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(), coord));
 }
 
 void Map::createElement(std::string name, float range) {

@@ -2,21 +2,21 @@
 #include "OtherFunctions.h"
 
 Strong::Strong() {
-	sprite.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
-	sprite.setRadius(CIRCLE_S_RADIUS);
+	rangeShape.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
+	rangeShape.setRadius(CIRCLE_S_RADIUS);
 }
 
 Strong::Strong(const IndividualState & state) : 
 	IndividualState(state),
 	subordinates() {
 
-	sprite.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
-	sprite.setRadius(CIRCLE_S_RADIUS);
+	rangeShape.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
+	rangeShape.setRadius(CIRCLE_S_RADIUS);
 }
 
 std::unique_ptr<IndividualState> Strong::changeState(Individual* new_leader) {
 	std::unique_ptr<Weak> weak = std::make_unique<Weak>(*this);
-	weak->changeColor(new_leader->getState()->getSprite()->getFillColor());
+	weak->changeColor(new_leader->getState()->getRangeShape()->getFillColor());
 	weak->setLeader(new_leader);
 	return move(weak);
 }
@@ -189,7 +189,7 @@ void Strong::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individu
 
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
-	me->changeColor(new_leader->getState()->getSprite()->getFillColor());
+	me->changeColor(new_leader->getState()->getRangeShape()->getFillColor());
 	moveIndividuals(leaders, strong->getSubordinates(), my_position, new_position);
 	for (int i = subordinates.size() - 1; i >= 0; i--) {
 		subordinates[i]->findMyGroupNew(leaders,i);
