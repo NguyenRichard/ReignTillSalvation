@@ -6,6 +6,7 @@ LawMenu::LawMenu(Element* element, Game* game, int width, int height) :
 	element(element),
 	game(game)
 {
+
 	if (!font.loadFromFile("res/fonts/impact.ttf")) {
 		std::cout << "Impossible to load font for menu";
 		return;
@@ -22,17 +23,18 @@ LawMenu::LawMenu(Element* element, Game* game, int width, int height) :
 	//put selectedColor for a default option if you use handleKeyEvent.
 	options[0].setFillColor(nselectedColor);
 	options[0].setString(option_names[0]);
-	options[0].setCharacterSize(char_size);
+	options[0].setCharacterSize(char_size/2);
 	sf::FloatRect rect = options[0].getGlobalBounds();
 	//SFML draw with the top-left corner as origin, so we have to center the position.
-	options[0].setPosition(sf::Vector2f(width / 2 - rect.width, (height / (number_choice + 1)) * 1 - rect.height));
+	options[0].setPosition(sf::Vector2f((WINDOW_WIDTH) / 2 - rect.width/2, (WINDOW_HEIGHT - height) / 2+(height / (number_choice + 1)) * 1 - rect.height));
 
 	for (int i = 1; i < option_names.size(); i++) {
 		options[i].setFont(font);
 		options[i].setFillColor(nselectedColor);
 		options[i].setString(option_names[i]);
-		options[i].setCharacterSize(char_size);
-		options[i].setPosition(sf::Vector2f(width / 2 - rect.width, (height / (number_choice + 1)) * (i + 1) - rect.height));
+		options[i].setCharacterSize(char_size/2);
+		rect = options[i].getGlobalBounds();
+		options[i].setPosition(sf::Vector2f((WINDOW_WIDTH) / 2 - rect.width/2, (WINDOW_HEIGHT - height) / 2+(height / (number_choice + 1)) * (i + 1) - rect.height));
 	}
 
 	background.setFillColor(LAW_MENU_BACKGROUND_COLOR);
@@ -61,6 +63,7 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 					subordinate->addElement(element);
 				}
 			}
+			game->changeGameState(Running);
 			break;
 		case 1:
 			map->getLaws().push_back(std::make_unique<Law>(element, repulsion));
@@ -71,6 +74,7 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 					subordinate->addElement(element);
 				}
 			}
+			game->changeGameState(Running);
 			break;
 		case 2:
 			map->getLaws().push_back(std::make_unique<Law>(element, repulsion));
@@ -81,6 +85,7 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 					subordinate->addElement(element);
 				}
 			}
+			game->changeGameState(Running);
 			break;
 		case 3:
 			game->changeGameState(Running);
