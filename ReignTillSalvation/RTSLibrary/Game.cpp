@@ -31,7 +31,7 @@ void Game::render(sf::RenderWindow& window) {
 	Strong* strong;
 	for (const auto & leader : leaders) {
 		coord = leader->getCoord();
-		circle = leader->getState()->getSprite();
+		circle = leader->getState()->getRangeShape();
 		radius = circle->getRadius();
 		circle->setPosition(coord.x-radius,coord.y-radius);
 		window.draw(*circle);
@@ -39,7 +39,7 @@ void Game::render(sf::RenderWindow& window) {
 		subordinates = &(strong->getSubordinates());
 		for (const auto & subordinate : *subordinates) {
 			coord = subordinate->getCoord();
-			circle = subordinate->getState()->getSprite();
+			circle = subordinate->getState()->getRangeShape();
 			radius = circle->getRadius();
 			circle->setPosition(coord.x - radius, coord.y - radius);
 			window.draw(*circle);
@@ -47,7 +47,7 @@ void Game::render(sf::RenderWindow& window) {
 	}
 	std::vector<sf::Vector2f> element_coords;
 	for (const auto & element : elements) {
-		circle = element.get()->getSprite();
+		circle = element.get()->getRangeShape();
 		radius = circle->getRadius();
 		element_coords = element.get()->getCoords();
 		float range = element.get()->getRangeUnmutable();

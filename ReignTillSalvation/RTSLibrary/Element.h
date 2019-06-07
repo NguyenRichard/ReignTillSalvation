@@ -24,7 +24,7 @@ public:
 	void addCoord(sf::Vector2f);
 	std::string getName() const { return name; }
 	std::vector<sf::Vector2f>& getCoords() { return coords;  }
-	sf::CircleShape* getSprite() { return &sprite; }
+	sf::CircleShape* getRangeShape() { return &rangeShape; }
 	float& getRangeMutable() { return range; }
 	float getRangeUnmutable() { return range; }
 	std::vector<sf::Vector2f> getCoords() const;
@@ -36,7 +36,7 @@ private:
 	std::string name;
 	std::vector<sf::Vector2f> coords;
 	float range;
-	sf::CircleShape sprite;
+	sf::CircleShape rangeShape;
 	std::string attractionMessage;
 	std::string repulsionMessage;
 	float power;
