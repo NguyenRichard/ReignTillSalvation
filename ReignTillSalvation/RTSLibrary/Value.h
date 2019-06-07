@@ -23,5 +23,16 @@
 
 #define MAX_INDIVIDUALS					100
 
+#define LAW_PROPORTION					600
+
+#define LAW_MENU_BACKGROUND_COLOR		sf::Color(123,234,200)
+#define LAW_MENU_WIDTH					WINDOW_WIDTH/6
+#define LAW_MENU_HEIGHT					WINDOW_HEIGHT/2
+
+#define ELEMENT_SPRITE_SIZE				20
+#define DEFAULT_RANGE					30
+#define FILL_COLOR						sf::Color(255,255,255,0)
+#define OUTLINE_COLOR					sf::Color(255,255,255,255)
+
 
 #pragma endregion define
