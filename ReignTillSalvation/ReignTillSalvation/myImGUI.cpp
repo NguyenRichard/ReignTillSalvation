@@ -150,7 +150,6 @@ void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, bool* c
 	if (!ImGui::Begin("Individuals Info", p_open))
 	{
 		ImGui::End();
-		*creating = false;
 		return;
 	}
 	ImGui::SetWindowFontScale(window.getSize().y / 550);
@@ -166,29 +165,20 @@ void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, bool* c
 	ImGui::Columns(1);
 	ImGui::Separator();
 	ImGui::PopStyleVar();
-	if (*creating) {
-		if (ImGui::Button("Cancel")) {
-			*creating = false;
-		}
-		else {
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
-				sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
-				if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
-					&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
-					game->getMap()->createIndividual(mouseWorldPosition);
-				}
-				*creating = false;
+	if (ImGui::Button("Add individuals")) {
+		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+				ImGui::End();
+				return;
 			}
 		}
-	}
-	else {
-		if (ImGui::Button("Add Individuals")) {
-			*creating = true;
+		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
+			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
+			game->getMap()->createIndividual(mouseWorldPosition);
 		}
 	}
-	
-
 	ImGui::End();
 
 }
@@ -254,7 +244,6 @@ void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* inpu
 	if (!ImGui::Begin("Element Info", p_open))
 	{
 		ImGui::End();
-		*creating = false;
 		return;
 	}
 	ImGui::SetWindowFontScale(window.getSize().y / 550);
@@ -271,19 +260,13 @@ void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* inpu
 	ImGui::Separator();
 	ImGui::PopStyleVar();
 	ImGui::InputText("name", input_name, MAX_INPUT_NAME);
-
-	if (ImGui::Button((*creating) ? "Cancel" : "Add Elements")) {
-		if (*creating == false) {
-			*creating = true;
-			ImGui::End();
+	if (ImGui::Button("Add element")) {
+		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+				ImGui::End();
+				return;
+			}
 		}
-		else {
-			*creating = false;
-			ImGui::End();
-		}
-	}
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && *creating == true) {
 		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
 		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
 		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
@@ -291,9 +274,7 @@ void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* inpu
 			std::string name(input_name);
 			game->getMap()->addElementInMap(name, mouseWorldPosition);
 		}
-		*creating = false;
 	}
-
 	ImGui::End();
 
 }

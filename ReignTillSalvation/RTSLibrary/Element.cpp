@@ -9,7 +9,7 @@ Element::Element(std::string name) :
 	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
 	rangeShape.setOutlineColor(color);
 	sprite = sf::RectangleShape(sf::Vector2f(ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
-	rangeShape.setFillColor(color);
+	sprite.setFillColor(color);
 }
 
 Element::Element(std::string name, float new_range) :
@@ -30,7 +30,7 @@ Element::Element(std::string name, float range, sf::Color color, std::string att
 	rangeShape.setOutlineColor(color);
 
 	sprite = sf::RectangleShape(sf::Vector2f(ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
-	rangeShape.setFillColor(color);
+	sprite.setFillColor(color);
 
 }
 

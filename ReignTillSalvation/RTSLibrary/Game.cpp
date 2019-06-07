@@ -32,6 +32,8 @@ void Game::processInput(sf::RenderWindow& window) {
 
 void Game::processGameInput(sf::RenderWindow& window) {
 	std::vector<sf::Vector2f>* coords;
+	sf::Event event;
+
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
 		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
@@ -39,7 +41,7 @@ void Game::processGameInput(sf::RenderWindow& window) {
 			coords = &element->getCoords();
 			for (const auto & coord : *coords) {
 				if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE) {
-					menu = std::make_unique<LawMenu>(element.get(),this,LAW_MENU_WIDTH,LAW_MENU_HEIGHT);
+					menu = std::make_unique<LawMenu>(element.get(), this, LAW_MENU_WIDTH, LAW_MENU_HEIGHT);
 					changeGameState(InMenu);
 				}
 			}
@@ -89,7 +91,7 @@ void Game::renderGame(sf::RenderWindow& window) {
 		for (const auto & element_coord : element_coords) {
 			elem_range_sprite->setPosition(element_coord.x - radius, element_coord.y - radius);
 			elem_range_sprite->setRadius(range);
-			elem_sprite->setPosition(element_coord.x - sprite_width, element_coord.y - sprite_height);
+			elem_sprite->setPosition(element_coord.x - sprite_width/2, element_coord.y - sprite_height/2);
 			window.draw(*elem_sprite);
 			window.draw(*elem_range_sprite);
 		}
