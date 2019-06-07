@@ -2,7 +2,7 @@
 #include "Element.h"
 
 
-enum LawType { attraction, repulsion, cancel };
+enum LawType { Attraction, Repulsion, Cancel };
 
 class Law {
 private:
@@ -15,5 +15,6 @@ public:
 	void updateElement();
 	bool done();
 	Element* getElement() { return element; };
+	LawType getType() { return type; };
 
 };

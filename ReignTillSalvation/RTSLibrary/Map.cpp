@@ -50,7 +50,7 @@ void Map::createLaw(Element* element, LawType type) {
 		}
 	}
 	Strong* strong;
-	laws.push_back(std::make_unique<Law>(element, attraction));
+	laws.push_back(std::make_unique<Law>(element, type));
 	for (auto & leader : leaders) {
 		strong = dynamic_cast<Strong*>(leader->getState());
 		leader->addElement(element);
