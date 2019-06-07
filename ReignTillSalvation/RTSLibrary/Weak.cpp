@@ -72,7 +72,7 @@ void Weak::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& le
 		makeSubordinate(strong->getSubordinates(), leaders[index_new_leader], my_position);
 	}
 	else {
-		if (!strong->stillInGroup(my_position)) {
+		if (!strong->stillInGroup(my_position) && strong != nullptr) {
 			leaders.push_back(move(strong->getSubordinates()[my_position]));
 			me->changeState(changeState());
 		}
