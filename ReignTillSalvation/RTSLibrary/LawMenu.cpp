@@ -37,7 +37,7 @@ LawMenu::LawMenu(Element* element, Game* game, int width, int height) :
 		options[i].setPosition(sf::Vector2f((WINDOW_WIDTH) / 2 - rect.width/2, (WINDOW_HEIGHT - height) / 2+(height / (number_choice + 1)) * (i + 1) - rect.height));
 	}
 
-	background.setFillColor(LAW_MENU_BACKGROUND_COLOR);
+	background.setFillColor(element->getSprite()->getFillColor());
 	background.setSize(sf::Vector2f(width, height));
 	background.setPosition(sf::Vector2f((WINDOW_WIDTH - width) / 2, (WINDOW_HEIGHT - height)/2));
 

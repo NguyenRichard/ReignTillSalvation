@@ -30,5 +30,5 @@ void Law::updateElement() {
 }
 
 bool Law::done() {
-	return (element->getPower() < 2 * MAX_POWER / LAW_PROPORTION) && (element->getPower() > -2 * MAX_POWER / LAW_PROPORTION);
+	return (element->getPower() < 2 * MAX_POWER / LAW_PROPORTION) && (element->getPower() > -2 * MAX_POWER / LAW_PROPORTION) && type == Cancel;
 }

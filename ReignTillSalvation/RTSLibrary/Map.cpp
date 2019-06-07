@@ -83,6 +83,10 @@ void Map::updateLaws() {
 					subordinate->deleteElement(laws[i]->getElement());
 				}
 			}
+			laws.erase(laws.begin() + i);
+		}
+		else {
+			laws[i]->updateElement();
 		}
 	}
 }
