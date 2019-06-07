@@ -25,11 +25,13 @@ public:
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;
 	void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;
+
 	int myStrength() const override { return subordinates.size(); };
 	int findSubPosition(const IndividualState&);
-	void makeSubordinate(std::vector<std::unique_ptr<Individual>>&,std::unique_ptr<Individual>&, int);
+	void makeSubordinate(Individual*, std::vector<std::unique_ptr<Individual>>&,Individual* new_leader, int);
+	//new_leader must be a Strong.
 
 
 private:
-	std::vector<std::unique_ptr<Individual>> subordinates;
+	std::vector<std::unique_ptr<Individual>> subordinates; //must be sorted 
 };
