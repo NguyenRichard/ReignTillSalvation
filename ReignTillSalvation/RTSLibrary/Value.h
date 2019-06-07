@@ -8,6 +8,7 @@
 #define CIRCLE_S_RADIUS					10
 #define GROUP_SUB_RANGE					30
 #define GROUP_LEAD_RANGE				60
+
 #define WINDOW_HEIGHT					1000
 #define WINDOW_WIDTH					1500
 
@@ -18,6 +19,9 @@
 
 #define MAX_RUN_ATTRACTION				2.0f
 #define MAX_POWER						3.0f
-#define NATURAL_ATTRACTION			3.0f
+#define NATURAL_ATTRACTION				3.0f
+
+#define MAX_INDIVIDUALS					100
+
 
 #pragma endregion define

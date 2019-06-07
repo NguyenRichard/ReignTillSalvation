@@ -29,7 +29,8 @@ public:
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
 
 	virtual void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
-	virtual void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) = 0;
+	virtual void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
+	virtual void findGroupNew(Individual*, std::vector<std::unique_ptr<Individual>>&, int) {};
 	virtual int findSubPosition(const IndividualState&) = 0;
 	virtual int myStrength() const = 0;
 

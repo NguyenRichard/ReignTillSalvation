@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "OtherFunctions.h"
 
 #pragma region GameFunctions
 
@@ -59,22 +60,11 @@ void Game::render(sf::RenderWindow& window) {
 }
 
 void::Game::init() {
-
-	if (!font.loadFromFile("res/fonts/impact.ttf")) {
-		std::cout << "Impossible to load font for menu";
-		return;
+	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
+		map.createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
 
-	text.setFont(font);
-	//Useful if you use handleKeyEvent() for default color.
-	text.setFillColor(sf::Color::Red);
-	text.setString("IN GAME");
-	text.setCharacterSize(100);
-	sf::FloatRect rect = text.getGlobalBounds();
-	//SFML draw with the top-left corner as origin, so we have to center the position.
-	text.setPosition(sf::Vector2f(width / 2 - rect.width / 2, height / 2 - rect.height / 2));
-
-	parseXML();
+	//parseXML();
 }
 
 void Game::update() {

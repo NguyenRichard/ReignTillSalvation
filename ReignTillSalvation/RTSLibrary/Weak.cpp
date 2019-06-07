@@ -64,25 +64,62 @@ void Weak::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& le
 			if (temp != -1) {
 				index_new_leader = i;
 				position_in_subordinate = temp;
+				strongest_strength = leaders[i]->myStrength();
 			}
 		}
 	}
 	Strong* strong = static_cast<Strong*>(leader->getState());
 	if (index_new_leader != -1) {
-		makeSubordinate(strong->getSubordinates(), leaders[index_new_leader], my_position);
+		makeSubordinate(me,strong->getSubordinates(), leaders[index_new_leader], my_position);
 	}
 	else {
-		if (!strong->stillInGroup(my_position) && strong != nullptr) {
-			leaders.push_back(move(strong->getSubordinates()[my_position]));
+		if (!strong->stillInGroup(my_position)) {
+			moveIndividuals(strong->getSubordinates(), leaders, my_position, leaders.size());
 			me->changeState(changeState());
 		}
 	}
 }
 
-void Weak::makeSubordinate(std::vector<std::unique_ptr<Individual>>& subordinates, std::unique_ptr<Individual>& new_leader,int my_position) {
+void Weak::findGroupNew(Individual* me, std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
+	Individual* new_leader = NULL;
+	int temp = -1;
+
+	int index_new_leader = -1;
+	int position_in_subordinate = -1;
+	int strongest_strength = 1;
+	for (int i = 0; i < leaders.size(); i++) {
+		if (strongest_strength < leaders[i]->myStrength())
+		{
+			temp = leaders[i]->getState()->findSubPosition(*this);
+			if (temp != -1) {
+				index_new_leader = i;
+				position_in_subordinate = temp;
+				strongest_strength = leaders[i]->myStrength();
+			}
+		}
+	}
+	Strong* strong = static_cast<Strong*>(leader->getState());
+	if (index_new_leader != -1) {
+		makeSubordinate(me, strong->getSubordinates(), leaders[index_new_leader], my_position);
+	}
+	else {
+		moveIndividuals(strong->getSubordinates(), leaders, my_position, leaders.size());
+		me->changeState(changeState());
+
+	}
+
+}
+
+void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual>>& subordinates, std::unique_ptr<Individual>& new_leader,int my_position) {
+	//Only works if the weak can be part of the group otherwise new_position will be equal to -1.
+	//Careful MoveIndividuals erase the content of the subordinates vector. So if you loop on subordinates, the index might change.
 
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
+	setLeader(new_leader.get());
+	me->changeColor(new_leader->getState()->getSprite()->getFillColor());
 	moveIndividuals(subordinates, strong->getSubordinates(), my_position, new_position);
 
 }
+
+
