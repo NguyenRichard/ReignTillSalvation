@@ -32,9 +32,9 @@ void Individual::updatePositionAttraction() {
 				sf::Vector2f direction = directionToward(coord);
 
 				int power = element->getPower();
-				if (liked == element)
+				if (liked && liked == element)
 					power += NATURAL_ATTRACTION;
-				if (disliked == element)
+				if (disliked && disliked == element)
 					power -= NATURAL_ATTRACTION;
 
 				if (power > MAX_POWER)
