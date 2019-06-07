@@ -25,11 +25,6 @@ void Strong::action() {
 	std::cout << "I am strong.\n";
 }
 
-void Strong::addSubordinate(std::unique_ptr<Individual>& subordinate) {
-	subordinate.get()->changeColor(sprite.getFillColor());
-	subordinates.push_back(move(subordinate));
-}
-
 std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
 void Strong::updatePositionChaos() {
@@ -88,19 +83,6 @@ void Strong::eraseSubordinate(int index) {
 	subordinates.erase(subordinates.begin() + index);
 }
 
-void Strong::insertSubordinate(const int &index, std::unique_ptr<Individual> &new_sub) {
-	if (subordinates.size() == index) {
-		subordinates.push_back(std::move(new_sub));
-		return;
-	}
-	subordinates.resize(1+subordinates.size());
-
-	for (int i = subordinates.size() - 2; i >= index; i--) {
-		subordinates[i + 1] = std::move(subordinates[i]);
-	}
-	subordinates[index] = std::move(new_sub);
-	subordinates[index]->changeColor(sprite.getFillColor());
-}
 
 /*Searching if the individual is in this group with a linear search, and
 -return its position if he is.
@@ -166,10 +148,9 @@ bool Strong::stillInGroup(int position) {
 }
 
 void Strong::updateMyGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
-	int sub_position = 0;
-	for (auto & subordinate : subordinates) {
-		subordinate->updateMyGroup(leaders, sub_position);
-		sub_position++;
+
+	for (int sub_position = subordinates.size() - 1; sub_position >= 0; sub_position--) {
+		subordinates[sub_position]->updateMyGroup(leaders, sub_position);
 	}
 	findGroup(me,leaders, my_position);
 }
@@ -199,23 +180,22 @@ void Strong::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& 
 	}
 
 	if (index_strongest != my_position) {
-		makeSubordinate(leaders, leaders[index_strongest], my_position);
-		me->changeState(changeState(leaders[index_strongest].get()));
+		makeSubordinate(me,leaders, leaders[index_strongest].get(), my_position);
 	}
 
 }
 
-void Strong::makeSubordinate(std::vector<std::unique_ptr<Individual>>& leaders, std::unique_ptr<Individual>& new_leader, int position) {
-
-	int my_position = 0;
-	for (auto& subordinate : subordinates) {
-		subordinate->findMyGroup(leaders,my_position);
-		my_position++;
-	}
+void Strong::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual>>& leaders, Individual* new_leader, int my_position) {
 
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
-	moveIndividuals(leaders, strong->getSubordinates(), position, new_position);
+	me->changeColor(new_leader->getState()->getSprite()->getFillColor());
+	moveIndividuals(leaders, strong->getSubordinates(), my_position, new_position);
+	for (int i = subordinates.size() - 1; i >= 0; i--) {
+		subordinates[i]->findMyGroupNew(leaders,i);
+	}
+	me->changeState(changeState(new_leader));
+
 }
 
 

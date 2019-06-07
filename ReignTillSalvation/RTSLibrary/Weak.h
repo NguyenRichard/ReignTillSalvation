@@ -18,10 +18,12 @@ public:
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;
 	void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;
+	void findGroupNew(Individual*, std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;
 	int myStrength() const override { return -1; };
 	int findSubPosition(const IndividualState&) override { return -1; };
-	void makeSubordinate(std::vector<std::unique_ptr<Individual>>&,std::unique_ptr<Individual>&,int);
+	void makeSubordinate(Individual*,std::vector<std::unique_ptr<Individual>>& new_leader,std::unique_ptr<Individual>&,int);
+	//new_leader must be a Strong.
 
 private:
-	Individual* leader;
+	Individual* leader; //must be a Strong.
 };
