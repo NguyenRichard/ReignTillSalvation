@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include "SFML/Graphics.hpp"
+#include <iostream> 
 
 #define MAX_NUMBER_OF_ITEMS 5
 #define SELECTED_COLOR sf::Color::Blue
@@ -18,7 +19,7 @@ protected:
 	sf::Text options[MAX_NUMBER_OF_ITEMS];
 public:
 	Menu();
-	void render(sf::RenderWindow& window);
+	virtual void render(sf::RenderWindow& window);
 	void MoveUp();
 	void MoveDown();
 	void handleKeyEvent(sf::RenderWindow& window);

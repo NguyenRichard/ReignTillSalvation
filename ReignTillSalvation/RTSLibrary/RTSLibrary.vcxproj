@@ -156,6 +156,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="IndividualState.h" />
+    <ClInclude Include="Law.h" />
+    <ClInclude Include="LawMenu.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
@@ -175,6 +177,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="IndividualState.cpp" />
+    <ClCompile Include="Law.cpp" />
+    <ClCompile Include="LawMenu.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />

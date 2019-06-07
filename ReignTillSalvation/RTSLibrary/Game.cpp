@@ -4,14 +4,14 @@
 #pragma region GameFunctions
 
 Game::Game(int width, int height) : 
-	RTSState(width, height) {}
+	RTSState(width, height), state(Running) {}
 
 #pragma endregion GameFunctions
 
 #pragma region RTSStateFunctions
 
 Game::Game(const RTSState& state) : 
-	RTSState(state.getWidth(),state.getHeight()) {}
+	RTSState(state.getWidth(),state.getHeight()), state(Running) {}
 
 std::unique_ptr<RTSState> Game::changeState() {
 	return std::make_unique<MainMenu>(*this);
@@ -68,8 +68,10 @@ void::Game::init() {
 }
 
 void Game::update() {
-	map.updateGroup();
-	map.updatePositions();
+	if (state == Running) {
+		map.updateGroup();
+		map.updatePositions();
+	}
 }
 
 void Game::parseXML() {
@@ -86,6 +88,10 @@ void Game::parseXML() {
 		std::string repulsionMessage = node.node().attribute("repulsionMessage").value();
 		map.createElement(name, range, color, attractionMessage, repulsionMessage);
 	}
+}
+
+void Game::changeGameState() {
+	state = (GameState) ((state + 1) % MAX_NUMBER);
 }
 
 

@@ -7,6 +7,8 @@
 #include "Map.h"
 #include "MainMenu.h"
 
+enum GameState { Running, Paused, MAX_NUMBER};
+
 class Game : public RTSState{
 public:
 	Game(int width, int height);
@@ -18,8 +20,10 @@ public:
 	void init() override;
 	Map* getMap() { return &map; }
 	const std::string XML_FILE_PATH = "resources.xml";
+	void changeGameState();
 private:
 	Map map;
-
+	GameState state;
 	void parseXML();
+	std::unique_ptr<Menu> menus;
 };
