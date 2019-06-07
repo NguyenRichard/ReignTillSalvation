@@ -90,7 +90,7 @@ int imGUImain(){
 		rts.update();
 		rts.render(window);
 
-		ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
+	//	ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
 		if (showGameInfo) gameInformation(window, rts, &showGameInfo);
 		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo,&creating_i);
 		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name,&creating_e);

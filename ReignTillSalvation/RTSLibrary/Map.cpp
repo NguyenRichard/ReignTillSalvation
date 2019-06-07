@@ -15,7 +15,9 @@ void Map::createIndividual(sf::Vector2f coord) {
 				std::make_unique<Strong>(), coord, liked, disliked
 				));
 	}
-	leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(), coord));
+	else {
+		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(), coord));
+	}
 }
 
 void Map::createElement(std::string name, float range) {
@@ -41,6 +43,23 @@ void Map::createElement(std::string name, float range, sf::Color color,
 	));
 }
 
+void Map::createLaw(Element* element, LawType type) {
+	for (int i = laws.size()-1; i >= 0; i--) {
+		if (laws[i]->getElement() == element) {
+			laws.erase(laws.begin() + i);
+		}
+	}
+	Strong* strong;
+	laws.push_back(std::make_unique<Law>(element, attraction));
+	for (auto & leader : leaders) {
+		strong = dynamic_cast<Strong*>(leader->getState());
+		leader->addElement(element);
+		for (auto & subordinate : strong->getSubordinates()) {
+			subordinate->addElement(element);
+		}
+	}
+}
+
 void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
 		leader->updatePosition();
@@ -51,6 +70,26 @@ void Map::updateGroup() {
 	for (int i = leaders_size-1; i >= 0; i--) {
 		leaders[i]->updateMyGroup(leaders,i);
 	}
+}
+
+void Map::updateLaws() {
+	Strong* strong;
+	for (int i = laws.size() - 1; i >= 0; i--) {
+		if (laws[i]->done()) {
+			for (auto & leader : leaders) {
+				strong = dynamic_cast<Strong*>(leader->getState());
+				leader->deleteElement(laws[i]->getElement());
+				for (auto & subordinate : strong->getSubordinates()) {
+					subordinate->addElement(laws[i]->getElement());
+				}
+			}
+		}
+	}
+}
+
+void Map::update() {
+	updatePositions();
+	updateGroup();
 }
 
 int Map::individualsNumber() {

@@ -30,7 +30,7 @@ void Individual::updatePositionAttraction() {
 	bool dislikedHasBeenApplied = false;
 	sf::Vector2f my_coord = getCoord();
 
-	for (Element* &element: elements)
+	for (Element* element: elements)
 		for (sf::Vector2f coord : element->getCoords())
 			if (distanceToPoint(coord) < element->getRangeUnmutable()) {
 				sf::Vector2f direction = directionToward(coord);
@@ -42,7 +42,7 @@ void Individual::updatePositionAttraction() {
 				}
 				if (disliked && disliked == element) {
 					power -= NATURAL_ATTRACTION;
-					dislikedHasBeenApplied = false;
+					dislikedHasBeenApplied = true;
 				}
 
 				if (power > MAX_POWER)
@@ -102,14 +102,14 @@ float Individual::distanceToIndividual(const IndividualState& individual) const 
 	return state->distanceToIndividual(individual);
 }
 
-void Individual::applyCollision(const sf::Vector2f& coord) {
+void Individual::applyCollision(const sf::Vector2f& coord,float min) {
 
 	float dist = this->distanceToPoint(coord);
-	if (dist < DIST_BETWEEN_INDIVIDUAL) {
+	if (dist < min) {
 		sf::Vector2f direction = this->directionToward(coord);
 		sf::Vector2f my_coord = this->getCoord();
-		float direction_x = my_coord.x - (DIST_BETWEEN_INDIVIDUAL - dist)*direction.x;
-		float direction_y = my_coord.y - (DIST_BETWEEN_INDIVIDUAL - dist)*direction.y;
+		float direction_x = my_coord.x - (min - dist)*direction.x;
+		float direction_y = my_coord.y - (min - dist)*direction.y;
 		this->setCoord(sf::Vector2f(direction_x, direction_y));
 
 		sf::Vector2f new_coord = getCoord();
@@ -128,6 +128,15 @@ void Individual::applyCollision(const sf::Vector2f& coord) {
 
 		setCoord(new_coord);
 	}
+}
+
+void Individual::applyCollisionElements() {
+	for (const auto & element : elements) {
+		for (auto coord : element->getCoords()) {
+			applyCollision(coord,ELEMENT_SPRITE_SIZE);
+		}
+	}
+
 }
 
 void Individual::updateMyGroup(std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
@@ -163,8 +172,8 @@ void moveIndividuals(std::vector<std::unique_ptr<Individual>>& vect1,
 	vect1.erase(vect1.begin() + pos1);
 }
 
-void Individual::deleteElement(Element* &element) {
-	for (int i = 0; i <= elements.size(); i++) {
+void Individual::deleteElement(Element* element) {
+	for (int i = elements.size()-1; i >= 0; i--) {
 		if (element == elements[i]) {
 			elements.erase(elements.begin() + i);
 			return;
@@ -172,14 +181,14 @@ void Individual::deleteElement(Element* &element) {
 	}
 }
 
-void Individual::setLiked(Element* &el_liked) {
+void Individual::setLiked(Element* el_liked) {
 	liked = el_liked;
 }
 
-void Individual::setDisliked(Element* &el_disliked) {
+void Individual::setDisliked(Element* el_disliked) {
 	disliked = el_disliked;
 }
 
-void Individual::addElement(Element* &element) {
+void Individual::addElement(Element* element) {
 	elements.push_back(element);
 }

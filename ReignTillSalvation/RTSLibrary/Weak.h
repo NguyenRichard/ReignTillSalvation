@@ -11,7 +11,7 @@ public:
 	Weak(const IndividualState & state);
 	std::unique_ptr<IndividualState> changeState();
 	void action() override;
-	void updatePositionChaos();
+	void updatePositionChaos() override;
 	void setLeader(Individual* leader);
 	const Individual* getLeader() const { return leader; };
 	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
