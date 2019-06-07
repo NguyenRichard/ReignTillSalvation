@@ -29,7 +29,8 @@
 
 int imGUImain();
 void globalInformation(sf::RenderWindow &, RTS&, bool*);
-void individualWindow(sf::RenderWindow &, RTS&, bool*);
+void individualWindow(sf::RenderWindow &, RTS&, bool*,bool*);
 void showIndividual(Individual&, const char*, int);
-void elementWindow(sf::RenderWindow &, RTS&, bool*,char*);
+void elementWindow(sf::RenderWindow &, RTS&, bool*,char*,bool*);
 void showElement(Element&, int);
+void gameInformation(sf::RenderWindow &, RTS&, bool*);

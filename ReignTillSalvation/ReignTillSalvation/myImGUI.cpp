@@ -7,6 +7,9 @@ int imGUImain(){
 	static bool showIndividualInfo = false;
 	static bool showGlobalInfo = false;
 	static bool showElementInfo = false;
+	static bool showGameInfo = false;
+	static bool creating_i = false;
+	static bool creating_e = false;
 	static char input_name[MAX_INPUT_NAME] = "Element";
 	char elementName[255] = "Element";
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ReignTillSalvation");
@@ -61,6 +64,9 @@ int imGUImain(){
 			showGlobalInfo = true;
 		}
 		if (dynamic_cast<Game*>(rts.getState())) {
+			if (ImGui::Button("Show Game Info")) {
+				showGameInfo = true;
+			}
 			if (ImGui::Button("Show Individuals Info")) {
 				showIndividualInfo = true;
 			}
@@ -71,31 +77,31 @@ int imGUImain(){
 		else {
 			showIndividualInfo = false;
 			showElementInfo = false;
+			showGameInfo = false;
 		}
 
 		ImGui::End(); // end window
-
-		ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
-		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo);
-		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name);
-		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
-
-		window.clear();
-
-		sf::Time duration = globalClock.getElapsedTime();
-		layerZero.update(duration);
 
 		window.clear(sf::Color::Black);
 		window.draw(layerZero);
 		window.draw(layerOne);
 		window.draw(layerTwo);
 
-		ImGui::SFML::Render(window);
 		rts.update();
 		rts.render(window);
 
-		window.display();
+		ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
+		if (showGameInfo) gameInformation(window, rts, &showGameInfo);
+		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo,&creating_i);
+		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name,&creating_e);
+		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
+
+		sf::Time duration = globalClock.getElapsedTime();
+		layerZero.update(duration);
+
+		ImGui::SFML::Render(window);
+		window.display();
 		offset = time.asSeconds() - offset;
 		Sleep(MS_PER_UPDATE - 1000 * offset);
 	}
@@ -133,18 +139,18 @@ void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 		{
 			rts.changeState();
 		}
-		printf("coucou");
 	}
 	ImGui::End(); // end window
 }
 
-void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open) {
+void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, bool* creating) {
 	Game* game = static_cast<Game*>(rts.getState());
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
 		x / 4, window.getSize().y / 5));
 	if (!ImGui::Begin("Individuals Info", p_open))
 	{
 		ImGui::End();
+		*creating = false;
 		return;
 	}
 	ImGui::SetWindowFontScale(window.getSize().y / 550);
@@ -160,20 +166,29 @@ void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	ImGui::Columns(1);
 	ImGui::Separator();
 	ImGui::PopStyleVar();
-	if (ImGui::Button("Add individuals")) {
-		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
-				ImGui::End();
-				return;
+	if (*creating) {
+		if (ImGui::Button("Cancel")) {
+			*creating = false;
+		}
+		else {
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+				sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+				sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+				if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
+					&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
+					game->getMap()->createIndividual(mouseWorldPosition);
+				}
+				*creating = false;
 			}
 		}
-		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
-		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
-		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
-			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
-			game->getMap()->createIndividual(mouseWorldPosition);
+	}
+	else {
+		if (ImGui::Button("Add Individuals")) {
+			*creating = true;
 		}
 	}
+	
+
 	ImGui::End();
 
 }
@@ -232,13 +247,14 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 	ImGui::PopID();
 }
 
-void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_name) {
+void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_name, bool* creating) {
 	Game* game = static_cast<Game*>(rts.getState());
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
 		x / 4, window.getSize().y / 5));
 	if (!ImGui::Begin("Element Info", p_open))
 	{
 		ImGui::End();
+		*creating = false;
 		return;
 	}
 	ImGui::SetWindowFontScale(window.getSize().y / 550);
@@ -255,25 +271,32 @@ void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* inpu
 	ImGui::Separator();
 	ImGui::PopStyleVar();
 	ImGui::InputText("name", input_name, MAX_INPUT_NAME);
-	if (ImGui::Button("Add element")) {
-		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
-				ImGui::End();
-				return;
-			}
+
+	if (ImGui::Button((*creating) ? "Cancel" : "Add Elements")) {
+		if (*creating == false) {
+			*creating = true;
+			ImGui::End();
 		}
+		else {
+			*creating = false;
+			ImGui::End();
+		}
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && *creating == true) {
 		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
 		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
 		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
 			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
 			std::string name(input_name);
-			game->getMap()->addElementInMap(name,mouseWorldPosition);
+			game->getMap()->addElementInMap(name, mouseWorldPosition);
 		}
+		*creating = false;
 	}
+
 	ImGui::End();
 
 }
-
 
 void showElement(Element& element, int uid)
 {
@@ -318,4 +341,27 @@ void showElement(Element& element, int uid)
 		ImGui::TreePop();
 	}
 	ImGui::PopID();
+}
+
+void gameInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
+	Game* game = static_cast<Game*>(rts.getState());
+	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+		x / 5, window.getSize().y / 5));
+	if (!ImGui::Begin("Game Info", p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	ImGui::SetWindowFontScale(window.getSize().y / 600);
+
+
+	std::string string = "Number of individuals: " + std::to_string(game->getMap()->individualsNumber());
+	ImGui::Text(string.c_str());
+
+	if (ImGui::Button("Change State")) {
+		{
+			game->changeGameState();
+		}
+	}
+	ImGui::End(); // end window
 }
