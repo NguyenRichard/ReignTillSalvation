@@ -70,7 +70,7 @@ void Strong::updatePositionChaos() {
 		for (int j = i+1; j < subordinates.size(); j++) {
 			subordinates[i]->applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_INDIVIDUAL);
 		}
-	//	subordinates[i]->applyCollisionElements();
+		subordinates[i]->applyCollisionElements();
 	}
 
 	std::sort(subordinates.begin(), subordinates.end(), [](const std::unique_ptr<Individual>& a, const std::unique_ptr<Individual>& b)->bool {
