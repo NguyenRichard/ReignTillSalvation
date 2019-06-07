@@ -26,38 +26,53 @@ void Individual::changeColor(const sf::Color& color) {
 }
 
 void Individual::updatePositionAttraction() {
+	bool likedHasBeenApplied = false;
+	bool dislikedHasBeenApplied = false;
+	sf::Vector2f my_coord = getCoord();
+
 	for (Element* &element: elements)
 		for (sf::Vector2f coord : element->getCoords())
 			if (distanceToPoint(coord) < element->getRangeUnmutable()) {
 				sf::Vector2f direction = directionToward(coord);
 
 				int power = element->getPower();
-				if (liked && liked == element)
+				if (liked && liked == element) {
 					power += NATURAL_ATTRACTION;
-				if (disliked && disliked == element)
+					likedHasBeenApplied = true;
+				}
+				if (disliked && disliked == element) {
 					power -= NATURAL_ATTRACTION;
+					dislikedHasBeenApplied = false;
+				}
 
 				if (power > MAX_POWER)
 					power = MAX_POWER;
 				if (power < -MAX_POWER)
 					power = -MAX_POWER;
 
-				coord += sf::Vector2f(power * direction.x / ATTRACTION_DIVIDER,
+				my_coord += sf::Vector2f(power * direction.x / ATTRACTION_DIVIDER,
 					power * direction.y / ATTRACTION_DIVIDER);
-
-				if (coord.x < 0)
-					coord.x = 0;
-				if (coord.y < 0)
-					coord.y = 0;
-
-				float outside_mvt_x = coord.x - WINDOW_WIDTH;
-				float outside_mvt_y = coord.y - WINDOW_HEIGHT;
-
-				if (outside_mvt_x > 0)
-					coord.x -= outside_mvt_x;
-				if (outside_mvt_y > 0)
-					coord.y -= outside_mvt_y;
 			}
+
+	if (liked && !likedHasBeenApplied)
+	{
+		sf::Vector2f coord = liked->getCoords();
+	}
+
+	if (my_coord.x < 0)
+		my_coord.x = 0;
+	if (my_coord.y < 0)
+		my_coord.y = 0;
+
+	float outside_mvt_x = my_coord.x - WINDOW_WIDTH;
+	float outside_mvt_y = my_coord.y - WINDOW_HEIGHT;
+
+	if (outside_mvt_x > 0)
+		my_coord.x -= outside_mvt_x;
+	if (outside_mvt_y > 0)
+		my_coord.y -= outside_mvt_y;
+
+	setCoord(my_coord);
 }
 
 void Individual::updatePosition() {
