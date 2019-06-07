@@ -1,6 +1,5 @@
 #include "Game.h"
-#include "MainMenu.h"
-#include <iostream> 
+#include "OtherFunctions.h"
 
 #pragma region GameFunctions
 
@@ -28,16 +27,27 @@ void Game::render(sf::RenderWindow& window) {
 	sf::Vector2f coord;
 	sf::CircleShape* circle;
 	float radius;
+	std::vector<std::unique_ptr<Individual>>* subordinates;
+	Strong* strong;
 	for (const auto & leader : leaders) {
-		coord = leader.get()->getCoord();
-		circle = leader.get()->getState()->getSprite();
+		coord = leader->getCoord();
+		circle = leader->getState()->getRangeShape();
 		radius = circle->getRadius();
 		circle->setPosition(coord.x-radius,coord.y-radius);
 		window.draw(*circle);
+		strong = dynamic_cast<Strong*>(leader->getState());
+		subordinates = &(strong->getSubordinates());
+		for (const auto & subordinate : *subordinates) {
+			coord = subordinate->getCoord();
+			circle = subordinate->getState()->getRangeShape();
+			radius = circle->getRadius();
+			circle->setPosition(coord.x - radius, coord.y - radius);
+			window.draw(*circle);
+		}
 	}
 	std::vector<sf::Vector2f> element_coords;
 	for (const auto & element : elements) {
-		circle = element.get()->getSprite();
+		circle = element.get()->getRangeShape();
 		radius = circle->getRadius();
 		element_coords = element.get()->getCoords();
 		float range = element.get()->getRangeUnmutable();
@@ -50,21 +60,32 @@ void Game::render(sf::RenderWindow& window) {
 }
 
 void::Game::init() {
+	parseXML();
 
-	if (!font.loadFromFile("res/fonts/impact.ttf")) {
-		std::cout << "Impossible to load font for menu";
-		return;
+	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
+		map.createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
+}
 
-	text.setFont(font);
-	//Useful if you use handleKeyEvent() for default color.
-	text.setFillColor(sf::Color::Red);
-	text.setString("IN GAME");
-	text.setCharacterSize(100);
-	sf::FloatRect rect = text.getGlobalBounds();
-	//SFML draw with the top-left corner as origin, so we have to center the position.
-	text.setPosition(sf::Vector2f(width / 2 - rect.width / 2, height / 2 - rect.height / 2));
+void Game::update() {
+	map.updateGroup();
+	map.updatePositions();
+}
 
+void Game::parseXML() {
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(XML_FILE_PATH.c_str());
+
+	pugi::xpath_node_set elements = doc.select_nodes("/ElementsCollection/Element");
+	for (auto &node : elements)
+	{
+		std::string name = node.node().attribute("name").value();
+		float range = (float) atoi(node.node().attribute("range").value());
+		sf::Color color = stringToColor(node.node().attribute("color").value());
+		std::string attractionMessage = node.node().attribute("attractionMessage").value();
+		std::string repulsionMessage = node.node().attribute("repulsionMessage").value();
+		map.createElement(name, range, color, attractionMessage, repulsionMessage);
+	}
 }
 
 

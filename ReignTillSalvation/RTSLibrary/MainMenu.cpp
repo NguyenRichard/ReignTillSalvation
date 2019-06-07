@@ -1,6 +1,5 @@
 #include "MainMenu.h"
 #include <iostream> 
-#include "Game.h"
 
 #pragma region MenuFunctions
 MainMenu::MainMenu(int width, int height) :

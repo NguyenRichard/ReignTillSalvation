@@ -1,7 +1,6 @@
 #include "Attraction.h"
 
 Attraction::~Attraction() {
-	element.deleteAttraction(this);
 }
 
 void Attraction::updateAttraction() {
@@ -12,4 +11,12 @@ void Attraction::updateAttraction() {
 void Attraction::updateRejection() {
 	if (power > -max_power)
 		power--;
+}
+
+int Attraction::getPower() const {
+	return power;
+}
+
+Element Attraction::getElement() const {
+	return element;
 }

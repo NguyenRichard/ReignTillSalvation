@@ -17,9 +17,23 @@ int imGUImain(){
 	window.setVerticalSyncEnabled(true);
 	ImGui::SFML::Init(window);
 
+	tmx::Map map;
+
+	map.load("C:/Users/cypri/Desktop/tmxlite/SFMLExample/assets/demo.tmx");
+
+	MapLayer layerZero(map, 0);
+	MapLayer layerOne(map, 1);
+	MapLayer layerTwo(map, 2);
+
+	sf::Clock globalClock;
 
 	sf::Clock deltaClock;
+
+	float offset;
+	sf::Time time = sf::Time::Time();
 	while (window.isOpen()) {
+		offset = time.asSeconds();
+
 		sf::Event event;
 
 		while (window.pollEvent(event)) {
@@ -33,6 +47,7 @@ int imGUImain(){
 			}
 
 		}
+
 		ImGui::SFML::Update(window, deltaClock.restart());
 
 		ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
@@ -66,9 +81,23 @@ int imGUImain(){
 		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
 		window.clear();
+
+		sf::Time duration = globalClock.getElapsedTime();
+		layerZero.update(duration);
+
+		window.clear(sf::Color::Black);
+		window.draw(layerZero);
+		window.draw(layerOne);
+		window.draw(layerTwo);
+
 		ImGui::SFML::Render(window);
+		rts.update();
 		rts.render(window);
+
 		window.display();
+
+		offset = time.asSeconds() - offset;
+		Sleep(MS_PER_UPDATE - 1000 * offset);
 	}
 
 	ImGui::SFML::Shutdown();
@@ -90,9 +119,11 @@ void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	ImGui::SetWindowFontScale(window.getSize().y / 450);
 
 	ImGui::Text("Mouse position:");
-	std::string string = "x: " + std::to_string(sf::Mouse::getPosition(window).x);
+	sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+	sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+	std::string string = "x: " + std::to_string(mouseWorldPosition.x);
 	ImGui::Text(string.c_str());
-	string = "y: " + std::to_string(sf::Mouse::getPosition(window).y);
+	string = "y: " + std::to_string(mouseWorldPosition.y);
 	ImGui::Text(string.c_str());
 
 	if (ImGui::Button("Change State")) {
@@ -173,7 +204,7 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 
 		if (dynamic_cast<Strong*>(individual.getState())) {
 			Strong* strong = dynamic_cast<Strong*>(individual.getState());
-			std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinate();
+			std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinates();
 			int i = 1;
 			for (auto& subordinate : subordinates)
 			{
@@ -182,6 +213,17 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 				i++;
 				ImGui::PopID();
 			}
+		}
+		else {
+			Weak* weak = dynamic_cast<Weak*>(individual.getState());
+			ImGui::PushID(1);
+			ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "DistanceToLead");
+			ImGui::NextColumn();
+			ImGui::SetNextItemWidth(-1);
+			std::string string = "d: " + std::to_string(weak->distanceToLeader());
+			ImGui::Text(string.c_str());
+			ImGui::NextColumn();
+			ImGui::PopID();
 		}
 
 	
@@ -255,7 +297,7 @@ void showElement(Element& element, int uid)
 
 		int i = 0;
 
-		std::vector<sf::Vector2f>& coords = element.getCoords();
+		std::vector<sf::Vector2f> coords = element.getCoords();
 		for (auto& coord : coords)
 		{
 			ImGui::PushID(i);
