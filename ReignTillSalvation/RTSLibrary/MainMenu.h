@@ -1,6 +1,7 @@
 #pragma once
 #include "Menu.h"
 #include "RTSState.h"
+#include "Game.h"
 
 class MainMenu : public Menu, public RTSState {
 private:

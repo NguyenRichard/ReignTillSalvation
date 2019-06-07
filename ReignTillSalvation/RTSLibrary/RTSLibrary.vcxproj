@@ -165,6 +165,7 @@
     <ClInclude Include="RTS.h" />
     <ClInclude Include="RTSState.h" />
     <ClInclude Include="Strong.h" />
+    <ClInclude Include="Value.h" />
     <ClInclude Include="ViewManager.h" />
     <ClInclude Include="Weak.h" />
   </ItemGroup>
@@ -173,6 +174,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Individual.cpp" />
+    <ClCompile Include="IndividualState.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />

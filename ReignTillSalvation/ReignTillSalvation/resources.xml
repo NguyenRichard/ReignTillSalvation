@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ElementsCollection>
+
+<Element name="Poney" range="200" color="White" sprite=""
+         attractionMessage="placeholder Poney attraction"
+         repulsionMessage="placeholder Poney repulsion"
+/>
+<Element name="Cactus" range="150" color="Yellow" sprite=""
+         attractionMessage="placeholder Cactus attraction"
+         repulsionMessage="placeholder Cactus repulsion"
+/> 
+<Element name="Arbre" range="100" color="Green" sprite=""
+         attractionMessage="placeholder Arbre attraction"
+         repulsionMessage="placeholder Arbre repulsion"
+/>
+<Element name="Miku" range="250" color="Cyan" sprite=""
+         attractionMessage="placeholder Miku attraction"
+         repulsionMessage="placeholder Miku repulsion"
+/>
+
+</ElementsCollection>

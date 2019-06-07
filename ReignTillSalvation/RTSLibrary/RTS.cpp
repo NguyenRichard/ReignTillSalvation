@@ -15,6 +15,10 @@ void RTS::render(sf::RenderWindow& window) {
 	state->render(window);
 }
 
+void RTS::update() {
+	state->update();
+}
+
 void RTS::processInput(sf::RenderWindow& window) {
 	state->processInput(window);
 	if (state->haveToChangeState()) {

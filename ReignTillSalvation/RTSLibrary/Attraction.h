@@ -11,6 +11,8 @@ public:
 
 	void updateRejection();
 	void updateAttraction();
+	int getPower() const;
+	Element getElement() const;
 private:
 	Element element;
 	int power;
