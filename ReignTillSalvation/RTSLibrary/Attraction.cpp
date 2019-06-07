@@ -1,7 +1,6 @@
 #include "Attraction.h"
 
 Attraction::~Attraction() {
-	element.deleteAttraction(this);
 }
 
 void Attraction::updateAttraction() {

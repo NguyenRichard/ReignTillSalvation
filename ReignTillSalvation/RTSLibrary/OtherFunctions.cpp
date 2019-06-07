@@ -8,22 +8,20 @@ int randomint(int const &n) {
 }
 
 sf::Color stringToColor(const std::string &color) {
-	if (color == "Black")
+	if (color.compare("Black") == 0)
 		return sf::Color::Black;
-	if (color == "White")
+	if (color.compare("White") == 0)
 		return sf::Color::White;
-	if (color == "Red")
+	if (color.compare("Red") == 0)
 		return sf::Color::Red;
-	if (color == "Green")
+	if (color.compare("Green") == 0)
 		return sf::Color::Green;
-	if (color == "Blue")
+	if (color.compare("Blue") == 0)
 		return sf::Color::Blue;
-	if (color == "Yellow")
+	if (color.compare("Yellow") == 0)
 		return sf::Color::Yellow;
-	if (color == "Magenta")
+	if (color.compare("Magenta") == 0)
 		return sf::Color::Magenta;
-	if (color == "Cyan")
+	if (color.compare("Cyan") == 0)
 		return sf::Color::Cyan;
-
-	return sf::Color::Transparent;
 }

@@ -182,7 +182,7 @@ void Strong::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& 
 	int index_strongest = my_position;
 	int strongest_strength = myStrength();
 	for (int i = my_position + 1; i < leaders.size(); i++) {
-		if ((strongest_strength < leaders[i]->myStrength())
+		if ((strongest_strength <= leaders[i]->myStrength())
 			&& (leaders[i]->distanceToIndividual(*this) < GROUP_LEAD_RANGE))
 		{
 			index_strongest = i;
@@ -190,7 +190,7 @@ void Strong::findGroup(Individual* me,std::vector<std::unique_ptr<Individual>>& 
 		}
 	}
 	for (int i = 0; i != my_position; i++) {
-		if ((strongest_strength < leaders[i]->myStrength())
+		if ((strongest_strength <= leaders[i]->myStrength())
 			&& (leaders[i]->distanceToIndividual(*this) < GROUP_LEAD_RANGE))
 		{
 			index_strongest = i;

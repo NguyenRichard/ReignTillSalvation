@@ -6,6 +6,13 @@ Individual::Individual(std::unique_ptr<IndividualState> new_state, sf::Vector2f 
 	state->setCoord(coord);
 }
 
+Individual::Individual(std::unique_ptr<IndividualState> new_state, sf::Vector2f coord,
+		Element* liked, Element* disliked) :
+	state(std::move(new_state)), liked(liked), disliked(disliked)
+{
+	state->setCoord(coord);
+}
+
 void Individual::changeState(std::unique_ptr<IndividualState> new_state) {
 	state = std::move(new_state);
 }
@@ -19,11 +26,22 @@ void Individual::changeColor(const sf::Color& color) {
 }
 
 void Individual::updatePositionAttraction() {
-	for (std::unique_ptr<Attraction> &attraction : attractions)
-		for (sf::Vector2f coord : attraction->getElement().getCoords())
-			if (distanceToPoint(coord) < attraction->getElement().getRangeUnmutable()) {
+	for (Element* &element: elements)
+		for (sf::Vector2f coord : element->getCoords())
+			if (distanceToPoint(coord) < element->getRangeUnmutable()) {
 				sf::Vector2f direction = directionToward(coord);
-				int power = attraction->getPower();
+
+				int power = element->getPower();
+				if (liked == element)
+					power += NATURAL_ATTRACTION;
+				if (disliked == element)
+					power -= NATURAL_ATTRACTION;
+
+				if (power > MAX_POWER)
+					power = MAX_POWER;
+				if (power < -MAX_POWER)
+					power = -MAX_POWER;
+
 				coord += sf::Vector2f(power * direction.x / ATTRACTION_DIVIDER,
 					power * direction.y / ATTRACTION_DIVIDER);
 
@@ -97,6 +115,7 @@ void moveIndividuals(std::vector<std::unique_ptr<Individual>>& vect1,
 	std::vector<std::unique_ptr<Individual>>& vect2, int pos1, int pos2) {
 	if (vect2.size() == pos2) {
 		vect2.push_back(std::move(vect1[pos1]));
+		vect1.erase(vect1.begin() + pos1);
 		return;
 	}
 	vect2.resize(1 + vect2.size());
@@ -106,4 +125,25 @@ void moveIndividuals(std::vector<std::unique_ptr<Individual>>& vect1,
 	}
 	vect2[pos2] = std::move(vect1[pos1]);
 	vect1.erase(vect1.begin() + pos1);
+}
+
+void Individual::deleteElement(Element* &element) {
+	for (int i = 0; i <= elements.size(); i++) {
+		if (element == elements[i]) {
+			elements.erase(elements.begin() + i);
+			return;
+		}
+	}
+}
+
+void Individual::setLiked(Element* &el_liked) {
+	liked = el_liked;
+}
+
+void Individual::setDisliked(Element* &el_disliked) {
+	disliked = el_disliked;
+}
+
+void Individual::addElement(Element* &element) {
+	elements.push_back(element);
 }

@@ -5,6 +5,7 @@
 #include "Element.h"
 #include "Value.h"
 #include "Weak.h"
+#include "OtherFunctions.h"
 
 class Map
 {
