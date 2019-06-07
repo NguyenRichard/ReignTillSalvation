@@ -6,17 +6,17 @@ Law::Law(Element* element, LawType type) : element(element), type(type) {}
 void Law::updateElement() {
 
 	switch (type) {
-	case attraction:
+	case Attraction:
 		if (element->getPower() < MAX_POWER) {
 			element->changePower(MAX_POWER / LAW_PROPORTION);
 		}
 		break;
-	case repulsion:
+	case Repulsion:
 		if (element->getPower() > -MAX_POWER) {
 			element->changePower(-MAX_POWER / LAW_PROPORTION);
 		}
 		break;
-	case cancel:
+	case Cancel:
 		if (element->getPower() > 2*MAX_POWER/LAW_PROPORTION) {
 			element->changePower(-MAX_POWER / LAW_PROPORTION);
 		}

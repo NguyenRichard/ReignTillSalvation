@@ -8,8 +8,7 @@ int imGUImain(){
 	static bool showGlobalInfo = false;
 	static bool showElementInfo = false;
 	static bool showGameInfo = false;
-	static bool creating_i = false;
-	static bool creating_e = false;
+	static bool showLawInfo = false;
 	static char input_name[MAX_INPUT_NAME] = "Element";
 	char elementName[255] = "Element";
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ReignTillSalvation");
@@ -73,11 +72,15 @@ int imGUImain(){
 			if (ImGui::Button("Show Element Info")) {
 				showElementInfo = true;
 			}
+			if (ImGui::Button("Show Law Info")) {
+				showLawInfo = true;
+			}
 		}
 		else {
 			showIndividualInfo = false;
 			showElementInfo = false;
 			showGameInfo = false;
+			showLawInfo = false;
 		}
 
 		ImGui::End(); // end window
@@ -92,8 +95,9 @@ int imGUImain(){
 
 	//	ImGui::ShowTestWindow(); //Demo to see ImGui functionalities
 		if (showGameInfo) gameInformation(window, rts, &showGameInfo);
-		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo,&creating_i);
-		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name,&creating_e);
+		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo);
+		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name);
+		if (showLawInfo) lawWindow(window, rts,&showLawInfo);
 		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
 
@@ -143,7 +147,7 @@ void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	ImGui::End(); // end window
 }
 
-void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, bool* creating) {
+void individualWindow(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	Game* game = static_cast<Game*>(rts.getState());
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
 		x / 4, window.getSize().y / 5));
@@ -237,7 +241,7 @@ void showIndividual(Individual& individual, const char* prefix, int uid)
 	ImGui::PopID();
 }
 
-void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_name, bool* creating) {
+void elementWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_name) {
 	Game* game = static_cast<Game*>(rts.getState());
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
 		x / 4, window.getSize().y / 5));
@@ -344,5 +348,64 @@ void gameInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 			game->changeGameState();
 		}
 	}
+
 	ImGui::End(); // end window
+}
+
+void lawWindow(sf::RenderWindow & window, RTS& rts, bool* p_open) {
+	Game* game = static_cast<Game*>(rts.getState());
+	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+		x / 4, window.getSize().y / 5));
+	if (!ImGui::Begin("Law Info", p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	ImGui::SetWindowFontScale(window.getSize().y / 550);
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+	ImGui::Columns(2);
+	ImGui::Separator();
+	std::vector<std::unique_ptr<Law>>& laws = game->getMap()->getLaws();
+	int i = 1;
+	for (auto & law : laws) {
+		showLaw(*law, i);
+		i++;
+	}
+	ImGui::Columns(1);
+	ImGui::Separator();
+	ImGui::PopStyleVar();
+	ImGui::End();
+
+}
+
+
+void showLaw(Law& law, int uid)
+{
+	ImGui::PushID(uid);                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
+	ImGui::AlignTextToFramePadding();  // Text and Tree nodes are less high than regular widgets, here we add vertical spacing to make the tree lines equal high.
+	bool node_open = ImGui::TreeNode("Law","%d",uid);
+	ImGui::NextColumn();
+	ImGui::AlignTextToFramePadding();
+	ImGui::NextColumn();
+	if (node_open)
+	{
+		showElement(*law.getElement(), 0);
+		LawType type = law.getType();
+		std::string string = "Type: ";
+		switch (type) {
+		case Attraction:
+			string = string + "Attraction";
+			break;
+		case Repulsion:
+			string = string + "Repulsion";
+			break;
+		case Cancel:
+			string = string + "Cancel";
+		}
+		ImGui::Text(string.c_str());
+
+
+		ImGui::TreePop();
+	}
+	ImGui::PopID();
 }

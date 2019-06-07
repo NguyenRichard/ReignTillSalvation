@@ -55,15 +55,15 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 		Strong* strong;
 		switch (selectedItemIndex){
 		case 0:
-			map->createLaw(element, attraction);
+			map->createLaw(element, Attraction);
 			game->changeGameState(Running);
 			break;
 		case 1:
-			map->createLaw(element,repulsion);
+			map->createLaw(element,Repulsion);
 			game->changeGameState(Running);
 			break;
 		case 2:
-			map->createLaw(element, cancel);
+			map->createLaw(element, Cancel);
 			game->changeGameState(Running);
 			break;
 		case 3:
@@ -78,34 +78,16 @@ void LawMenu::handleKeyEventAction(sf::RenderWindow& window) {
 	Strong* strong;
 	switch (selectedItemIndex) {
 	case 0:
-		map->getLaws().push_back(std::make_unique<Law>(element, attraction));
-		for (auto & leader : map->getLeaders()) {
-			strong = dynamic_cast<Strong*>(leader->getState());
-			leader->addElement(element);
-			for (auto & subordinate : strong->getSubordinates()) {
-				subordinate->addElement(element);
-			}
-		}
+		map->createLaw(element, Attraction);
+		game->changeGameState(Running);
 		break;
 	case 1:
-		map->getLaws().push_back(std::make_unique<Law>(element, repulsion));
-		for (auto & leader : map->getLeaders()) {
-			strong = dynamic_cast<Strong*>(leader->getState());
-			leader->addElement(element);
-			for (auto & subordinate : strong->getSubordinates()) {
-				subordinate->addElement(element);
-			}
-		}
+		map->createLaw(element, Repulsion);
+		game->changeGameState(Running);
 		break;
 	case 2:
-		map->getLaws().push_back(std::make_unique<Law>(element, repulsion));
-		for (auto & leader : map->getLeaders()) {
-			strong = dynamic_cast<Strong*>(leader->getState());
-			leader->addElement(element);
-			for (auto & subordinate : strong->getSubordinates()) {
-				subordinate->addElement(element);
-			}
-		}
+		map->createLaw(element, Cancel);
+		game->changeGameState(Running);
 		break;
 	case 3:
 		game->changeGameState(Running);
