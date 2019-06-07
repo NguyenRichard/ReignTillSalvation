@@ -22,6 +22,7 @@ void Map::createElement(std::string name, float range) {
 	elements.push_back(std::make_unique<Element>(name, range));
 }
 
+
 void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 	for (const auto & element : elements) {
 		if (name.compare(element.get()->getName()) == 0) {
@@ -34,9 +35,9 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 }
 
 void Map::createElement(std::string name, float range, sf::Color color,
-	std::string attractionMessage, std::string repulsionMessage) {
+	std::string attractionMessage, std::string repulsionMessage,std::string cancelMessage) {
 	elements.push_back(std::make_unique<Element>(
-		name, range, color, attractionMessage, repulsionMessage
+		name, range, color, attractionMessage, repulsionMessage,cancelMessage
 	));
 }
 

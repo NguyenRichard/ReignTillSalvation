@@ -2,10 +2,9 @@
 #include "Value.h"
 #include "Strong.h"
 
-LawMenu::LawMenu(Element* element,std::unique_ptr<Individual>* leaders, std::vector<std::unique_ptr<Law>>* laws, int width, int height) :
+LawMenu::LawMenu(Element* element, Game* game, int width, int height) :
 	element(element),
-	leaders(leaders),
-	laws(laws)
+	game(game)
 {
 	if (!font.loadFromFile("res/fonts/impact.ttf")) {
 		std::cout << "Impossible to load font for menu";
@@ -50,11 +49,12 @@ void LawMenu::render(sf::RenderWindow& window) {
 
 void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		switch (selectedItemIndex) {
+		Map* map = game->getMap();
+		Strong* strong;
+		switch (selectedItemIndex){
 		case 0:
-			laws->push_back(std::make_unique<Law>(element, attraction));
-			Strong* strong;
-			for (auto & leader : *leaders) {
+			map->getLaws().push_back(std::make_unique<Law>(element, attraction));
+			for (auto & leader : map->getLeaders()) {
 				strong = dynamic_cast<Strong*>(leader->getState());
 				leader->addElement(element);
 				for (auto & subordinate : strong->getSubordinates()) {
@@ -63,9 +63,8 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 			}
 			break;
 		case 1:
-			laws->push_back(std::make_unique<Law>(element, repulsion));
-			Strong* strong;
-			for (auto & leader : *leaders) {
+			map->getLaws().push_back(std::make_unique<Law>(element, repulsion));
+			for (auto & leader : map->getLeaders()) {
 				strong = dynamic_cast<Strong*>(leader->getState());
 				leader->addElement(element);
 				for (auto & subordinate : strong->getSubordinates()) {
@@ -74,9 +73,8 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 			}
 			break;
 		case 2:
-			laws->push_back(std::make_unique<Law>(element, repulsion));
-			Strong* strong;
-			for (auto & leader : *leaders) {
+			map->getLaws().push_back(std::make_unique<Law>(element, repulsion));
+			for (auto & leader : map->getLeaders()) {
 				strong = dynamic_cast<Strong*>(leader->getState());
 				leader->addElement(element);
 				for (auto & subordinate : strong->getSubordinates()) {
@@ -84,6 +82,49 @@ void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
 				}
 			}
 			break;
+		case 3:
+			game->changeGameState(Running);
+			break;
 		}
+	}
+}
+
+void LawMenu::handleKeyEventAction(sf::RenderWindow& window) {
+	Map* map = game->getMap();
+	Strong* strong;
+	switch (selectedItemIndex) {
+	case 0:
+		//	map->getLaws()->push_back(std::make_unique<Law>(element, attraction));
+		for (auto & leader : map->getLeaders()) {
+			strong = dynamic_cast<Strong*>(leader->getState());
+			leader->addElement(element);
+			for (auto & subordinate : strong->getSubordinates()) {
+				subordinate->addElement(element);
+			}
+		}
+		break;
+	case 1:
+		//		map->getLaws()->push_back(std::make_unique<Law>(element, repulsion));
+		for (auto & leader : map->getLeaders()) {
+			strong = dynamic_cast<Strong*>(leader->getState());
+			leader->addElement(element);
+			for (auto & subordinate : strong->getSubordinates()) {
+				subordinate->addElement(element);
+			}
+		}
+		break;
+	case 2:
+		//	map->getLaws()->push_back(std::make_unique<Law>(element, repulsion));
+		for (auto & leader : map->getLeaders()) {
+			strong = dynamic_cast<Strong*>(leader->getState());
+			leader->addElement(element);
+			for (auto & subordinate : strong->getSubordinates()) {
+				subordinate->addElement(element);
+			}
+		}
+		break;
+	case 3:
+		game->changeGameState(Running);
+		break;
 	}
 }
