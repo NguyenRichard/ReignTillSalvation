@@ -152,10 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Attraction.h" />
+    <ClInclude Include="CircleDanger.h" />
+    <ClInclude Include="Danger.h" />
     <ClInclude Include="Element.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="IndividualState.h" />
+    <ClInclude Include="LineDanger.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
@@ -171,10 +174,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attraction.cpp" />
+    <ClCompile Include="CircleDanger.cpp" />
+    <ClCompile Include="Danger.cpp" />
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="IndividualState.cpp" />
+    <ClCompile Include="LineDanger.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />

@@ -55,9 +55,20 @@ void Individual::updatePositionAttraction() {
 			}
 
 	if (liked && !likedHasBeenApplied)
-	{
-		sf::Vector2f coord = liked->getCoords();
-	}
+			for (sf::Vector2f coord : liked->getCoords())
+				if (distanceToPoint(coord) < liked->getRangeUnmutable()) {
+					sf::Vector2f direction = directionToward(coord);
+					my_coord += sf::Vector2f(NATURAL_ATTRACTION * direction.x / ATTRACTION_DIVIDER,
+						NATURAL_ATTRACTION * direction.y / ATTRACTION_DIVIDER);
+				}
+
+	if (disliked && !dislikedHasBeenApplied)
+		for (sf::Vector2f coord : disliked->getCoords())
+			if (distanceToPoint(coord) < disliked->getRangeUnmutable()) {
+				sf::Vector2f direction = directionToward(coord);
+				my_coord += sf::Vector2f(-NATURAL_ATTRACTION * direction.x / ATTRACTION_DIVIDER,
+					-NATURAL_ATTRACTION * direction.y / ATTRACTION_DIVIDER);
+			}
 
 	if (my_coord.x < 0)
 		my_coord.x = 0;

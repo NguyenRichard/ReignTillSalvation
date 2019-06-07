@@ -13,7 +13,7 @@ LineDanger::LineDanger(float set_countdownAppearance, float set_duration,
 
 	direction.x = direction.x / sqrt(pow(direction.x, 2) + pow(direction.y, 2));
 	direction.y = direction.y / sqrt(pow(direction.x, 2) + pow(direction.y,2));
-	float rotation = 180.0f / PI * direction.x / direction.y;
+	float rotation = 180.0f / PI * direction.y / direction.x;
 	shape.setRotation(rotation);
 
 	sf::Color color = sf::Color::Red;
@@ -37,7 +37,7 @@ void LineDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 	int i = 0;
 	for (std::unique_ptr<Individual> &individual : leaders)
 	{
-		if (distanceBetween(center, individual->getCoord()) < shape.getRadius) {
+		if (isInTheZone(individual)) {
 			moveIndividuals(leaders, leader_of_death.getSubordinates(),
 				i, leader_of_death.getSubordinates().size());
 		}
@@ -50,10 +50,34 @@ void LineDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 		i = 0;
 		for (std::unique_ptr<Individual> &weak : leader->getSubordinates())
 		{
-			if (distanceBetween(center, weak->getCoord()) > shape.getRadius) {
+			if (isInTheZone(weak)) {
 				weak->findMyGroupNew(leaders, i);
 			}
 			i++;
 		}
 	}
+}
+
+bool LineDanger::isInTheZone(std::unique_ptr<Individual> &individual)
+{
+	sf::Vector2f coord = individual->getCoord();
+	sf::Vector2f origin = shape.getPosition();
+
+	float rotationLine = shape.getRotation() * PI / 180.0f;
+	sf::Vector2f directionLine = sf::Vector2f(cos(rotationLine), sin(rotationLine));
+	
+	sf::Vector2f vectorBetween = coord - origin;
+	sf::Vector2f directionBetween = sf::Vector2f();
+	directionBetween.x = vectorBetween.x / magnitude(vectorBetween);
+	directionBetween.y = vectorBetween.y / magnitude(vectorBetween);
+
+	float rotationBetween = acos(directionBetween.x);
+	if (directionBetween.y < 0)
+		rotationBetween = -rotationBetween;
+
+	// angle between the line and the vector from the origin to the individual
+	float rotationRelative = rotationLine - rotationBetween;
+
+	float distancePointToLine = magnitude(vectorBetween) * sin(rotationBetween);
+	return distancePointToLine < shape.getSize().x;
 }

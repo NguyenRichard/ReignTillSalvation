@@ -30,7 +30,7 @@ void CircleDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 	int i = 0;
 	for (std::unique_ptr<Individual> &individual : leaders)
 	{
-		if (distanceBetween(center, individual->getCoord()) < shape.getRadius) {
+		if (distanceBetween(center, individual->getCoord()) < shape.getRadius()) {
 			moveIndividuals(leaders, leader_of_death.getSubordinates(),
 				i, leader_of_death.getSubordinates().size());
 		}
@@ -43,7 +43,7 @@ void CircleDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 		i = 0;
 		for (std::unique_ptr<Individual> &weak : leader->getSubordinates())
 		{
-			if (distanceBetween(center, weak->getCoord()) > shape.getRadius) {
+			if (distanceBetween(center, weak->getCoord()) > shape.getRadius()) {
 				weak->findMyGroupNew(leaders, i);
 			}
 			i++;

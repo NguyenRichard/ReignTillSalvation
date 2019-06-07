@@ -30,3 +30,8 @@ float distanceBetween(sf::Vector2f p1, sf::Vector2f p2)
 {
 	return (float)sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
 }
+
+float magnitude(sf::Vector2f &vector)
+{
+	return sqrt(pow(vector.x, 2) + pow(vector.y, 2));
+}

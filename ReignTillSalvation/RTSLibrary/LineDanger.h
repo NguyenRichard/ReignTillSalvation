@@ -13,4 +13,5 @@ private:
 	sf::RectangleShape shape;
 
 	void updateOpacity(float opacity);
+	bool isInTheZone(std::unique_ptr<Individual> &individual);
 };
