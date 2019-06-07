@@ -303,6 +303,16 @@ void showElement(Element& element, int uid)
 		ImGui::NextColumn();
 		ImGui::PopID();
 
+		ImGui::PushID(1);
+		ImGui::AlignTextToFramePadding();
+		ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Power");
+		ImGui::NextColumn();
+		ImGui::SetNextItemWidth(-1);
+		std::string string = "Power: "+ std::to_string(element.getPower());
+		ImGui::Text(string.c_str());
+		ImGui::SetNextItemWidth(-1);
+		ImGui::NextColumn();
+		ImGui::PopID();
 		int i = 0;
 
 		std::vector<sf::Vector2f> coords = element.getCoords();
