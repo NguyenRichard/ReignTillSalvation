@@ -11,9 +11,9 @@ public:
 	void changeState(RTS* rts) override;
 
 private:
-	void handleMouseEventClick(RTS*,sf::RenderWindow& window) override;
+	void handleMouseEventClick(RTS*,sf::RenderWindow& window, sf::Event&) override;
 	void handleKeyEventAction(RTS*,sf::RenderWindow& window) override;
-	void processInput(RTS*,sf::RenderWindow& window) override;
+	void processInput(RTS*,sf::RenderWindow& window, sf::Event&) override;
 	std::unique_ptr<RTSState> changeStateToGameRunning();
 
 };

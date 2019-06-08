@@ -170,6 +170,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RTS.h" />
+    <ClInclude Include="RTSLibrary.h" />
     <ClInclude Include="RTSState.h" />
     <ClInclude Include="Strong.h" />
     <ClInclude Include="Value.h" />

@@ -32,15 +32,17 @@ void Menu::MoveDown() {
 	}
 }
 
-void Menu::handleKeyEvent(RTS* rts,sf::RenderWindow& window) {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+void Menu::handleKeyEvent(RTS* rts,sf::RenderWindow& window, sf::Event& event) {
+	switch (event.key.code) {
+	case sf::Keyboard::Up:
 		MoveUp();
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+		break;
+	case sf::Keyboard::Down:
 		MoveDown();
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-		handleKeyEventAction(rts,window);
+		break;
+	case sf::Keyboard::Return:
+		handleKeyEventAction(rts, window);
+		break;
 	}
 }
 
@@ -66,7 +68,7 @@ void Menu::handleMouseEventPositionSelect(sf::RenderWindow& window) {
 	}
 }
 
-void Menu::handleMouseEvent(RTS* rts,sf::RenderWindow& window) {
+void Menu::handleMouseEvent(RTS* rts,sf::RenderWindow& window, sf::Event& event) {
 	handleMouseEventPositionSelect(window);
-	handleMouseEventClick(rts,window);
+	handleMouseEventClick(rts,window,event);
 }

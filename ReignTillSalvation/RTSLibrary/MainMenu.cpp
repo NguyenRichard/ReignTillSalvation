@@ -17,8 +17,8 @@ void MainMenu::handleKeyEventAction(RTS* rts,sf::RenderWindow& window) {
 	}
 }
 
-void MainMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window) {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+void MainMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window,sf::Event& event) {
+	if (event.key.code == sf::Mouse::Left) {
 		switch (selectedItemIndex) {
 		case 0: //Play option
 			changeState(rts);
@@ -50,8 +50,19 @@ std::unique_ptr<RTSState> MainMenu::changeStateToGameRunning() {
 	return std::make_unique<GameRunning>(*this);
 
 }
-void MainMenu::processInput(RTS* rts,sf::RenderWindow& window) {
-	Menu::handleMouseEvent(rts,window);
+void MainMenu::processInput(RTS* rts,sf::RenderWindow& window, sf::Event& event) {
+	if (event.type == sf::Event::Closed) {
+		window.close();
+	}
+	if (event.type == sf::Event::KeyReleased) {
+		switch (event.key.code) {
+		case sf::Keyboard::Escape:
+			rts->changeState(changeStateToGameRunning());
+			break;
+		}
+
+	}
+	Menu::handleMouseEvent(rts, window, event);
 }
 
 void MainMenu::init() {

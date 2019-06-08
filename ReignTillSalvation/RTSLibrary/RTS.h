@@ -12,7 +12,7 @@ public:
 	void initState() { state->init(); };
 	void render(sf::RenderWindow& window);
 	void update();
-	void processInput(sf::RenderWindow& window);
+	void processInput(sf::RenderWindow&,sf::Event&);
 	RTSState* getState() { return state.get(); };
 
 };

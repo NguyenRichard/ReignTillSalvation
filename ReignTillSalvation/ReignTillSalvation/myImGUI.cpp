@@ -37,18 +37,17 @@ int imGUImain(){
 		offset = time.asSeconds();
 
 		sf::Event event;
-
 		while (window.pollEvent(event)) {
-			ImGui::SFML::ProcessEvent(event);
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
 			if (event.type == sf::Event::Resized) {
 				view.set_View(window);
 			}
-
+			rts.processInput(window, event);
+			ImGui::SFML::ProcessEvent(event);
 		}
-		rts.processInput(window);
+
 
 		ImGui::SFML::Update(window, deltaClock.restart());
 

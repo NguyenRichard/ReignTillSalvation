@@ -12,7 +12,7 @@ public:
 	Game(int width, int height);
 	Game(const RTSState & state);
 	Game(const Game & state, std::unique_ptr<Map>);
-	void processInput(RTS*,sf::RenderWindow& window) override = 0;
+	void processInput(RTS*,sf::RenderWindow& window,sf::Event&) override = 0;
 	void render(sf::RenderWindow& window) override = 0;
 	void update() override = 0;
 	void init() override = 0;
