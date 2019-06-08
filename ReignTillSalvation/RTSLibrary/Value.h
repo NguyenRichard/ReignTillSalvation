@@ -36,6 +36,8 @@
 #define DEFAULT_COUNTDOWN_DANGER		10.0f
 #define DEFAULT_DURATION_DANGER			3.0f
 #define DEFAULT_RADIUS_DANGER			200.0f
+#define DEFAULT_DIRECTION_DANGER		sf::Vector2f(1.0, 1.0)
+#define DEFAULT_WIDTH_DANGER			10.0f
 
 
 #pragma endregion define

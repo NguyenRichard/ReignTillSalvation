@@ -23,7 +23,7 @@ public:
 	bool update();
 
 private:
-	sf::Time timeSinceApparition;
+	sf::Clock apparitionTime;
 	sf::Time countdownAppearance;
 	sf::Time duration;
 

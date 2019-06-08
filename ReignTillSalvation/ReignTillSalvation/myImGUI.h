@@ -36,3 +36,5 @@ void showElement(Element&, int);
 void gameInformation(sf::RenderWindow &, RTS&, bool*);
 void showLaw(Law&, int);
 void lawWindow(sf::RenderWindow &, RTS&, bool*);
+void showDanger(Danger&, int);
+void dangerWindow(sf::RenderWindow &, RTS&, bool*, char*);

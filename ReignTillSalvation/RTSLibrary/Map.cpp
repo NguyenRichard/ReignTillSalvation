@@ -111,7 +111,19 @@ int Map::individualsNumber() {
 
 void Map::updateDangers() {
 	for (auto &danger : dangers) {
-		if (danger->update())
+		bool update = danger->update();
+		if (update)
 			danger->affectZone(leaders);
 	}
+}
+
+void Map::addDangerInMap(std::string shape, sf::Vector2f coord) {
+	if (shape == "circle")
+		dangers.push_back(std::make_unique<CircleDanger>(
+			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord, DEFAULT_RADIUS_DANGER));
+
+	if (shape == "line")
+		dangers.push_back(std::make_unique<LineDanger>(
+			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord, DEFAULT_DIRECTION_DANGER,
+			DEFAULT_WIDTH_DANGER));
 }
