@@ -18,7 +18,9 @@ void GameMenu::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event
 		}
 
 	}
-	menu->handleMouseEvent(rts, window, event);
+	else {
+		menu->handleMouseEvent(rts, window, event);
+	}
 
 }
 

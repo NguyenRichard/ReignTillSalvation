@@ -81,6 +81,7 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map->getLeaders();
 	std::vector<std::unique_ptr<Element>>& elements = map->getElements();
 	std::vector<std::unique_ptr<Danger>>& dangers = map->getDangers();
+	std::vector<std::unique_ptr<Law>>& laws = map->getLaws();
 	sf::Vector2f coord;
 	sf::CircleShape* circle;
 	float radius;
@@ -129,6 +130,10 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 	for (const auto &danger : dangers) {
 		danger_shape = &danger->getShape();
 		window.draw(*danger_shape);
+	}
+
+	for (const auto & law : laws) {
+		law->render(window);
 	}
 }
 
