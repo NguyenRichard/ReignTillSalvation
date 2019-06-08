@@ -8,7 +8,8 @@ class Law {
 private:
 	Element* element;
 	LawType type;
-	
+	sf::RectangleShape fillBar;
+	sf::RectangleShape bar;
 
 public:
 	Law(Element*, LawType);
@@ -16,5 +17,6 @@ public:
 	bool done();
 	Element* getElement() { return element; };
 	LawType getType() { return type; };
+	void render(sf::RenderWindow&);
 
 };

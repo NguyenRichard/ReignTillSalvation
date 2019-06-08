@@ -9,5 +9,5 @@
 
 int main()
 {
-	return RTSmain();
+	return imGUImain();
 }
