@@ -9,8 +9,11 @@ int imGUImain(){
 	static bool showElementInfo = false;
 	static bool showGameInfo = false;
 	static bool showLawInfo = false;
+	static bool showDangerInfo = false;
 	static char input_name[MAX_INPUT_NAME] = "Element";
+	static char input_shape[MAX_INPUT_NAME] = "circle";
 	char elementName[255] = "Element";
+	char dangerShape[255] = "circle";
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ReignTillSalvation");
 
 	ViewManager view(window);
@@ -75,12 +78,16 @@ int imGUImain(){
 			if (ImGui::Button("Show Law Info")) {
 				showLawInfo = true;
 			}
+			if (ImGui::Button("Show Danger Info")) {
+				showDangerInfo = true;
+			}
 		}
 		else {
 			showIndividualInfo = false;
 			showElementInfo = false;
 			showGameInfo = false;
 			showLawInfo = false;
+			showDangerInfo = false;
 		}
 
 		ImGui::End(); // end window
@@ -98,6 +105,7 @@ int imGUImain(){
 		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo);
 		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name);
 		if (showLawInfo) lawWindow(window, rts,&showLawInfo);
+		if (showDangerInfo) dangerWindow(window, rts,&showDangerInfo, input_shape);
 		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
 
@@ -418,4 +426,101 @@ void showLaw(Law& law, int uid)
 		ImGui::TreePop();
 	}
 	ImGui::PopID();
+}
+
+void dangerWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_shape) {
+	Game* game = static_cast<Game*>(rts.getState());
+	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
+		x / 4, window.getSize().y / 5));
+	if (!ImGui::Begin("Danger Info", p_open))
+	{
+		ImGui::End();
+		return;
+	}
+	ImGui::SetWindowFontScale(window.getSize().y / 550);
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
+	ImGui::Columns(2);
+	ImGui::Separator();
+	std::vector<std::unique_ptr<Danger>>& dangers = game->getMap()->getDangers();
+	int i = 1;
+	for (auto & danger : dangers) {
+		showDanger(*danger, i);
+		i++;
+	}
+	ImGui::Columns(1);
+	ImGui::Separator();
+	ImGui::PopStyleVar();
+	ImGui::InputText("shape", input_shape, MAX_INPUT_NAME);
+	if (ImGui::Button("Add danger")) {
+		while (!(sf::Mouse::isButtonPressed(sf::Mouse::Left))) {
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))) {
+				ImGui::End();
+				return;
+			}
+		}
+		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
+			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
+			std::string shape(input_shape);
+			game->getMap()->addDangerInMap(shape, mouseWorldPosition);
+		}
+	}
+	ImGui::End();
+
+}
+
+void showDanger(Danger& danger, int uid)
+{/*
+	ImGui::PushID(uid);                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
+	ImGui::AlignTextToFramePadding();  // Text and Tree nodes are less high than regular widgets, here we add vertical spacing to make the tree lines equal high.
+	bool node_open = ImGui::TreeNode("Object", "%s", danger.getName().c_str());
+	ImGui::NextColumn();
+	ImGui::AlignTextToFramePadding();
+	ImGui::NextColumn();
+	if (node_open)
+	{
+		ImGui::PushID(1);
+		ImGui::AlignTextToFramePadding();
+		ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Range");
+		ImGui::NextColumn();
+		ImGui::SetNextItemWidth(-1);
+		ImGui::InputFloat("r: ", &element.getRangeMutable(), 1.0f);
+		ImGui::SetNextItemWidth(-1);
+		ImGui::NextColumn();
+		ImGui::PopID();
+
+		ImGui::PushID(1);
+		ImGui::AlignTextToFramePadding();
+		ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Power");
+		ImGui::NextColumn();
+		ImGui::SetNextItemWidth(-1);
+		std::string string = "Power: " + std::to_string(element.getPower());
+		ImGui::Text(string.c_str());
+		ImGui::SetNextItemWidth(-1);
+		ImGui::NextColumn();
+		ImGui::PopID();
+		int i = 0;
+
+		std::vector<sf::Vector2f> coords = element.getCoords();
+		for (auto& coord : coords)
+		{
+			ImGui::PushID(i);
+			// Here we use a TreeNode to highlight on hover (we could use e.g. Selectable as well)
+			ImGui::AlignTextToFramePadding();
+			ImGui::TreeNodeEx("Field", ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Bullet, "Coordinate_%d", i);
+			ImGui::NextColumn();
+			ImGui::SetNextItemWidth(-1);
+			ImGui::InputFloat("x: ", &coords[i].x, 1.0f);
+			ImGui::SetNextItemWidth(-1);
+			ImGui::InputFloat("y: ", &coords[i].y, 1.0f);
+			ImGui::NextColumn();
+			ImGui::PopID();
+
+			i++;
+		}
+
+		ImGui::TreePop();
+	}
+	ImGui::PopID();*/
 }

@@ -1,8 +1,8 @@
 #include "CircleDanger.h"
 
-CircleDanger::CircleDanger(float set_countdownAppearance,
-	float set_duration, sf::Vector2f coord, float radius) :
-	Danger(set_countdownAppearance, set_duration)
+CircleDanger::CircleDanger(float setCountdownAppearance,
+	float setDuration, sf::Vector2f coord, float radius) :
+	Danger(setCountdownAppearance, setDuration)
 {
 	shape = sf::CircleShape(radius);
 
@@ -13,7 +13,8 @@ CircleDanger::CircleDanger(float set_countdownAppearance,
 	color.a = 0;
 	shape.setFillColor(color);
 	shape.setOutlineThickness(2);
-	shape.setOutlineColor(sf::Color::Red);
+	color.a = 150.0f;
+	shape.setOutlineColor(color);
 }
 
 void CircleDanger::updateOpacity(float opacity)
@@ -27,26 +28,37 @@ void CircleDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 {
 	sf::Vector2f center = shape.getPosition();
 	Strong leader_of_death = Strong();
-	int i = 0;
-	for (std::unique_ptr<Individual> &individual : leaders)
+	int nb_weak_dead = 0;
+	for (int i = leaders.size() - 1; i >= 0; i--)
 	{
-		if (distanceBetween(center, individual->getCoord()) < shape.getRadius()) {
+		std::unique_ptr<Individual> &leader = leaders[i];
+		if (distanceBetween(center, leader->getCoord()) < shape.getRadius()) {
 			moveIndividuals(leaders, leader_of_death.getSubordinates(),
 				i, leader_of_death.getSubordinates().size());
 		}
-		i++;
+		else
+		{
+			Strong* strong = dynamic_cast<Strong*>(leader->getState());
+			for (int i = strong->getSubordinates().size() - 1; i >= 0; i--)
+			{
+				std::unique_ptr<Individual> &weak = strong->getSubordinates()[i];
+				if (distanceBetween(center, weak->getCoord()) < shape.getRadius()) {
+					moveIndividuals(strong->getSubordinates(), leader_of_death.getSubordinates(), i, 0);
+					nb_weak_dead++;
+				}
+			}
+		}
 	}
 
-	for (std::unique_ptr<Individual> &individual : leader_of_death.getSubordinates())
+	for (int i = leader_of_death.getSubordinates().size() - 1; i >= nb_weak_dead ;i--)
 	{
-		Strong* leader = dynamic_cast<Strong*>(individual->getState());
-		i = 0;
-		for (std::unique_ptr<Individual> &weak : leader->getSubordinates())
+		Strong* strong = dynamic_cast<Strong*>(leader_of_death.getSubordinates()[i]->getState());
+		for (int i = strong->getSubordinates().size() - 1; i >= 0; i--)
 		{
+			std::unique_ptr<Individual> &weak = strong->getSubordinates()[i];
 			if (distanceBetween(center, weak->getCoord()) > shape.getRadius()) {
 				weak->findMyGroupNew(leaders, i);
 			}
-			i++;
 		}
 	}
 }

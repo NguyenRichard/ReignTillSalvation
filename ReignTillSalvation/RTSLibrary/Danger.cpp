@@ -1,5 +1,6 @@
 #include "Danger.h"
 
+
 Danger::Danger(float set_countdownAppearance, float set_duration)
 {
 	countdownAppearance = sf::seconds(set_countdownAppearance);
@@ -8,7 +9,7 @@ Danger::Danger(float set_countdownAppearance, float set_duration)
 
 bool Danger::update()
 {
-	float opacity = timeSinceApparition.asSeconds() / 
+	float opacity = apparitionTime.getElapsedTime().asSeconds() / 
 		countdownAppearance.asSeconds() * MAX_COUNTDOWN_OPACITY;
 	if (opacity > MAX_COUNTDOWN_OPACITY) {
 		updateOpacity(DANGER_OPACITY);
