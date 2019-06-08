@@ -108,6 +108,7 @@ void GameRunning::update() {
 }
 
 void::GameRunning::init() {
+	time->resume();
 	parseXML();
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
 		map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));

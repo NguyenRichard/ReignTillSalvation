@@ -50,4 +50,5 @@ void GameMenu::changeState(RTS* rts) {
 
 void GameMenu::init() {
 	menu = std::make_unique<LawMenu>(map->getSelectedElement(), LAW_MENU_WIDTH, LAW_MENU_HEIGHT);
+	time->pause();
 }
