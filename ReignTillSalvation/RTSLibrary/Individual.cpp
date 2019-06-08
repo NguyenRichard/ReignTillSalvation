@@ -91,7 +91,9 @@ void Individual::updatePosition() {
 	state->updatePositionChaos();
 }
 
-
+void Individual::render(sf::RenderWindow& window) {
+	state->render(window);
+}
 
 float Individual::distanceToIndividual(const Individual & individual) const {
 	return state->distanceToIndividual(*individual.state.get());

@@ -17,9 +17,10 @@ public:
 	IndividualState(const IndividualState & state) : coord(state.coord) {};
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
-	sf::CircleShape* getRangeShape() { return &rangeShape; };
-	void changeColor(const sf::Color& color) { rangeShape.setFillColor(color); };
+	sf::CircleShape* getSprite() { return &sprite; };
+	void changeColor(const sf::Color& color) { sprite.setFillColor(color); };
 	virtual void updatePositionChaos() = 0;
+	virtual void render(sf::RenderWindow&) = 0;
 
 	void setCoord(const sf::Vector2f& new_coord) { coord = new_coord; };
 	sf::Vector2f& getCoord() { return coord; };
@@ -37,7 +38,7 @@ public:
 	bool operator <(const IndividualState&);
 
 protected:
-	sf::CircleShape rangeShape;
+	sf::CircleShape sprite;
 	sf::Vector2f coord;
 	sf::Vector2f old_coord;
 };

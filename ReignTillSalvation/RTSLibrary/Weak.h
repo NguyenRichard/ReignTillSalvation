@@ -14,7 +14,8 @@ public:
 	void setLeader(Individual* leader);
 	const Individual* getLeader() const { return leader; };
 	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
-	std::unique_ptr<IndividualState> changeState();// PUT IT PRIVATE
+	std::unique_ptr<IndividualState> changeState();
+	void render(sf::RenderWindow&) override;
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;
 	void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;
