@@ -7,14 +7,35 @@ GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map) :
 {
 }
 
+void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event) {
 
-void GameRunning::processInput(RTS* rts, sf::RenderWindow& window) {
-
-	processGameInput(rts,window);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-		changeState(rts);
+	if (event.type == sf::Event::KeyReleased) {
+		switch (event.key.code) {
+		case sf::Keyboard::Escape:
+			changeState(rts);
+			break;
+		}
 	}
+	if (event.type == sf::Event::MouseButtonReleased) {
+		switch (event.mouseButton.button) {
+		case sf::Mouse::Left:
+			std::vector<sf::Vector2f>* coords;
+			sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
+			sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
+			for (auto & element : map->getElements()) {
+				coords = &element->getCoords();
+				for (const auto & coord : *coords) {
+					if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE) {
+						map->setSelectedElement(element.get());
+						rts->changeState(changeStateToGameMenu());
+						rts->initState();
+					}
+				}
+			}
+			break;
+		}
+	}
+
 }
 
 void GameRunning::render(sf::RenderWindow& window) {
@@ -38,7 +59,6 @@ std::unique_ptr<RTSState> GameRunning::changeStateToGameMenu() {
 
 void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
 	std::vector<sf::Vector2f>* coords;
-	sf::Event event;
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
@@ -120,6 +140,9 @@ void::GameRunning::init() {
 	parseXML();
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
 		map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
+	}
+	for (int i = 0; i < MAX_ELEMENTS; i++) {
+		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(), sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
 }
 

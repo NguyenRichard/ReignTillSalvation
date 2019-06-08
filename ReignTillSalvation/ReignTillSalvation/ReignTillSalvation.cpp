@@ -3,10 +3,11 @@
 
 #pragma region include
 #include "myImGUI.h"
+#include "../RTSLibrary/RTSLibrary.h"
 #pragma endregion include
 
 
 int main()
 {
-	return imGUImain();
+	return RTSmain();
 }

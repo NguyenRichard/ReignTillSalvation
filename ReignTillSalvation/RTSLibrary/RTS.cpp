@@ -18,8 +18,8 @@ void RTS::update() {
 	state->update();
 }
 
-void RTS::processInput(sf::RenderWindow& window) {
-	state->processInput(this,window);
+void RTS::processInput(sf::RenderWindow& window,sf::Event& event) {
+	state->processInput(this,window,event);
 }
 
 void RTS::changeStateAuto() {

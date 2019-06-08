@@ -8,14 +8,18 @@ GameMenu::GameMenu(const Game & state, std::unique_ptr<Map> new_map) :
 {
 }
 
+void GameMenu::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event) {
 
-void GameMenu::processInput(RTS* rts, sf::RenderWindow& window) {
+	if (event.type == sf::Event::KeyReleased) {
+		switch (event.key.code) {
+		case sf::Keyboard::Escape:
+			rts->changeState(changeStateToGameRunning());
+			break;
+		}
 
-	menu->handleMouseEvent(rts, window);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-		rts->changeState(changeStateToGameRunning());
 	}
+	menu->handleMouseEvent(rts, window, event);
+
 }
 
 void GameMenu::render(sf::RenderWindow& window) {

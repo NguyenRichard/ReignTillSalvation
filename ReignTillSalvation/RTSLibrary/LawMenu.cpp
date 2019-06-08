@@ -49,9 +49,9 @@ void LawMenu::render(sf::RenderWindow& window) {
 
 }
 
-void LawMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window) {
+void LawMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window, sf::Event& event) {
 	GameMenu* game = dynamic_cast<GameMenu*>(rts->getState());
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && game != NULL) {
+	if (event.key.code == sf::Mouse::Left && game != NULL) {
 		std::unique_ptr<Map>& map = game->getMap();
 		Strong* strong;
 		switch (selectedItemIndex){

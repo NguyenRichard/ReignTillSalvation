@@ -23,10 +23,10 @@ public:
 	virtual void render(sf::RenderWindow& window);
 	void MoveUp();
 	void MoveDown();
-	void handleKeyEvent(RTS*, sf::RenderWindow& window);
+	void handleKeyEvent(RTS*, sf::RenderWindow& window,sf::Event&);
 	virtual void handleKeyEventAction(RTS*,sf::RenderWindow& window) = 0; //put default option when using.
 	void handleMouseEventPositionSelect(sf::RenderWindow& window);
-	virtual void handleMouseEventClick(RTS*,sf::RenderWindow& window) = 0;
-	void handleMouseEvent(RTS*,sf::RenderWindow& window);
+	virtual void handleMouseEventClick(RTS*,sf::RenderWindow& window, sf::Event&) = 0;
+	void handleMouseEvent(RTS*,sf::RenderWindow& window, sf::Event&);
 
 };
