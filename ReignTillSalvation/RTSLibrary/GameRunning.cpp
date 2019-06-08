@@ -2,9 +2,10 @@
 #include "GameMenu.h"
 
 
-GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map) :
-	Game(state,std::move(new_map))
+GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> time) :
+	Game(state, std::move(new_map), std::move(time))
 {
+	time->resume();
 }
 
 void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event) {
@@ -133,7 +134,7 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 }
 
 void GameRunning::update() {
-	map->update();
+	map->update(time);
 }
 
 void::GameRunning::init() {
@@ -142,7 +143,8 @@ void::GameRunning::init() {
 		map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
 	for (int i = 0; i < MAX_ELEMENTS; i++) {
-		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(), sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
+		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(),
+			sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
 }
 

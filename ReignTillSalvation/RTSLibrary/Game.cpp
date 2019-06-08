@@ -6,7 +6,8 @@
 
 Game::Game(int width, int height) :
 	RTSState(width, height),
-	map(std::make_unique<Map>())
+	map(std::make_unique<Map>()),
+	time(std::make_unique<sftools::Chronometer>())
 {}
 
 #pragma endregion GameFunctions
@@ -15,14 +16,14 @@ Game::Game(int width, int height) :
 
 Game::Game(const RTSState& state) :
 	RTSState(state),
-	map(std::make_unique<Map>()) 
+	map(std::make_unique<Map>()),
+	time(std::make_unique<sftools::Chronometer>())
 {}
 
-Game::Game(const Game & state, std::unique_ptr<Map> new_map) :
+Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> time) :
 	RTSState(state), 
-	map(std::move(new_map))
-{
-
-}
+	map(std::move(new_map)),
+	time(std::move(time))
+{}
 
 #pragma endregion RTSStateFunctions

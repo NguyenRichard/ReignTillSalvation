@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Chronometer.hpp"
 
 #include "Value.h"
 #include "OtherFunctions.h"
@@ -14,16 +15,17 @@ class Danger
 {
 public:
 	// countdownAppearance and duration are times in seconds
-	Danger(float set_countdownAppearance, float set_duration);
+	Danger(std::unique_ptr<sftools::Chronometer>&, float set_countdownAppearance, float set_duration);
 
 	virtual sf::Shape &getShape() = 0;
 	virtual void affectZone(std::vector<std::unique_ptr<Individual>>&) = 0;
 	
 	// returns true if countdown is finished
-	bool update();
+	bool update(std::unique_ptr<sftools::Chronometer>&);
+	bool isFinished(std::unique_ptr<sftools::Chronometer>&);
 
 private:
-	sf::Clock apparitionTime;
+	sf::Time apparitionTime;
 	sf::Time countdownAppearance;
 	sf::Time duration;
 
