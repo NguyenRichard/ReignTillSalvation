@@ -10,6 +10,7 @@
 #include "Danger.h"
 #include "CircleDanger.h"
 #include "LineDanger.h"
+#include "TextureManager.h"
 
 class Map
 {
@@ -25,9 +26,10 @@ private:
 	void updateDangers(std::unique_ptr<sftools::Chronometer>&);
 	void deleteDanger(const int&);
 	void addRandomDanger(std::unique_ptr<sftools::Chronometer>&);
+	TextureManager textureManager;
 
 public:
-	Map() = default;
+	Map();
 	void createIndividual(sf::Vector2f);
 	void createElement(std::string, float);
 	void createElement(std::string, float, sf::Color, std::string, std::string, std::string);

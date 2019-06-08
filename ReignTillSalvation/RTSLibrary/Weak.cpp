@@ -2,16 +2,20 @@
 
 Weak::Weak()
 {
-	sprite.setRadius(CIRCLE_W_RADIUS);
+	sprite.setTexture(textures->first);
+	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
 };
 
-Weak::Weak(const IndividualState & state) : IndividualState(state) {
-	sprite.setRadius(CIRCLE_W_RADIUS);
+Weak::Weak(const IndividualState & state) : 
+	IndividualState(state) 
+{
+	sprite.setTexture(textures->first);
+	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
 }
 
 std::unique_ptr<IndividualState> Weak::changeState() {
 	std::unique_ptr<Strong> strong = std::make_unique<Strong>(*this);
-	strong->changeColor(sf::Color(randomint(255), randomint(255), randomint(255)));
+	strong->getSprite()->setTexture(textures->second);
 	return move(strong);
 }
 
@@ -117,12 +121,17 @@ void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
 	setLeader(new_leader.get());
-	me->changeColor(new_leader->getState()->getSprite()->getFillColor());
 	moveIndividuals(subordinates, strong->getSubordinates(), my_position, new_position);
 
 }
 
 void Weak::render(sf::RenderWindow& window) {
-	sprite.setPosition(coord.x - CIRCLE_W_RADIUS, coord.y - CIRCLE_W_RADIUS);
+	sprite.setPosition(coord.x, coord.y);
+	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
+	float rotation = calculateAngle(direction);
+	if (direction.y < 0) {
+		rotation = 360.0f-rotation;
+	}
+	sprite.setRotation(rotation);
 	window.draw(sprite);
 }
