@@ -1,4 +1,5 @@
 #include "OtherFunctions.h"
+#include "Value.h"
 
 int randomint(int const &n) {
 	static std::random_device rd;
@@ -34,4 +35,9 @@ float distanceBetween(sf::Vector2f p1, sf::Vector2f p2)
 float magnitude(sf::Vector2f &vector)
 {
 	return sqrt(pow(vector.x, 2) + pow(vector.y, 2));
+}
+
+float calculateAngle(sf::Vector2f &vector) {
+	float cos_teta = vector.x/magnitude(vector);
+	return acos(cos_teta)*180/PI;
 }

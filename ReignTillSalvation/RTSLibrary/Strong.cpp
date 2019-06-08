@@ -1,22 +1,22 @@
 #include "Strong.h"
 #include "OtherFunctions.h"
 
-Strong::Strong() {
-	sprite.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
-	sprite.setRadius(CIRCLE_S_RADIUS);
+Strong::Strong(std::pair<sf::Texture, sf::Texture>* textures) : IndividualState(textures) 
+{
+	sprite.setTexture(textures->second);
+	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
 }
 
 Strong::Strong(const IndividualState & state) : 
-	IndividualState(state),
-	subordinates() {
-
-	sprite.setFillColor(sf::Color(randomint(255), randomint(255), randomint(255)));
-	sprite.setRadius(CIRCLE_S_RADIUS);
+	IndividualState(state)
+{
+	sprite.setTexture(textures->second);
+	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
 }
 
 std::unique_ptr<IndividualState> Strong::changeState(Individual* new_leader) {
 	std::unique_ptr<Weak> weak = std::make_unique<Weak>(*this);
-	weak->changeColor(new_leader->getState()->getSprite()->getFillColor());
+	weak->getSprite()->setTexture(textures->first);
 	weak->setLeader(new_leader);
 	return move(weak);
 }
@@ -190,7 +190,6 @@ void Strong::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individu
 
 	Strong* strong = static_cast<Strong*>(new_leader->getState());
 	int new_position = new_leader->getState()->findSubPosition(*this);
-	me->changeColor(new_leader->getState()->getSprite()->getFillColor());
 	moveIndividuals(leaders, strong->getSubordinates(), my_position, new_position);
 	for (int i = subordinates.size() - 1; i >= 0; i--) {
 		subordinates[i]->findMyGroupNew(leaders,i);
@@ -201,7 +200,15 @@ void Strong::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individu
 
 
 void Strong::render(sf::RenderWindow& window) {
-	sprite.setPosition(coord.x - CIRCLE_S_RADIUS, coord.y - CIRCLE_S_RADIUS);
+
+	sprite.setPosition(coord.x, coord.y);
+	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
+	float rotation = calculateAngle(direction);
+	if (direction.y < 0) {
+		rotation = 360.0f - rotation;
+	}
+	sprite.setRotation(rotation);
+
 	window.draw(sprite);
 	for (const auto & subordinate : subordinates) {
 		subordinate->render(window);
