@@ -22,6 +22,7 @@
 #define NATURAL_ATTRACTION				3.0f
 
 #define MAX_INDIVIDUALS					100
+#define MAX_ELEMENTS					10
 
 #define LAW_PROPORTION					600
 

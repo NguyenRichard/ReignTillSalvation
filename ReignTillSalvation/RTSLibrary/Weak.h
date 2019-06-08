@@ -9,12 +9,12 @@ class Weak : public IndividualState {
 public:
 	Weak();
 	Weak(const IndividualState & state);
-	std::unique_ptr<IndividualState> changeState();
 	void action() override;
 	void updatePositionChaos() override;
 	void setLeader(Individual* leader);
 	const Individual* getLeader() const { return leader; };
 	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
+	std::unique_ptr<IndividualState> changeState();// PUT IT PRIVATE
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;
 	void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;

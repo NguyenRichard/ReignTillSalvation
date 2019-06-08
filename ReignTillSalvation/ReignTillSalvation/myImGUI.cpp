@@ -40,18 +40,17 @@ int imGUImain(){
 		offset = time.asSeconds();
 
 		sf::Event event;
-
 		while (window.pollEvent(event)) {
-			ImGui::SFML::ProcessEvent(event);
-			rts.processInput(window);
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
 			if (event.type == sf::Event::Resized) {
 				view.set_View(window);
 			}
-
+			rts.processInput(window, event);
+			ImGui::SFML::ProcessEvent(event);
 		}
+
 
 		ImGui::SFML::Update(window, deltaClock.restart());
 
@@ -144,14 +143,13 @@ void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	string = "y: " + std::to_string(mouseWorldPosition.y);
 	ImGui::Text(string.c_str());
 
+
 	if (ImGui::Button("Change State")) {
-		// this code gets if user clicks on the button
-		// yes, you could have written if(ImGui::InputText(...))
-		// but I do this to show how buttons work :)
 		{
-			rts.changeState();
+			rts.changeStateAuto();
 		}
 	}
+
 	ImGui::End(); // end window
 }
 
@@ -360,12 +358,6 @@ void gameInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 
 	std::string string = "Number of individuals: " + std::to_string(game->getMap()->individualsNumber());
 	ImGui::Text(string.c_str());
-
-	if (ImGui::Button("Change State")) {
-		{
-			game->changeGameState();
-		}
-	}
 
 	ImGui::End(); // end window
 }
