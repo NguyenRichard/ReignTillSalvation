@@ -1,14 +1,15 @@
 #include "MainMenu.h"
+#include "GameRunning.h"
 
 #pragma region MenuFunctions
 MainMenu::MainMenu(int width, int height) :
 	Menu(), 
 	RTSState(width,height) {}
 
-void MainMenu::handleKeyEventAction(sf::RenderWindow& window) {
+void MainMenu::handleKeyEventAction(RTS* rts,sf::RenderWindow& window) {
 	switch (selectedItemIndex) {
 	case 0: //Play option
-		changeState();
+		changeState(rts);
 		break;
 	case 2: //Exit option
 		window.close();
@@ -16,11 +17,11 @@ void MainMenu::handleKeyEventAction(sf::RenderWindow& window) {
 	}
 }
 
-void MainMenu::handleMouseEventClick(sf::RenderWindow& window) {
+void MainMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 		switch (selectedItemIndex) {
 		case 0: //Play option
-			state = true;
+			changeState(rts);
 			break;
 		case 2: //Exit option
 			window.close();
@@ -39,12 +40,18 @@ MainMenu::MainMenu(const RTSState& state) :
 
 }
 
-std::unique_ptr<RTSState> MainMenu::changeState() {
-	return std::make_unique<Game>(*this);
+void MainMenu::changeState(RTS* rts) {
+	rts->changeState(changeStateToGameRunning());
+	rts->initState();
 }
 
-void MainMenu::processInput(sf::RenderWindow& window) {
-	Menu::handleMouseEvent(window);
+std::unique_ptr<RTSState> MainMenu::changeStateToGameRunning() {
+
+	return std::make_unique<GameRunning>(*this);
+
+}
+void MainMenu::processInput(RTS* rts,sf::RenderWindow& window) {
+	Menu::handleMouseEvent(rts,window);
 }
 
 void MainMenu::init() {

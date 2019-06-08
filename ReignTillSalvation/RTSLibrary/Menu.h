@@ -2,6 +2,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include <iostream> 
+#include "RTS.h"
 
 #define MAX_NUMBER_OF_ITEMS 5
 #define SELECTED_COLOR sf::Color::Blue
@@ -22,10 +23,10 @@ public:
 	virtual void render(sf::RenderWindow& window);
 	void MoveUp();
 	void MoveDown();
-	void handleKeyEvent(sf::RenderWindow& window);
-	virtual void handleKeyEventAction(sf::RenderWindow& window) = 0; //put default option when using.
+	void handleKeyEvent(RTS*, sf::RenderWindow& window);
+	virtual void handleKeyEventAction(RTS*,sf::RenderWindow& window) = 0; //put default option when using.
 	void handleMouseEventPositionSelect(sf::RenderWindow& window);
-	virtual void handleMouseEventClick(sf::RenderWindow& window) = 0;
-	void handleMouseEvent(sf::RenderWindow& window);
+	virtual void handleMouseEventClick(RTS*,sf::RenderWindow& window) = 0;
+	void handleMouseEvent(RTS*,sf::RenderWindow& window);
 
 };

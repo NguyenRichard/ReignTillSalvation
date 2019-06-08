@@ -6,9 +6,8 @@ RTS::RTS(std::unique_ptr<RTSState> new_state) :
 	state->init();
 }
 
-void RTS::changeState() {
-	state = move(state->changeState());
-	state->init();
+void RTS::changeState(std::unique_ptr<RTSState> new_state) {
+	state = move(new_state);
 }
 
 void RTS::render(sf::RenderWindow& window) {
@@ -20,8 +19,9 @@ void RTS::update() {
 }
 
 void RTS::processInput(sf::RenderWindow& window) {
-	state->processInput(window);
-	if (state->haveToChangeState()) {
-		changeState();
-	}
+	state->processInput(this,window);
+}
+
+void RTS::changeStateAuto() {
+	state->changeState(this);
 }
