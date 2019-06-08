@@ -2,8 +2,8 @@
 #include "GameMenu.h"
 
 
-GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> time) :
-	Game(state, std::move(new_map), std::move(time))
+GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time) :
+	Game(state, std::move(new_map), std::move(new_time))
 {
 	time->resume();
 }

@@ -28,7 +28,7 @@
 
 #define MAX_RUN_ATTRACTION				2.0f
 #define MAX_POWER						3.0f
-#define NATURAL_ATTRACTION				3.0f
+#define NATURAL_ATTRACTION				1.5f
 #pragma endregion movement_constant
 
 #pragma region law_constant
