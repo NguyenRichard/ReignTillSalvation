@@ -14,20 +14,23 @@ class Individual;
 class IndividualState {
 public:
 	IndividualState() = default;
-	IndividualState(const IndividualState & state) : coord(state.coord) {};
+	IndividualState(std::pair<sf::Texture, sf::Texture>*);
+	IndividualState(const IndividualState & state);
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
-	sf::CircleShape* getSprite() { return &sprite; };
-	void changeColor(const sf::Color& color) { sprite.setFillColor(color); };
+	sf::Sprite* getSprite() { return &sprite; };
+	void setTextures(std::pair<sf::Texture, sf::Texture>* textures) { this->textures = textures; };
 	virtual void updatePositionChaos() = 0;
 	virtual void render(sf::RenderWindow&) = 0;
 
 	void setCoord(const sf::Vector2f& new_coord) { coord = new_coord; };
 	sf::Vector2f& getCoord() { return coord; };
+	sf::Vector2f& getOldCoord() { return old_coord; };
 	float distanceToPoint(const sf::Vector2f&) const;
 	float distanceToIndividual(const IndividualState& individual) const;
 	sf::Vector2f directionToward(const sf::Vector2f&) const;
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
+	void rotateSprite(float degree);
 
 	virtual void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
 	virtual void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
@@ -38,7 +41,8 @@ public:
 	bool operator <(const IndividualState&);
 
 protected:
-	sf::CircleShape sprite;
+	sf::Sprite sprite;
+	std::pair<sf::Texture, sf::Texture>* textures;
 	sf::Vector2f coord;
 	sf::Vector2f old_coord;
 };

@@ -5,21 +5,17 @@
 #include "SFML/Graphics.hpp"
 #include "gtest/gtest.h"
 
-
 TEST(TestIndividual_ChangeState, WeaktoStrong) {
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(20, 300));
 	Weak* weak = dynamic_cast<Weak*>(individual->getState());
-	sf::CircleShape circle_before = *(weak->getSprite());
 	sf::Vector2f coord_before = weak->getCoord();
 	ASSERT_TRUE(weak != NULL);
 
 	individual->changeState(weak->changeState());
 	Strong* strong = dynamic_cast<Strong*>(individual->getState());
-	sf::CircleShape circle_after = *(strong->getSprite());
 	sf::Vector2f coord_after = strong->getCoord();
 
 	EXPECT_TRUE(strong != NULL);
-	EXPECT_EQ(CIRCLE_S_RADIUS, circle_after.getRadius());
 	EXPECT_TRUE(coord_after.x > coord_before.x - 0.1);
 	EXPECT_TRUE(coord_after.x < coord_before.x + 0.1);
 	EXPECT_TRUE(coord_after.y > coord_before.y - 0.1);
@@ -31,17 +27,14 @@ TEST(TestIndividual_ChangeState, StrongtoWeak) {
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(20, 300));
 	std::unique_ptr<Individual> new_leader = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(40, 300));
 	Strong* strong = dynamic_cast<Strong*>(individual->getState());
-	sf::CircleShape circle_before = *(strong->getSprite());
 	sf::Vector2f coord_before = strong->getCoord();
 	ASSERT_TRUE(strong != NULL);
 
 	individual->changeState(strong->changeState(new_leader.get()));
 	Weak* weak = dynamic_cast<Weak*>(individual->getState());
-	sf::CircleShape circle_after = *(weak->getSprite());
 	sf::Vector2f coord_after = weak->getCoord();
 
 	EXPECT_TRUE(strong != NULL);
-	EXPECT_EQ(CIRCLE_W_RADIUS, circle_after.getRadius());
 	EXPECT_TRUE(coord_after.x > coord_before.x - 0.1);
 	EXPECT_TRUE(coord_after.x < coord_before.x + 0.1);
 	EXPECT_TRUE(coord_after.y > coord_before.y - 0.1);
@@ -138,11 +131,9 @@ TEST(TestIndividual_MakeSubordinate, WeakTransfer) {
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(950, 1000))));//dist 50
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1059))));//dist 59
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(940, 1020))));//dist 63 
-	sf::CircleShape* circle_master = strong->getSprite();
 	Weak* weak;
 	for (const auto & subordinate : subordinates) {
 		weak = static_cast<Weak*>(subordinate->getState());
-		subordinate->changeColor(circle_master->getFillColor());
 		weak->setLeader(master.get());
 	}
 
@@ -153,10 +144,9 @@ TEST(TestIndividual_MakeSubordinate, WeakTransfer) {
 	old_subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(960, 990))));//dist 41.2
 	old_subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1030, 1045))));//dist 54
 	old_subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1070)))); //dist 70 
-	sf::CircleShape* circle_old_master = strong2->getSprite();
+	
 	for (const auto & subordinate : old_subordinates) {
 		weak = static_cast<Weak*>(subordinate->getState());
-		subordinate->changeColor(circle_old_master->getFillColor());
 		weak->setLeader(old_master.get());
 	}
 	
@@ -164,13 +154,11 @@ TEST(TestIndividual_MakeSubordinate, WeakTransfer) {
 	ASSERT_EQ(4, subordinates.size());
 	for (const auto & subordinate : subordinates) {
 		weak = static_cast<Weak*>(subordinate->getState());
-		ASSERT_EQ(circle_master->getFillColor(), weak->getSprite()->getFillColor());
 		ASSERT_EQ(master.get(), weak->getLeader());
 	}
 	ASSERT_EQ(4, old_subordinates.size());
 	for (const auto & subordinate : old_subordinates) {
 		weak = static_cast<Weak*>(subordinate->getState());
-		ASSERT_EQ(circle_old_master->getFillColor(), weak->getSprite()->getFillColor());
 		ASSERT_EQ(old_master.get(), weak->getLeader());
 	}
 
@@ -191,7 +179,6 @@ TEST(TestIndividual_MakeSubordinate, WeakTransfer) {
 		weak = static_cast<Weak*>(subordinate->getState());
 		nextDistToLeader = subordinate->distanceToIndividual(*master);
 		EXPECT_TRUE(distToLeader < nextDistToLeader);
-		EXPECT_EQ(circle_master->getFillColor(), weak->getSprite()->getFillColor());
 		EXPECT_EQ(master.get(), weak->getLeader());
 		distToLeader = nextDistToLeader;
 	}
