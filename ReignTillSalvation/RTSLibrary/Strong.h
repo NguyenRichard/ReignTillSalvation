@@ -13,12 +13,12 @@ class Strong : public IndividualState {
 public:
 	Strong();
 	Strong(const IndividualState & state);
-	std::unique_ptr<IndividualState> changeState(Individual*);
 	void action() override;
 	std::vector<std::unique_ptr<Individual>>& getSubordinates();
 	void updatePositionChaos() override;
 	void eraseSubordinate(int);
 	bool stillInGroup(int);
+	std::unique_ptr<IndividualState> changeState(Individual*);// PUT IT PRIVATE
 
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;

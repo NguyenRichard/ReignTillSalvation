@@ -32,7 +32,7 @@ void Menu::MoveDown() {
 	}
 }
 
-void Menu::handleKeyEvent(sf::RenderWindow& window) {
+void Menu::handleKeyEvent(RTS* rts,sf::RenderWindow& window) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		MoveUp();
 	}
@@ -40,7 +40,7 @@ void Menu::handleKeyEvent(sf::RenderWindow& window) {
 		MoveDown();
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-		handleKeyEventAction(window);
+		handleKeyEventAction(rts,window);
 	}
 }
 
@@ -66,7 +66,7 @@ void Menu::handleMouseEventPositionSelect(sf::RenderWindow& window) {
 	}
 }
 
-void Menu::handleMouseEvent(sf::RenderWindow& window) {
+void Menu::handleMouseEvent(RTS* rts,sf::RenderWindow& window) {
 	handleMouseEventPositionSelect(window);
-	handleMouseEventClick(window);
+	handleMouseEventClick(rts,window);
 }
