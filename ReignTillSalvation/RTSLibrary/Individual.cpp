@@ -21,9 +21,6 @@ void Individual::action() {
 	state->action();
 }
 
-void Individual::changeColor(const sf::Color& color) {
-	state->changeColor(color);
-}
 
 void Individual::updatePositionAttraction() {
 	bool likedHasBeenApplied = false;
@@ -89,6 +86,22 @@ void Individual::updatePositionAttraction() {
 void Individual::updatePosition() {
 	updatePositionAttraction();
 	state->updatePositionChaos();
+
+	sf::Vector2f old_coord = state->getOldCoord();
+	sf::Vector2f coord = state->getCoord();
+	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
+	if (direction.x >= 0 && direction.y >= 0) {
+		state->rotateSprite(calculateAngle(direction));
+	}
+	else if (direction.x >= 0 && direction.y < 0) {
+		state->rotateSprite(calculateAngle(direction)+90);
+	}
+	else if (direction.x < 0 && direction.y < 0) {
+		state->rotateSprite(calculateAngle(direction) + 180);
+	}
+	else {
+		state->rotateSprite(calculateAngle(direction) + 270);
+	}
 }
 
 void Individual::render(sf::RenderWindow& window) {
@@ -135,7 +148,7 @@ void Individual::applyCollision(const sf::Vector2f& coord,float min) {
 void Individual::applyCollisionElements() {
 	for (const auto & element : elements) {
 		for (auto coord : element->getCoords()) {
-			applyCollision(coord,ELEMENT_SPRITE_SIZE);
+			applyCollision(coord,DIST_TO_ELEMENTS);
 		}
 	}
 
@@ -143,12 +156,6 @@ void Individual::applyCollisionElements() {
 
 void Individual::updateMyGroup(std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
 	state->updateMyGroup(this,leaders, my_position);
-
-	/*individual->changeState();
-	individual->changeColor(new_leader->getRangeShape()->getFillColor());
-	new_position = new_leader->findSubPosition(*individual);
-	weak = dynamic_cast<Weak*>(individual->getState());
-	weak->setLeader(leader.get());*/
 }
 
 void Individual::findMyGroup(std::vector<std::unique_ptr<Individual>>& leaders, int my_position) {
@@ -193,4 +200,8 @@ void Individual::setDisliked(Element* el_disliked) {
 
 void Individual::addElement(Element* element) {
 	elements.push_back(element);
+}
+
+void Individual::setTextures(std::pair<sf::Texture, sf::Texture>* textures) {
+	state->setTextures(textures);
 }
