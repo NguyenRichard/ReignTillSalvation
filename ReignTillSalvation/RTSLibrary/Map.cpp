@@ -111,8 +111,7 @@ int Map::individualsNumber() {
 
 void Map::updateDangers() {
 	for (auto &danger : dangers) {
-		if (danger->update()) {
+		if (danger->update())
 			danger->affectZone(leaders);
-		}
 	}
 }

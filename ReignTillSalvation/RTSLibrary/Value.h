@@ -33,5 +33,9 @@
 #define FILL_COLOR						sf::Color(255,255,255,0)
 #define OUTLINE_COLOR					sf::Color(255,255,255,255)
 
+#define DEFAULT_COUNTDOWN_DANGER		10.0f
+#define DEFAULT_DURATION_DANGER			3.0f
+#define DEFAULT_RADIUS_DANGER			200.0f
+
 
 #pragma endregion define
