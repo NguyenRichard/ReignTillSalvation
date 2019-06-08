@@ -1,9 +1,9 @@
 #include "CircleDanger.h"
 
 CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
-		float setCountdownAppearance,
-		float setDuration, sf::Vector2f coord, float radius) :
-	Danger(time, setCountdownAppearance, setDuration)
+		float setCountdownAppearance, float setDuration, sf::Vector2f coord,
+		float radius, float time_offset, float time_before_next) :
+	Danger(time, setCountdownAppearance, setDuration, time_offset, time_before_next)
 {
 	shape = sf::CircleShape(radius);
 
@@ -20,7 +20,27 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
 
 CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
 		float setCountdownAppearance, float setDuration, sf::Vector2f coord) :
-	CircleDanger(time, setCountdownAppearance, setDuration, coord, DEFAULT_RADIUS_DANGER) {}
+	CircleDanger(time, setCountdownAppearance, setDuration, coord,
+		DEFAULT_RADIUS_DANGER, 0, 8.0f) {}
+
+CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time) :
+	Danger(time)
+{
+	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
+	shape = sf::CircleShape(radius);
+	sf::Vector2f coord;
+	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
+	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
+	shape.setOrigin(sf::Vector2f(radius, radius));
+	shape.setPosition(coord);
+
+	sf::Color color = sf::Color::Red;
+	color.a = 0;
+	shape.setFillColor(color);
+	shape.setOutlineThickness(2);
+	color.a = 150.0f;
+	shape.setOutlineColor(color);
+}
 
 void CircleDanger::updateOpacity(float opacity)
 {
@@ -48,7 +68,8 @@ void CircleDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 			{
 				std::unique_ptr<Individual> &weak = strong->getSubordinates()[i];
 				if (distanceBetween(center, weak->getCoord()) < shape.getRadius()) {
-					moveIndividuals(strong->getSubordinates(), leader_of_death.getSubordinates(), i, 0);
+					moveIndividuals(strong->getSubordinates(),
+						leader_of_death.getSubordinates(), i, 0);
 					nb_weak_dead++;
 				}
 			}

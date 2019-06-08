@@ -15,7 +15,9 @@ class Danger
 {
 public:
 	// countdownAppearance and duration are times in seconds
-	Danger(std::unique_ptr<sftools::Chronometer>&, float set_countdownAppearance, float set_duration);
+	Danger(std::unique_ptr<sftools::Chronometer>&, float set_countdownAppearance,
+		float set_duration, float time_offset, float time_before_next);
+	Danger(std::unique_ptr<sftools::Chronometer>&);
 
 	virtual sf::Shape &getShape() = 0;
 	virtual void affectZone(std::vector<std::unique_ptr<Individual>>&) = 0;
@@ -23,8 +25,11 @@ public:
 	// returns true if countdown is finished
 	bool update(std::unique_ptr<sftools::Chronometer>&);
 	bool isFinished(std::unique_ptr<sftools::Chronometer>&);
+	bool hasBegun(std::unique_ptr<sftools::Chronometer>&);
+	bool isNextNow(std::unique_ptr<sftools::Chronometer>&);
 
 private:
+	sf::Time timeOfNext;
 	sf::Time apparitionTime;
 	sf::Time countdownAppearance;
 	sf::Time duration;

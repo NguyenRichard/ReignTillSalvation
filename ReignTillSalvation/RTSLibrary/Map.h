@@ -24,6 +24,7 @@ private:
 	void updatePositions();
 	void updateDangers(std::unique_ptr<sftools::Chronometer>&);
 	void deleteDanger(const int&);
+	void addRandomDanger(std::unique_ptr<sftools::Chronometer>&);
 
 public:
 	Map() = default;
