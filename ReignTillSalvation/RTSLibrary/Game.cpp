@@ -53,6 +53,7 @@ void Game::processGameInput(sf::RenderWindow& window) {
 void Game::renderGame(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
 	std::vector<std::unique_ptr<Element>>& elements = map.getElements();
+	std::vector<std::unique_ptr<Danger>>& dangers = map.getDangers();
 	sf::Vector2f coord;
 	sf::CircleShape* circle;
 	float radius;
@@ -95,6 +96,12 @@ void Game::renderGame(sf::RenderWindow& window) {
 			window.draw(*elem_sprite);
 			window.draw(*elem_range_sprite);
 		}
+	}
+
+	sf::Shape* danger_shape;
+	for (const auto &danger : dangers) {
+		danger_shape = &danger->getShape();
+		window.draw(*danger_shape);
 	}
 }
 

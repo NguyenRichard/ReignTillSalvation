@@ -8,6 +8,8 @@
 #include "OtherFunctions.h"
 #include "Law.h"
 #include "Danger.h"
+#include "CircleDanger.h"
+#include "LineDanger.h"
 
 class Map
 {
@@ -28,9 +30,11 @@ public:
 	void createElement(std::string, float, sf::Color, std::string, std::string, std::string);
 	void createLaw(Element*, LawType);
 	void addElementInMap(std::string, sf::Vector2f);
+	void addDangerInMap(std::string, sf::Vector2f);
 	std::vector<std::unique_ptr<Individual>>& getLeaders() { return leaders; };
 	std::vector<std::unique_ptr<Element>>& getElements() { return elements; };
 	std::vector<std::unique_ptr<Law>>& getLaws() { return laws; };
+	std::vector<std::unique_ptr<Danger>>& getDangers() { return dangers; };
 
 	void update();
 	int individualsNumber();
