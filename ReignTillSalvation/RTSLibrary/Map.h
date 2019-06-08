@@ -22,7 +22,8 @@ private:
 	void updateGroup();
 	void updateLaws();
 	void updatePositions();
-	void updateDangers();
+	void updateDangers(std::unique_ptr<sftools::Chronometer>&);
+	void deleteDanger(const int&);
 
 public:
 	Map() = default;
@@ -39,7 +40,7 @@ public:
 	Element* getSelectedElement() { return selected_element; };
 	std::vector<std::unique_ptr<Danger>>& getDangers() { return dangers; };
 
-	void update();
+	void update(std::unique_ptr<sftools::Chronometer>&);
 	int individualsNumber();
 };
 

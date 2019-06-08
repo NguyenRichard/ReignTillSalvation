@@ -3,9 +3,11 @@
 #include "LawMenu.h"
 
 
-GameMenu::GameMenu(const Game & state, std::unique_ptr<Map> new_map) :
-	Game(state, std::move(new_map))
+GameMenu::GameMenu(const Game & state, std::unique_ptr<Map> new_map,
+	std::unique_ptr<sftools::Chronometer> time) :
+	Game(state, std::move(new_map), std::move(time))
 {
+	time->pause();
 }
 
 void GameMenu::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event) {

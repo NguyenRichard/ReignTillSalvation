@@ -5,17 +5,17 @@ LineDanger::LineDanger(float set_countdownAppearance, float set_duration,
 	Danger(set_countdownAppearance, set_duration)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
-	shape = sf::RectangleShape(sf::Vector2f(width, length));
+	shape = sf::RectangleShape(sf::Vector2f(length, width));
+	
+	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
+	shape.setPosition(coord);
 
 	direction.x = direction.x / sqrt(pow(direction.x, 2) + pow(direction.y, 2));
 	direction.y = direction.y / sqrt(pow(direction.x, 2) + pow(direction.y, 2));
-	float rotation = 180.0f / PI * acos(direction.y / direction.x);
+	float rotation = 180.0f / PI * atan(direction.y / direction.x);
 	if (direction.y < 0)
 		rotation += 180.0f;
 	shape.setRotation(rotation);
-
-	shape.setOrigin(sf::Vector2f(width / 2, length / 2));
-	shape.setPosition(coord);
 
 	sf::Color color = sf::Color::Red;
 	color.a = 0;
@@ -81,7 +81,8 @@ bool LineDanger::isInTheZone(std::unique_ptr<Individual> &individual)
 	sf::Vector2f coord = individual->getCoord();
 	sf::Vector2f origin = shape.getPosition();
 
-	float rotationLine = shape.getRotation() * PI / 180.0f;
+	float rotationLine = shape.getRotation();
+	rotationLine = rotationLine * PI / 180.0f;
 	sf::Vector2f directionLine = sf::Vector2f(cos(rotationLine), sin(rotationLine));
 	
 	sf::Vector2f vectorBetween = coord - origin;
@@ -96,6 +97,7 @@ bool LineDanger::isInTheZone(std::unique_ptr<Individual> &individual)
 	// angle between the line and the vector from the origin to the individual
 	float rotationRelative = rotationLine - rotationBetween;
 
-	float distancePointToLine = abs(magnitude(vectorBetween) * sin(rotationBetween));
-	return distancePointToLine < shape.getSize().x / 2;
+	float distancePointToLine = abs(magnitude(vectorBetween) * sin(rotationRelative));
+	bool ret = distancePointToLine < shape.getSize().y / 2;
+	return ret;
 }

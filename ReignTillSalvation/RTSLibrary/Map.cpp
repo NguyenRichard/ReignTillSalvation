@@ -94,11 +94,11 @@ void Map::updateLaws() {
 	}
 }
 
-void Map::update() {
+void Map::update(std::unique_ptr<sftools::Chronometer>& time) {
 	updatePositions();
 	updateGroup();
 	updateLaws();
-	updateDangers();
+	updateDangers(time);
 }
 
 int Map::individualsNumber() {
@@ -109,12 +109,21 @@ int Map::individualsNumber() {
 	return sum;
 }
 
-void Map::updateDangers() {
-	for (auto &danger : dangers) {
-		bool update = danger->update();
-		if (update)
-			danger->affectZone(leaders);
+void Map::updateDangers(std::unique_ptr<sftools::Chronometer>& time) {
+	for (int i = dangers.size() - 1; i >= 0; i--) {
+		std::unique_ptr<Danger> &danger = dangers[i];
+		bool update = danger->update(time);
+		if (update) {
+			if (danger->isFinished(time))
+				deleteDanger(i);
+			else
+				danger->affectZone(leaders);
+		}
 	}
+}
+
+void Map::deleteDanger(const int &i) {
+	dangers.erase(dangers.begin() + i);
 }
 
 void Map::addDangerInMap(std::string shape, sf::Vector2f coord) {
