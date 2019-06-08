@@ -110,15 +110,18 @@ int Map::individualsNumber() {
 }
 
 void Map::updateDangers(std::unique_ptr<sftools::Chronometer>& time) {
+	if (dangers.empty() || dangers.back()->isNextNow(time))
+		addRandomDanger(time);
+
 	for (int i = dangers.size() - 1; i >= 0; i--) {
 		std::unique_ptr<Danger> &danger = dangers[i];
-		bool update = danger->update(time);
-		if (update) {
-			if (danger->isFinished(time))
-				deleteDanger(i);
-			else
-				danger->affectZone(leaders);
-		}
+		if (danger->hasBegun(time))
+			if (danger->update(time)) {
+				if (danger->isFinished(time))
+					deleteDanger(i);
+				else
+					danger->affectZone(leaders);
+			}
 	}
 }
 
@@ -135,4 +138,16 @@ void Map::addDangerInMap(std::unique_ptr<sftools::Chronometer> &time,
 	if (shape == "line")
 		dangers.push_back(std::make_unique<LineDanger>(time,
 			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord));
+}
+
+void Map::addRandomDanger(std::unique_ptr<sftools::Chronometer> &time)
+{
+	if (randomint(1) == 0)
+	{
+		dangers.push_back(std::make_unique<CircleDanger>(time));
+	}
+	else
+	{
+		dangers.push_back(std::make_unique<LineDanger>(time));
+	}
 }

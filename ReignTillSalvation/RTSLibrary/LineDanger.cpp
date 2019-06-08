@@ -1,9 +1,9 @@
 #include "LineDanger.h"
 
 LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
-		float set_countdownAppearance, float set_duration,
-		sf::Vector2f coord, sf::Vector2f direction, float width) :
-	Danger(time, set_countdownAppearance, set_duration)
+		float set_countdownAppearance, float set_duration, sf::Vector2f coord,
+		sf::Vector2f direction, float width, float time_offset, float time_before_next) :
+	Danger(time, set_countdownAppearance, set_duration, time_offset, time_before_next)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
 	shape = sf::RectangleShape(sf::Vector2f(length, width));
@@ -11,8 +11,8 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
 	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape.setPosition(coord);
 
-	direction.x = direction.x / sqrt(pow(direction.x, 2) + pow(direction.y, 2));
-	direction.y = direction.y / sqrt(pow(direction.x, 2) + pow(direction.y, 2));
+	direction.x = direction.x / magnitude(direction);
+	direction.y = direction.y / magnitude(direction);
 	float rotation = 180.0f / PI * atan(direction.y / direction.x);
 	if (direction.y < 0)
 		rotation += 180.0f;
@@ -26,10 +26,41 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
 	shape.setOutlineColor(color);
 }
 
-LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
-		float set_countdownAppearance, float set_duration, sf::Vector2f coord) :
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time, float set_countdownAppearance,
+		float set_duration, sf::Vector2f coord) :
 	LineDanger(time, set_countdownAppearance, set_duration, coord,
-		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER) {}
+		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER, 0, 8.0f) {}
+
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time) :
+	Danger(time)
+{
+	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
+	float width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
+	shape = sf::RectangleShape(sf::Vector2f(length, width));
+
+	sf::Vector2f coord;
+	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
+	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
+	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
+	shape.setPosition(coord);
+
+	sf::Vector2f direction;
+	direction.x = (float)randomint(10) / 10;
+	direction.y = (float)randomint(10) / 10;
+	direction.x = direction.x / magnitude(direction);
+	direction.y = direction.y / magnitude(direction);
+	float rotation = 180.0f / PI * atan(direction.y / direction.x);
+	if (direction.y < 0)
+		rotation += 180.0f;
+	shape.setRotation(rotation);
+
+	sf::Color color = sf::Color::Red;
+	color.a = 0;
+	shape.setFillColor(color);
+	shape.setOutlineThickness(2);
+	color.a = 150.0f;
+	shape.setOutlineColor(color);
+}
 
 void LineDanger::updateOpacity(float opacity)
 {

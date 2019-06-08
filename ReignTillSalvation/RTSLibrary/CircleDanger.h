@@ -5,8 +5,10 @@
 class CircleDanger : public Danger
 {
 public:
-	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, float, sf::Vector2f coord, float radius);
+	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, float, sf::Vector2f coord,
+		float radius, float time_offset, float time_before_next);
 	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, float, sf::Vector2f coord);
+	CircleDanger(std::unique_ptr<sftools::Chronometer>&);
 	void affectZone(std::vector<std::unique_ptr<Individual>>&);
 	sf::CircleShape &getShape() { return shape; };
 private:

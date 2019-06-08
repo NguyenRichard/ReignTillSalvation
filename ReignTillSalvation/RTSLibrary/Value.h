@@ -66,4 +66,12 @@
 #define DEFAULT_WIDTH_DANGER			10.0f
 #define MAX_TIME_WITHOUT_DANGER			20.0f
 #define MIN_TIME_WITHOUT_DANGER			2.0f
+#define MIN_RADIUS_DANGER				50.0f
+#define MAX_RADIUS_DANGER				150.0f
+#define MIN_WIDTH_DANGER				5.0f
+#define MAX_WIDTH_DANGER				25.0f
+#define MIN_TIME_BEFORE_APPARITION		2.0f
+#define MAX_TIME_BEFORE_APPARITION		18.0f
+#define MIN_TIME_BEFORE_NEXT			1.0f
+#define MAX_TIME_BEFORE_NEXT			10.0f
 #pragma endregion danger_sprite

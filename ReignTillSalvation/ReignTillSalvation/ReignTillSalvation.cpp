@@ -9,6 +9,6 @@
 
 int main()
 {
-	//return RTSmain();
-	return imGUImain();
+	return RTSmain();
+	//return imGUImain();
 }
