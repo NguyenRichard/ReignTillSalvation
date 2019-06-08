@@ -1,10 +1,10 @@
 #include "LawMenu.h"
 #include "Value.h"
 #include "Strong.h"
+#include "GameMenu.h"
 
-LawMenu::LawMenu(Element* element, Game* game, int width, int height) :
-	element(element),
-	game(game)
+LawMenu::LawMenu(Element* element, int width, int height) :
+	element(element)
 {
 
 	if (!font.loadFromFile("res/fonts/impact.ttf")) {
@@ -49,48 +49,52 @@ void LawMenu::render(sf::RenderWindow& window) {
 
 }
 
-void LawMenu::handleMouseEventClick(sf::RenderWindow& window) {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		Map* map = game->getMap();
+void LawMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window, sf::Event& event) {
+	GameMenu* game = dynamic_cast<GameMenu*>(rts->getState());
+	if (event.key.code == sf::Mouse::Left && game != NULL) {
+		std::unique_ptr<Map>& map = game->getMap();
 		Strong* strong;
 		switch (selectedItemIndex){
 		case 0:
 			map->createLaw(element, Attraction);
-			game->changeGameState(Running);
+			game->changeState(rts);
 			break;
 		case 1:
 			map->createLaw(element,Repulsion);
-			game->changeGameState(Running);
+			game->changeState(rts);
 			break;
 		case 2:
 			map->createLaw(element, Cancel);
-			game->changeGameState(Running);
+			game->changeState(rts);
 			break;
 		case 3:
-			game->changeGameState(Running);
+			game->changeState(rts);
 			break;
 		}
 	}
 }
 
-void LawMenu::handleKeyEventAction(sf::RenderWindow& window) {
-	Map* map = game->getMap();
-	Strong* strong;
-	switch (selectedItemIndex) {
-	case 0:
-		map->createLaw(element, Attraction);
-		game->changeGameState(Running);
-		break;
-	case 1:
-		map->createLaw(element, Repulsion);
-		game->changeGameState(Running);
-		break;
-	case 2:
-		map->createLaw(element, Cancel);
-		game->changeGameState(Running);
-		break;
-	case 3:
-		game->changeGameState(Running);
-		break;
+void LawMenu::handleKeyEventAction(RTS* rts,sf::RenderWindow& window) {
+	GameMenu* game = dynamic_cast<GameMenu*>(rts->getState());
+	if (game != NULL) {
+		std::unique_ptr<Map>& map = game->getMap();
+		Strong* strong;
+		switch (selectedItemIndex) {
+		case 0:
+			map->createLaw(element, Attraction);
+			game->changeState(rts);
+			break;
+		case 1:
+			map->createLaw(element, Repulsion);
+			game->changeState(rts);
+			break;
+		case 2:
+			map->createLaw(element, Cancel);
+			game->changeState(rts);
+			break;
+		case 3:
+			game->changeState(rts);
+			break;
+		}
 	}
 }
