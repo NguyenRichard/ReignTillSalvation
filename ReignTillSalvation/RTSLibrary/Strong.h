@@ -18,7 +18,8 @@ public:
 	void updatePositionChaos() override;
 	void eraseSubordinate(int);
 	bool stillInGroup(int);
-	std::unique_ptr<IndividualState> changeState(Individual*);// PUT IT PRIVATE
+	std::unique_ptr<IndividualState> changeState(Individual*);
+	void render(sf::RenderWindow&) override;
 
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;

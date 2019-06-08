@@ -1,8 +1,9 @@
 #include "CircleDanger.h"
 
-CircleDanger::CircleDanger(float setCountdownAppearance,
-	float setDuration, sf::Vector2f coord, float radius) :
-	Danger(setCountdownAppearance, setDuration)
+CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
+		float setCountdownAppearance,
+		float setDuration, sf::Vector2f coord, float radius) :
+	Danger(time, setCountdownAppearance, setDuration)
 {
 	shape = sf::CircleShape(radius);
 
@@ -16,6 +17,10 @@ CircleDanger::CircleDanger(float setCountdownAppearance,
 	color.a = 150.0f;
 	shape.setOutlineColor(color);
 }
+
+CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
+		float setCountdownAppearance, float setDuration, sf::Vector2f coord) :
+	CircleDanger(time, setCountdownAppearance, setDuration, coord, DEFAULT_RADIUS_DANGER) {}
 
 void CircleDanger::updateOpacity(float opacity)
 {

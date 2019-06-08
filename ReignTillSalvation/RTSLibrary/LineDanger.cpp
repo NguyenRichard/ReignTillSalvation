@@ -1,8 +1,9 @@
 #include "LineDanger.h"
 
-LineDanger::LineDanger(float set_countdownAppearance, float set_duration,
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
+		float set_countdownAppearance, float set_duration,
 		sf::Vector2f coord, sf::Vector2f direction, float width) :
-	Danger(set_countdownAppearance, set_duration)
+	Danger(time, set_countdownAppearance, set_duration)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
 	shape = sf::RectangleShape(sf::Vector2f(length, width));
@@ -25,9 +26,9 @@ LineDanger::LineDanger(float set_countdownAppearance, float set_duration,
 	shape.setOutlineColor(color);
 }
 
-LineDanger::LineDanger(float set_countdownAppearance, float set_duration,
-	sf::Vector2f coord) :
-	LineDanger(set_countdownAppearance, set_duration, coord,
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
+		float set_countdownAppearance, float set_duration, sf::Vector2f coord) :
+	LineDanger(time, set_countdownAppearance, set_duration, coord,
 		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER) {}
 
 void LineDanger::updateOpacity(float opacity)

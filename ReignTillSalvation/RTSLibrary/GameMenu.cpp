@@ -20,7 +20,9 @@ void GameMenu::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event
 		}
 
 	}
-	menu->handleMouseEvent(rts, window, event);
+	else {
+		menu->handleMouseEvent(rts, window, event);
+	}
 
 }
 
@@ -35,7 +37,7 @@ void GameMenu::renderMenu(sf::RenderWindow& window) {
 
 std::unique_ptr<RTSState> GameMenu::changeStateToGameRunning() {
 
-	return std::make_unique<GameRunning>(*this, std::move(map));
+	return std::make_unique<GameRunning>(*this, std::move(map), std::move(time));
 
 }
 
