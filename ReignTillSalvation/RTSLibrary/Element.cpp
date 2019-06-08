@@ -42,6 +42,19 @@ std::vector<sf::Vector2f> Element::getCoords() const {
 	return coords;
 }
 
+void Element::render(sf::RenderWindow& window) {
+	float sprite_width = sprite.getSize().x;
+	float sprite_height = sprite.getSize().y;
+	for (const auto & element_coord : coords) {
+		rangeShape.setPosition(element_coord.x - range, element_coord.y - range);
+		rangeShape.setRadius(range);
+		sprite.setPosition(element_coord.x - sprite_width / 2, element_coord.y - sprite_height / 2);
+		window.draw(sprite);
+		window.draw(rangeShape);
+	}
+}
+
+
 bool Element:: operator ==(const Element &element) {
 	return name == element.getName();
 }

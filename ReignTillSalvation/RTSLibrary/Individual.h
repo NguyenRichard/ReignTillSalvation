@@ -23,6 +23,7 @@ public:
 	sf::Vector2f directionToward(const sf::Vector2f &point) const 
 		{ return state->directionToward(point); };
 
+	void render(sf::RenderWindow&);
 	void updateMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroupNew(std::vector<std::unique_ptr<Individual>>&, int);

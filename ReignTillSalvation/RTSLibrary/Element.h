@@ -27,6 +27,7 @@ public:
 	std::string getAttractionMessage() { return attractionMessage; };
 	std::string getRepulsionMessage() { return repulsionMessage; };
 	std::string getCancelMessage() { return cancelMessage; };
+	void render(sf::RenderWindow& window);
 
 	bool operator ==(const Element&);
 
