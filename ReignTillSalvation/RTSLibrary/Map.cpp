@@ -126,13 +126,13 @@ void Map::deleteDanger(const int &i) {
 	dangers.erase(dangers.begin() + i);
 }
 
-void Map::addDangerInMap(std::string shape, sf::Vector2f coord) {
+void Map::addDangerInMap(std::unique_ptr<sftools::Chronometer> &time,
+		std::string shape, sf::Vector2f coord) {
 	if (shape == "circle")
-		dangers.push_back(std::make_unique<CircleDanger>(
-			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord, DEFAULT_RADIUS_DANGER));
+		dangers.push_back(std::make_unique<CircleDanger>(time,
+			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord));
 
 	if (shape == "line")
-		dangers.push_back(std::make_unique<LineDanger>(
-			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord, DEFAULT_DIRECTION_DANGER,
-			DEFAULT_WIDTH_DANGER));
+		dangers.push_back(std::make_unique<LineDanger>(time,
+			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord));
 }

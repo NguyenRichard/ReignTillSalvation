@@ -6,8 +6,9 @@
 class LineDanger : public Danger
 {
 public:
-	LineDanger(float, float, sf::Vector2f coord, sf::Vector2f direction, float width);
-	LineDanger(float, float, sf::Vector2f coord);
+	LineDanger(std::unique_ptr<sftools::Chronometer>&,
+		float, float, sf::Vector2f coord, sf::Vector2f direction, float width);
+	LineDanger(std::unique_ptr<sftools::Chronometer>&, float, float, sf::Vector2f coord);
 	void affectZone(std::vector<std::unique_ptr<Individual>>&);
 	sf::RectangleShape &getShape() { return shape; };
 private:

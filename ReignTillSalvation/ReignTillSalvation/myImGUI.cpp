@@ -455,7 +455,7 @@ void dangerWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input
 		if (0 < mouseWorldPosition.x && mouseWorldPosition.x < window.getSize().x
 			&& 0 < mouseWorldPosition.y && mouseWorldPosition.y < window.getSize().y) {
 			std::string shape(input_shape);
-			game->getMap()->addDangerInMap(shape, mouseWorldPosition);
+			game->getMap()->addDangerInMap(game->getTime(), shape, mouseWorldPosition);
 		}
 	}
 	ImGui::End();

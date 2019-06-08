@@ -55,7 +55,7 @@ std::unique_ptr<RTSState> GameRunning::changeStateToMainMenu(){
 }
 
 std::unique_ptr<RTSState> GameRunning::changeStateToGameMenu() {
-	return std::make_unique<GameMenu>(*this,std::move(map));
+	return std::make_unique<GameMenu>(*this, std::move(map), std::move(time));
 }
 
 void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
@@ -82,54 +82,24 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map->getLeaders();
 	std::vector<std::unique_ptr<Element>>& elements = map->getElements();
 	std::vector<std::unique_ptr<Danger>>& dangers = map->getDangers();
-	sf::Vector2f coord;
-	sf::CircleShape* circle;
-	float radius;
-	std::vector<std::unique_ptr<Individual>>* subordinates;
-	Strong* strong;
+	std::vector<std::unique_ptr<Law>>& laws = map->getLaws();
+
 	for (const auto & leader : leaders) {
-		coord = leader->getCoord();
-		circle = leader->getState()->getRangeShape();
-		radius = circle->getRadius();
-		circle->setPosition(coord.x - radius, coord.y - radius);
-		window.draw(*circle);
-		strong = dynamic_cast<Strong*>(leader->getState());
-		subordinates = &(strong->getSubordinates());
-		for (const auto & subordinate : *subordinates) {
-			coord = subordinate->getCoord();
-			circle = subordinate->getState()->getRangeShape();
-			radius = circle->getRadius();
-			circle->setPosition(coord.x - radius, coord.y - radius);
-			window.draw(*circle);
-		}
+		leader->render(window);
 	}
-	std::vector<sf::Vector2f> element_coords;
-	sf::RectangleShape* elem_sprite;
-	sf::CircleShape* elem_range_sprite;
-	float sprite_width;
-	float sprite_height;
-	float range;
+
 	for (const auto & element : elements) {
-		elem_sprite = element.get()->getSprite();
-		elem_range_sprite = element.get()->getRangeShape();
-		radius = elem_range_sprite->getRadius();
-		element_coords = element.get()->getCoords();
-		range = element.get()->getRangeUnmutable();
-		sprite_width = elem_sprite->getSize().x;
-		sprite_height = elem_sprite->getSize().y;
-		for (const auto & element_coord : element_coords) {
-			elem_range_sprite->setPosition(element_coord.x - radius, element_coord.y - radius);
-			elem_range_sprite->setRadius(range);
-			elem_sprite->setPosition(element_coord.x - sprite_width / 2, element_coord.y - sprite_height / 2);
-			window.draw(*elem_sprite);
-			window.draw(*elem_range_sprite);
-		}
+		element->render(window);
 	}
 
 	sf::Shape* danger_shape;
 	for (const auto &danger : dangers) {
 		danger_shape = &danger->getShape();
 		window.draw(*danger_shape);
+	}
+
+	for (const auto & law : laws) {
+		law->render(window);
 	}
 }
 
