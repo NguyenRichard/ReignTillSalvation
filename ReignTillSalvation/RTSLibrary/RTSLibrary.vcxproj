@@ -208,6 +208,7 @@
     <ClCompile Include="RTS.cpp" />
     <ClCompile Include="RTSLibrary.cpp" />
     <ClCompile Include="Strong.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="Weak.cpp" />
   </ItemGroup>

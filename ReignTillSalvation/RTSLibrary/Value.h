@@ -12,7 +12,7 @@
 #pragma endregion window_size
 
 #pragma region map_initializing_constant
-#define MAX_INDIVIDUALS					40
+#define MAX_INDIVIDUALS					100
 #define MAX_ELEMENTS					0
 #pragma endregion map_initializing_constant
 
@@ -21,7 +21,7 @@
 #define WEAK_SPRITE_SIZE				16
 #define WEAK_SPRITE_RATIO				3
 #define STRONG_SPRITE_SIZE				16
-#define STRONG_SPRITE_RATIO				5
+#define STRONG_SPRITE_RATIO				4
 #define GROUP_SUB_RANGE					WEAK_SPRITE_SIZE*(2+WEAK_SPRITE_RATIO)
 #define GROUP_LEAD_RANGE				STRONG_SPRITE_SIZE*(2+STRONG_SPRITE_RATIO)
 
