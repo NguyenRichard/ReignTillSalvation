@@ -24,7 +24,6 @@
 #pragma endregion include
 
 #pragma region define
-#define MS_PER_UPDATE 2
 #pragma endregion define
 
 int imGUImain();
