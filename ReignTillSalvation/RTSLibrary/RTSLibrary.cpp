@@ -30,10 +30,9 @@ int RTSmain()
 			rts.processInput(window, event);
 		}
 
-		window.clear();
-
 		sf::Time duration = globalClock.getElapsedTime();
 		rts.update();
+		//window.clear();
 		rts.render(window);
 		window.display();
 	}
