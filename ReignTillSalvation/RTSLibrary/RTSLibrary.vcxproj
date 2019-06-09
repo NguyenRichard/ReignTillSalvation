@@ -161,6 +161,7 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMenu.h" />
+    <ClInclude Include="GameOverMenu.h" />
     <ClInclude Include="GameRunning.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="IndividualState.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Element.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMenu.cpp" />
+    <ClCompile Include="GameOverMenu.cpp" />
     <ClCompile Include="GameRunning.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="IndividualState.cpp" />

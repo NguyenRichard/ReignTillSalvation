@@ -11,7 +11,7 @@ public:
 	virtual ~RTSState() = default;
 	virtual void processInput(RTS*,sf::RenderWindow&, sf::Event&) = 0;
 	virtual void render(sf::RenderWindow&) = 0;
-	virtual void update() {};
+	virtual void update(RTS* rts) {};
 	virtual void init() = 0;
 	int getHeight() const { return height; };
 	int getWidth() const { return width; };

@@ -1,5 +1,6 @@
 #include "GameRunning.h"
 #include "GameMenu.h"
+#include "GameOverMenu.h"
 
 
 GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time) :
@@ -58,6 +59,10 @@ std::unique_ptr<RTSState> GameRunning::changeStateToGameMenu() {
 	return std::make_unique<GameMenu>(*this, std::move(map), std::move(time));
 }
 
+std::unique_ptr<RTSState> GameRunning::changeStateToGameOverMenu() {
+	return std::make_unique<GameOverMenu>(*this);
+}
+
 void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
 	std::vector<sf::Vector2f>* coords;
 
@@ -77,10 +82,12 @@ void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
 	}
 }
 
-void GameRunning::update() {
+void GameRunning::update(RTS* rts) {
 	map->update(time);
 	if (!music.getStatus() == music.Playing)
 		music.play();
+	if (map->getLeaders().size() == 0)
+		rts->changeState(changeStateToGameOverMenu());
 }
 
 void::GameRunning::init() {

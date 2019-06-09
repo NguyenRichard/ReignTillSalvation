@@ -54,7 +54,7 @@ void GameMenu::init() {
 	time->pause();
 }
 
-void GameMenu::update() {
+void GameMenu::update(RTS* rts) {
 	if (!music.getStatus() == music.Playing)
 		music.play();
 }

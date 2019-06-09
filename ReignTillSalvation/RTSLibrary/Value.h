@@ -12,7 +12,7 @@
 #pragma endregion window_size
 
 #pragma region map_initializing_constant
-#define MAX_INDIVIDUALS					100
+#define MAX_INDIVIDUALS					0
 #define MAX_ELEMENTS					0
 #pragma endregion map_initializing_constant
 

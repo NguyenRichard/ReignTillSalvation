@@ -15,7 +15,7 @@ public:
 	Game(const Game & state, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>);
 	void processInput(RTS*,sf::RenderWindow& window,sf::Event&) override = 0;
 	void render(sf::RenderWindow& window) override = 0;
-	void update() override = 0;
+	void update(RTS* rts) override = 0;
 	void init() override = 0;
 	std::unique_ptr<Map>& getMap() { return map; }
 	std::unique_ptr<sftools::Chronometer> &getTime() { return time; }
