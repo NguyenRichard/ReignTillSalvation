@@ -111,6 +111,7 @@ void Map::update(std::unique_ptr<sftools::Chronometer>& time) {
 	updateGroup();
 	updateLaws();
 	updateDangers(time);
+	updateAnim(time);
 }
 
 int Map::individualsNumber() {
@@ -161,5 +162,14 @@ void Map::addRandomDanger(std::unique_ptr<sftools::Chronometer> &time)
 	else
 	{
 		dangers.push_back(std::make_unique<LineDanger>(time));
+	}
+}
+
+void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
+{
+	if (time->getElapsedTime().asMilliseconds() - last_anim_update.asMilliseconds() > MS_PER_ANIM) {
+		for (auto &leader : leaders)
+			leader->getState()->incrementAnim();
+		last_anim_update = time->getElapsedTime();
 	}
 }
