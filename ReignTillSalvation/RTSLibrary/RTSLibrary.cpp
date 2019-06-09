@@ -32,7 +32,7 @@ int RTSmain()
 
 		sf::Time duration = globalClock.getElapsedTime();
 		rts.update();
-		//window.clear();
+		window.clear();
 		rts.render(window);
 		window.display();
 	}

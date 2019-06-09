@@ -92,6 +92,10 @@ void Individual::render(sf::RenderWindow& window) {
 	state->render(window);
 }
 
+void Individual::render_and_update(sf::RenderWindow& window) {
+	state->render_and_update(window);
+}
+
 float Individual::distanceToIndividual(const Individual & individual) const {
 	return state->distanceToIndividual(*individual.state.get());
 }
