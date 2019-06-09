@@ -16,7 +16,7 @@ Element::Element(std::string name, float new_range) :
 }
 
 Element::Element(std::string name, float range, sf::Color color, std::string attractionMessage,
-		std::string repulsionMessage, std::string cancelMessage, sf::Texture* texture) :
+		std::string repulsionMessage, std::string cancelMessage, sf::Texture*) :
 		name(name), coords(), range(range), power(0),
 		attractionMessage(attractionMessage),
 		repulsionMessage(repulsionMessage),

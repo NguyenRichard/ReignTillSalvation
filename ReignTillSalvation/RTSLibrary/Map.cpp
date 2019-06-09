@@ -21,7 +21,7 @@ void Map::createIndividual(sf::Vector2f coord) {
 				));
 	}
 	else {
-		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals[0]), coord));
+		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals.find("darkelement")), coord));
 	}
 }
 
