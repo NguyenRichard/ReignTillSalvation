@@ -125,7 +125,7 @@ void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual
 
 }
 
-void Weak::render(sf::RenderWindow& window) {
+void Weak::render_and_update(sf::RenderWindow& window) {
 	sprite.setPosition(coord.x, coord.y);
 	
 	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
@@ -135,10 +135,14 @@ void Weak::render(sf::RenderWindow& window) {
 	}
 
 
-	incrementAnim();
+	//incrementAnim();
 	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE));
 
 	sprite.setRotation(rotation);
+	window.draw(sprite);
+}
+
+void Weak::render(sf::RenderWindow& window) {
 	window.draw(sprite);
 }
 

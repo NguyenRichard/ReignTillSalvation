@@ -24,6 +24,7 @@ public:
 	void setTextures(std::pair<sf::Texture, sf::Texture>* textures) { this->textures = textures; };
 	virtual void updatePositionChaos() = 0;
 	virtual void render(sf::RenderWindow&) = 0;
+	virtual void render_and_update(sf::RenderWindow&) = 0;
 
 	void setCoord(const sf::Vector2f& new_coord) { coord = new_coord; };
 	sf::Vector2f& getCoord() { return coord; };
@@ -42,14 +43,14 @@ public:
 
 	bool operator <(const IndividualState&);
 
+	virtual void incrementAnim() = 0;
+
 protected:
 	sf::Sprite sprite;
 	std::pair<sf::Texture, sf::Texture>* textures;
 	sf::Vector2f coord;
 	sf::Vector2f old_coord;
 	sf::Vector2i anim;
-
-	virtual void incrementAnim() = 0;
 };
 
 #endif
