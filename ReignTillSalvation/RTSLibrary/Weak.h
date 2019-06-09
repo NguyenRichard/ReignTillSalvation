@@ -23,6 +23,7 @@ public:
 	int myStrength() const override { return -1; };
 	int findSubPosition(const IndividualState&) override { return -1; };
 	void makeSubordinate(Individual*,std::vector<std::unique_ptr<Individual>>& new_leader,std::unique_ptr<Individual>&,int);
+	void incrementAnim() override;
 	//new_leader must be a Strong.
 
 private:

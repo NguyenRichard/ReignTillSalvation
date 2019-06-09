@@ -9,6 +9,8 @@
 #include "SFML/Graphics.hpp"
 #include "Value.h"
 
+enum Dir {Down, DownLeft, Left, TopLeft, Top, TopRight, Right, DownRight};
+
 class Individual;
 
 class IndividualState {
@@ -45,6 +47,9 @@ protected:
 	std::pair<sf::Texture, sf::Texture>* textures;
 	sf::Vector2f coord;
 	sf::Vector2f old_coord;
+	sf::Vector2i anim;
+
+	virtual void incrementAnim() = 0;
 };
 
 #endif
