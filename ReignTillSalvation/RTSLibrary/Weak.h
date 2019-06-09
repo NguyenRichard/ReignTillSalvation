@@ -7,7 +7,7 @@
 
 class Weak : public IndividualState {
 public:
-	Weak();
+	Weak() = default;
 	Weak(const IndividualState & state);
 	void action() override;
 	void updatePositionChaos() override;

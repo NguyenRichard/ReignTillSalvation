@@ -1,9 +1,11 @@
 #include "Strong.h"
 #include "OtherFunctions.h"
 
+
 Strong::Strong(std::pair<sf::Texture, sf::Texture>* textures) : IndividualState(textures) 
 {
 	sprite.setTexture(textures->second);
+	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
 	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
 	sprite.setScale(5, 5);
 }
@@ -12,6 +14,7 @@ Strong::Strong(const IndividualState & state) :
 	IndividualState(state)
 {
 	sprite.setTexture(textures->second);
+	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
 	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
 	sprite.setScale(5, 5);
 }
@@ -65,12 +68,12 @@ void Strong::updatePositionChaos() {
 
 	for (int i = 0; i < subordinates.size();i++) {
 		subordinates[i]->updatePosition();
-		subordinates[i]->applyCollision(coord,DIST_BETWEEN_INDIVIDUAL);
+		subordinates[i]->applyCollision(coord,DIST_BETWEEN_LEADER);
 		for (int j = 0; j < i; j++) {
-			subordinates[i]->applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_INDIVIDUAL);
+			subordinates[i]->applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_SUBORDINATE);
 		}
 		for (int j = i+1; j < subordinates.size(); j++) {
-			subordinates[i]->applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_INDIVIDUAL);
+			subordinates[i]->applyCollision(subordinates[j]->getCoord(), DIST_BETWEEN_SUBORDINATE);
 		}
 		subordinates[i]->applyCollisionElements();
 	}
