@@ -41,6 +41,7 @@ void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& ev
 
 void GameRunning::render(sf::RenderWindow& window) {
 	if (time->getElapsedTime().asMilliseconds() - last_render.asMilliseconds() > MS_PER_RENDER) {
+		window.clear();
 		renderGame(window);
 		last_render = time->getElapsedTime();
 	}

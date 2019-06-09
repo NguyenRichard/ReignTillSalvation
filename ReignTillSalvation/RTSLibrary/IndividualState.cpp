@@ -2,11 +2,14 @@
 
 
 IndividualState::IndividualState(std::pair<sf::Texture, sf::Texture>* textures) : 
-	textures(textures) {}
+	textures(textures),
+	anim(sf::Vector2i(0,Right))
+{}
 
 IndividualState::IndividualState(const IndividualState & state) : 
 	coord(state.coord), 
-	textures(state.textures) {}
+	textures(state.textures),
+	anim(sf::Vector2i(0, Right)) {}
 
 sf::Vector2f IndividualState::directionToward(const sf::Vector2f &point) const {
 	sf::Vector2f direction = sf::Vector2f(point.x - coord.x, point.y - coord.y);

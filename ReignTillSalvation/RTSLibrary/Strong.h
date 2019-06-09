@@ -21,6 +21,8 @@ public:
 	bool stillInGroup(int);
 	std::unique_ptr<IndividualState> changeState(Individual*);
 	void render(sf::RenderWindow&) override;
+	void incrementAnim() override;
+	void setSpriteDirection(float rotation);
 
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;

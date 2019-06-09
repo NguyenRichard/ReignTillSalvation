@@ -133,6 +133,18 @@ void Weak::render(sf::RenderWindow& window) {
 	if (direction.y < 0) {
 		rotation = 360.0f-rotation;
 	}
+
+
+	incrementAnim();
+	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE));
+
 	sprite.setRotation(rotation);
 	window.draw(sprite);
+}
+
+void Weak::incrementAnim(){
+	anim.x++;
+	if (anim.x*WEAK_SPRITE_SIZE >= textures->first.getSize().x) {
+		anim.x = 0;
+	}
 }
