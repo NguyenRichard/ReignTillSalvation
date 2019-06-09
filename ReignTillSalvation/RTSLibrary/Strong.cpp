@@ -231,39 +231,73 @@ void Strong::incrementAnim() {
 void Strong::setSpriteDirection(float rotation) {
 	if ((rotation >= 0 && rotation < 22.5)) {
 		anim.y = Right;
-		rotation = rotation - 45;
 	}
 	else if (rotation >= 22.5 && rotation < 67.5) {
 		anim.y = DownRight;
-		rotation = rotation - 45;
+		if (rotation > 45.0f) {
+			rotation = rotation - 45.0f;
+		}
+		else {
+			rotation = 360.0f - (45.0f - rotation);
+		}
 	}
 	else if (rotation >= 67.5 && rotation < 112.5) {
 		anim.y = Down;
-		rotation = rotation - 90;
+		if (rotation > 90.0f) {
+			rotation = rotation - 90.0f;
+		}
+		else {
+			rotation = 360.0f - (90.0f - rotation);
+		}
 	}
 	else if (rotation >= 112.5 && rotation < 157.5) {
 		anim.y = DownLeft;
-		rotation = rotation - 135;
+		if (rotation > 135.0f) {
+			rotation = rotation - 135.0f;
+		}
+		else {
+			rotation = 360.0f - (135.0f - rotation);
+		}
 	}
 	else if (rotation >= 157.5 && rotation < 202.5) {
 		anim.y = Left;
-		rotation = rotation - 185;
+		if (rotation > 185.0f) {
+			rotation = rotation - 185.0f;
+		}
+		else {
+			rotation = 360.0f - (185.0f - rotation);
+		}
 	}
 	else if (rotation >= 202.5 && rotation < 247.5) {
 		anim.y = TopLeft;
-		rotation = rotation - 225;
+		if (rotation > 225.0f) {
+			rotation = rotation - 225.0f;
+		}
+		else {
+			rotation = 360.0f - (225.0f - rotation);
+		}
 	}
 	else if (rotation >= 247.5 && rotation < 292.5) {
 		anim.y = Top;
-		rotation = rotation - 270;
+		if (rotation > 270.0f) {
+			rotation = rotation - 270.0f;
+		}
+		else {
+			rotation = 360.0f - (270.0f - rotation);
+		}
 	}
 	else if (rotation >= 292.5 && rotation <= 337.5) {
 		anim.y = TopRight;
-		rotation = rotation - 315;
+		if (rotation > 315.0f) {
+			rotation = rotation - 315.0f;
+		}
+		else {
+			rotation = 360.0f - (315.0f - rotation);
+		}
 	}
 	else if(rotation >= 337.5 && rotation <= 360){
 		anim.y = Right;
-		rotation = rotation - 315;
+		rotation = 360-rotation;
 	}
 
 	sprite.setRotation(rotation);
