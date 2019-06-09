@@ -1,6 +1,10 @@
 #include "Map.h"
 
 
+Map::Map() {
+	background.setTexture(textureManager.map);
+}
+
 void Map::createIndividual(sf::Vector2f coord) {
 	int nb_elements = elements.size();
 	if (nb_elements > 0) {
@@ -39,7 +43,7 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 void Map::createElement(std::string name, float range, sf::Color color,
 	std::string attractionMessage, std::string repulsionMessage,std::string cancelMessage) {
 	elements.push_back(std::make_unique<Element>(
-		name, range, color, attractionMessage, repulsionMessage,cancelMessage
+		name, range, color, attractionMessage, repulsionMessage,cancelMessage, &textureManager.elements.find(name)
 	));
 }
 
