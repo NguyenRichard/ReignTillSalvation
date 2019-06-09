@@ -13,12 +13,12 @@ public:
 	Element(std::string name);
 	Element(std::string name, float range);
 	Element(std::string name, float range, sf::Color color,
-		std::string attractionMessage, std::string repulsionMessage, std::string cancelMessage);
+		std::string attractionMessage, std::string repulsionMessage, std::string cancelMessage,sf::Texture*);
 	void addCoord(sf::Vector2f);
 	std::string getName() const { return name; };
 	std::vector<sf::Vector2f>& getCoords() { return coords; };
 	sf::CircleShape* getRangeShape() { return &rangeShape; };
-	sf::RectangleShape* getSprite() { return &sprite; };
+	sf::Sprite* getSprite() { return &sprite; };
 	float& getRangeMutable() { return range; };
 	float getRangeUnmutable() { return range; };
 	std::vector<sf::Vector2f> getCoords() const;
@@ -28,6 +28,7 @@ public:
 	std::string getRepulsionMessage() { return repulsionMessage; };
 	std::string getCancelMessage() { return cancelMessage; };
 	void render(sf::RenderWindow& window);
+	void changeSprite();
 
 	bool operator ==(const Element&);
 
@@ -36,7 +37,8 @@ private:
 	std::vector<sf::Vector2f> coords;
 	float range;
 	sf::CircleShape rangeShape;
-	sf::RectangleShape sprite;
+	sf::Sprite sprite;
+	sf::Texture* texture;
 	std::string attractionMessage;
 	std::string repulsionMessage;
 	std::string cancelMessage;

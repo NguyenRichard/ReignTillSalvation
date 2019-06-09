@@ -29,7 +29,7 @@ private:
 	TextureManager textureManager;
 	void updateAnim(std::unique_ptr<sftools::Chronometer>&);
 public:
-	Map() = default;
+	Map();
 	void createIndividual(sf::Vector2f);
 	void createElement(std::string, float);
 	void createElement(std::string, float, sf::Color, std::string, std::string, std::string);
@@ -47,5 +47,6 @@ public:
 	int individualsNumber();
 
 	sf::Time last_anim_update;
+	sf::Sprite background;
 };
 

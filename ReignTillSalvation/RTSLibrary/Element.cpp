@@ -8,8 +8,6 @@ Element::Element(std::string name) :
 	rangeShape.setOutlineThickness(2);
 	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
 	rangeShape.setOutlineColor(color);
-	sprite = sf::RectangleShape(sf::Vector2f(ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
-	sprite.setFillColor(color);
 }
 
 Element::Element(std::string name, float new_range) :
@@ -18,19 +16,18 @@ Element::Element(std::string name, float new_range) :
 }
 
 Element::Element(std::string name, float range, sf::Color color, std::string attractionMessage,
-		std::string repulsionMessage, std::string cancelMessage) :
+		std::string repulsionMessage, std::string cancelMessage, sf::Texture* texture) :
 		name(name), coords(), range(range), power(0),
 		attractionMessage(attractionMessage),
 		repulsionMessage(repulsionMessage),
-		cancelMessage(cancelMessage)
+		cancelMessage(cancelMessage),
+		texture(texture)
 {
 	rangeShape = sf::CircleShape(range);
 	rangeShape.setFillColor(FILL_COLOR);
 	rangeShape.setOutlineThickness(2);
 	rangeShape.setOutlineColor(color);
 
-	sprite = sf::RectangleShape(sf::Vector2f(ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
-	sprite.setFillColor(color);
 
 }
 
@@ -43,12 +40,12 @@ std::vector<sf::Vector2f> Element::getCoords() const {
 }
 
 void Element::render(sf::RenderWindow& window) {
-	float sprite_width = sprite.getSize().x;
-	float sprite_height = sprite.getSize().y;
+	sprite.setOrigin(ELEMENT_SPRITE_SIZE / 2, ELEMENT_SPRITE_SIZE / 2);
+	changeSprite();
 	for (const auto & element_coord : coords) {
 		rangeShape.setPosition(element_coord.x - range, element_coord.y - range);
 		rangeShape.setRadius(range);
-		sprite.setPosition(element_coord.x - sprite_width / 2, element_coord.y - sprite_height / 2);
+		sprite.setPosition(element_coord.x, element_coord.y);
 		window.draw(sprite);
 		window.draw(rangeShape);
 	}
@@ -57,4 +54,17 @@ void Element::render(sf::RenderWindow& window) {
 
 bool Element:: operator ==(const Element &element) {
 	return name == element.getName();
+}
+
+
+void Element::changeSprite() {
+	if (power > MAX_POWER / LAW_PROPORTION) {
+		sprite.setTextureRect(sf::IntRect(1 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+	}
+	else if (power < -MAX_POWER / LAW_PROPORTION) {
+		sprite.setTextureRect(sf::IntRect(2 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+	}
+	else {
+		sprite.setTextureRect(sf::IntRect(0 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+	}
 }
