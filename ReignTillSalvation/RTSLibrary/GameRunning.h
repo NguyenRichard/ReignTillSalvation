@@ -18,6 +18,5 @@ private:
 	std::unique_ptr<RTSState> changeStateToMainMenu();
 	std::unique_ptr<RTSState> changeStateToGameMenu();
 	void processGameInput(RTS*,sf::RenderWindow& window);
-	void renderGame(sf::RenderWindow& window);
 	void parseXML();
 };

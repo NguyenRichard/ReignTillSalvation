@@ -75,44 +75,12 @@ void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
 			}
 		}
 	}
-
-}
-
-void GameRunning::renderGame(sf::RenderWindow& window) {
-	std::vector<std::unique_ptr<Individual>>& leaders = map->getLeaders();
-	std::vector<std::unique_ptr<Element>>& elements = map->getElements();
-	std::vector<std::unique_ptr<Danger>>& dangers = map->getDangers();
-	std::vector<std::unique_ptr<Law>>& laws = map->getLaws();
-
-	if (time->getElapsedTime().asMilliseconds() - last_render.asMilliseconds() > MS_PER_RENDER) {
-		for (const auto & leader : leaders) {
-			leader->render_and_update(window);
-		}
-		last_render = time->getElapsedTime();
-	}
-	else {
-		for (const auto & leader : leaders) {
-			leader->render(window);
-		}
-	}
-
-	for (const auto & element : elements) {
-		element->render(window);
-	}
-
-	sf::Shape* danger_shape;
-	for (const auto &danger : dangers) {
-		danger_shape = &danger->getShape();
-		window.draw(*danger_shape);
-	}
-
-	for (const auto & law : laws) {
-		law->render(window);
-	}
 }
 
 void GameRunning::update() {
 	map->update(time);
+	if (!music.getStatus() == music.Playing)
+		music.play();
 }
 
 void::GameRunning::init() {
