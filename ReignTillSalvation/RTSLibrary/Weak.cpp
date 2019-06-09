@@ -1,16 +1,10 @@
 #include "Weak.h"
 
-Weak::Weak()
-{
-	sprite.setTexture(textures->first);
-	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
-	sprite.setScale(3, 3);
-};
-
 Weak::Weak(const IndividualState & state) : 
 	IndividualState(state) 
 {
 	sprite.setTexture(textures->first);
+	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE));
 	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
 	sprite.setScale(3, 3);
 }
@@ -138,9 +132,9 @@ void Weak::render_and_update(sf::RenderWindow& window) {
 	setSpriteDirection(rotation);
 
 	//incrementAnim();
+
 	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE));
 
-	sprite.setRotation(rotation);
 	window.draw(sprite);
 }
 

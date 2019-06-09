@@ -1,17 +1,5 @@
 #include "Map.h"
 
-Map::Map() {
-	std::pair<sf::Texture, sf::Texture> textures;
-	
-	if (!textures.first.loadFromFile("res/sprite/spritesheet.png")) {
-		printf("cannot load blue.png texture");
-	}
-	if (!textures.second.loadFromFile("res/sprite/spritesheet.png")) {
-		printf("cannot load blueleader.png texture");
-	}
-
-	textureManager.individuals.push_back(textures);
-}
 
 void Map::createIndividual(sf::Vector2f coord) {
 	int nb_elements = elements.size();
@@ -25,7 +13,7 @@ void Map::createIndividual(sf::Vector2f coord) {
 		Element* disliked = elements[rdm2].get();
 		leaders.push_back(
 			std::make_unique<Individual>(
-				std::make_unique<Strong>(&textureManager.individuals[0]), coord, liked, disliked
+				std::make_unique<Strong>(&textureManager.individuals.find(liked->getName())->second), coord, liked, disliked
 				));
 	}
 	else {
