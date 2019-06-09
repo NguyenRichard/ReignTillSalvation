@@ -32,7 +32,7 @@ void Strong::action() {
 
 std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
-void Strong::updatePositionChaos(std::vector<Element*>& elements) {
+void Strong::updatePositionChaos(std::vector<std::unique_ptr<Element>>& elements) {
 	float degree = 0.01 + (1 - 0.01) * randomint(RAND_MAX) / (float) RAND_MAX;
 	// between 1 and 10
 
@@ -69,13 +69,13 @@ void Strong::updatePositionChaos(std::vector<Element*>& elements) {
 	applyCollisionElements(elements);
 
 	for (int i = 0; i < subordinates.size();i++) {
-		subordinates[i]->updatePosition();
-		applyCollision(coord,DIST_BETWEEN_LEADER);
+		subordinates[i]->updatePosition(elements);
+		subordinates[i]->getState()->applyCollision(coord,DIST_BETWEEN_LEADER);
 		for (int j = 0; j < i; j++) {
-			applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_SUBORDINATE);
+			subordinates[i]->getState()->applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_SUBORDINATE);
 		}
 		for (int j = i+1; j < subordinates.size(); j++) {
-			applyCollision(subordinates[j]->getCoord(), DIST_BETWEEN_SUBORDINATE);
+			subordinates[i]->getState()->applyCollision(subordinates[j]->getCoord(), DIST_BETWEEN_SUBORDINATE);
 		}
 	}
 

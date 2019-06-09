@@ -16,7 +16,7 @@ public:
 	Strong(const IndividualState & state);
 	void action() override;
 	std::vector<std::unique_ptr<Individual>>& getSubordinates();
-	void updatePositionChaos(std::vector<Element*>&) override;
+	void updatePositionChaos(std::vector<std::unique_ptr<Element>>&) override;
 	void eraseSubordinate(int);
 	bool stillInGroup(int);
 	std::unique_ptr<IndividualState> changeState(Individual*);

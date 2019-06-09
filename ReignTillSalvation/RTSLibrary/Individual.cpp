@@ -83,9 +83,9 @@ void Individual::updatePositionAttraction() {
 	setCoord(my_coord);
 }
 
-void Individual::updatePosition() {
+void Individual::updatePosition(std::vector<std::unique_ptr<Element>>& map_elements) {
 	updatePositionAttraction();
-	state->updatePositionChaos(elements);
+	state->updatePositionChaos(map_elements);
 }
 
 void Individual::render(sf::RenderWindow& window) {

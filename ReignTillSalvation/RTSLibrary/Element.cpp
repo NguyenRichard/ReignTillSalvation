@@ -60,10 +60,10 @@ bool Element:: operator ==(const Element &element) {
 
 
 void Element::changeSprite() {
-	if (power > MAX_POWER / LAW_PROPORTION) {
+	if (power > 2*MAX_POWER / LAW_PROPORTION) {
 		sprite.setTextureRect(sf::IntRect(1 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
 	}
-	else if (power < -MAX_POWER / LAW_PROPORTION) {
+	else if (power < -2*MAX_POWER / LAW_PROPORTION) {
 		sprite.setTextureRect(sf::IntRect(2 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
 	}
 	else {

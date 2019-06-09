@@ -67,7 +67,7 @@ void Map::createLaw(Element* element, LawType type) {
 void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
 	{
-		leader->updatePosition();
+		leader->updatePosition(elements);
 	}
 }
 
@@ -120,7 +120,8 @@ void Map::updateDangers(std::unique_ptr<sftools::Chronometer>& time) {
 	for (int i = dangers.size() - 1; i >= 0; i--) {
 		std::unique_ptr<Danger> &danger = dangers[i];
 		if (danger->hasBegun(time))
-			if (danger->update(time)) {
+			danger->update(time);
+			if (danger->getCountdownStatus()) {
 				if (danger->isFinished(time))
 					deleteDanger(i);
 				else
@@ -148,11 +149,11 @@ void Map::addRandomDanger(std::unique_ptr<sftools::Chronometer> &time)
 {
 	if (randomint(1) == 0)
 	{
-		dangers.push_back(std::make_unique<CircleDanger>(time));
+		dangers.push_back(std::make_unique<CircleDanger>(time, &textureManager.dangers.find("explosion")->second));
 	}
 	else
 	{
-		dangers.push_back(std::make_unique<LineDanger>(time));
+		dangers.push_back(std::make_unique<LineDanger>(time, &textureManager.dangers.find("laser")->second));
 	}
 }
 

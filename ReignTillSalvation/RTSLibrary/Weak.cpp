@@ -19,7 +19,7 @@ void Weak::action() {
 	std::cout << "I am weak\n";
 }
 
-void Weak::updatePositionChaos(std::vector<Element*>& elements) {
+void Weak::updatePositionChaos(std::vector<std::unique_ptr<Element>>& elements) {
 	sf::Vector2f direction = directionToward(leader->getCoord());
 	old_coord = coord;
 
