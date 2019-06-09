@@ -16,7 +16,7 @@ Element::Element(std::string name, float new_range) :
 }
 
 Element::Element(std::string name, float range, sf::Color color, std::string attractionMessage,
-		std::string repulsionMessage, std::string cancelMessage, sf::Texture*) :
+		std::string repulsionMessage, std::string cancelMessage, sf::Texture* texture) :
 		name(name), coords(), range(range), power(0),
 		attractionMessage(attractionMessage),
 		repulsionMessage(repulsionMessage),
@@ -27,6 +27,8 @@ Element::Element(std::string name, float range, sf::Color color, std::string att
 	rangeShape.setFillColor(FILL_COLOR);
 	rangeShape.setOutlineThickness(2);
 	rangeShape.setOutlineColor(color);
+	sprite.setTexture(*texture);
+	sprite.setScale(ELEMENT_SPRITE_RATIO, ELEMENT_SPRITE_RATIO);
 
 
 }

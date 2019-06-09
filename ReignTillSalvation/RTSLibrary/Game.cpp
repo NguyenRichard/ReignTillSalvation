@@ -42,6 +42,12 @@ void Game::renderGame(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Element>>& elements = map->getElements();
 	std::vector<std::unique_ptr<Danger>>& dangers = map->getDangers();
 	std::vector<std::unique_ptr<Law>>& laws = map->getLaws();
+	
+	map->render(window);
+	
+	for (const auto & element : elements) {
+		element->render(window);
+	}
 
 	if (time->getElapsedTime().asMilliseconds() - last_render.asMilliseconds() > MS_PER_RENDER) {
 		for (const auto & leader : leaders) {
@@ -55,9 +61,6 @@ void Game::renderGame(sf::RenderWindow& window) {
 		}
 	}
 
-	for (const auto & element : elements) {
-		element->render(window);
-	}
 
 	sf::Shape* danger_shape;
 	for (const auto &danger : dangers) {

@@ -10,7 +10,7 @@ public:
 	Weak() = default;
 	Weak(const IndividualState & state);
 	void action() override;
-	void updatePositionChaos() override;
+	void updatePositionChaos(std::vector<Element*>&) override;
 	void setLeader(Individual* leader);
 	const Individual* getLeader() const { return leader; };
 	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };

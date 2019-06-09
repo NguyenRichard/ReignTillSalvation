@@ -26,7 +26,7 @@ void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& ev
 			for (auto & element : map->getElements()) {
 				coords = &element->getCoords();
 				for (const auto & coord : *coords) {
-					if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE) {
+					if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE*(ELEMENT_SPRITE_RATIO-0.5)) {
 						map->setSelectedElement(element.get());
 						rts->changeState(changeStateToGameMenu());
 						rts->initState();

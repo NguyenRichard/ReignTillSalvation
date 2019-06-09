@@ -17,7 +17,7 @@
          repulsionMessage="placeholder Plant Element repulsion"
          cancelMessage="placeholder Plant Element cancel"
 />
-<Element name="fireelement" range="250" color="Red" sprite=""
+<Element name="fireelement" range="250" color="Orange" sprite=""
          attractionMessage="placeholder Fire Element attraction"
          repulsionMessage="placeholder Fire Element repulsion"
          cancelMessage="placeholder Fire Element cancel"
