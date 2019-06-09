@@ -12,13 +12,13 @@
 #pragma endregion window_size
 
 #pragma region map_initializing_constant
-#define MAX_INDIVIDUALS					1
+#define MAX_INDIVIDUALS					40
 #define MAX_ELEMENTS					0
 #pragma endregion map_initializing_constant
 
 #pragma region individualsprite
 
-#define WEAK_SPRITE_SIZE				32
+#define WEAK_SPRITE_SIZE				16
 #define STRONG_SPRITE_SIZE				16
 #define GROUP_SUB_RANGE					60
 #define GROUP_LEAD_RANGE				80

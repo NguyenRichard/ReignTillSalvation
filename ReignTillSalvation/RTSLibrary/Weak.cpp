@@ -4,6 +4,7 @@ Weak::Weak()
 {
 	sprite.setTexture(textures->first);
 	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
+	sprite.setScale(3, 3);
 };
 
 Weak::Weak(const IndividualState & state) : 
@@ -11,6 +12,7 @@ Weak::Weak(const IndividualState & state) :
 {
 	sprite.setTexture(textures->first);
 	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
+	sprite.setScale(3, 3);
 }
 
 std::unique_ptr<IndividualState> Weak::changeState() {
@@ -133,7 +135,7 @@ void Weak::render_and_update(sf::RenderWindow& window) {
 	if (direction.y < 0) {
 		rotation = 360.0f-rotation;
 	}
-
+	setSpriteDirection(rotation);
 
 	//incrementAnim();
 	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE));
@@ -151,4 +153,79 @@ void Weak::incrementAnim(){
 	if (anim.x*WEAK_SPRITE_SIZE >= textures->first.getSize().x) {
 		anim.x = 0;
 	}
+}
+
+void Weak::setSpriteDirection(float rotation) {
+	if ((rotation >= 0 && rotation < 22.5)) {
+		anim.y = Right;
+	}
+	else if (rotation >= 22.5 && rotation < 67.5) {
+		anim.y = DownRight;
+		if (rotation > 45.0f) {
+			rotation = rotation - 45.0f;
+		}
+		else {
+			rotation = 360.0f - (45.0f - rotation);
+		}
+	}
+	else if (rotation >= 67.5 && rotation < 112.5) {
+		anim.y = Down;
+		if (rotation > 90.0f) {
+			rotation = rotation - 90.0f;
+		}
+		else {
+			rotation = 360.0f - (90.0f - rotation);
+		}
+	}
+	else if (rotation >= 112.5 && rotation < 157.5) {
+		anim.y = DownLeft;
+		if (rotation > 135.0f) {
+			rotation = rotation - 135.0f;
+		}
+		else {
+			rotation = 360.0f - (135.0f - rotation);
+		}
+	}
+	else if (rotation >= 157.5 && rotation < 202.5) {
+		anim.y = Left;
+		if (rotation > 185.0f) {
+			rotation = rotation - 185.0f;
+		}
+		else {
+			rotation = 360.0f - (185.0f - rotation);
+		}
+	}
+	else if (rotation >= 202.5 && rotation < 247.5) {
+		anim.y = TopLeft;
+		if (rotation > 225.0f) {
+			rotation = rotation - 225.0f;
+		}
+		else {
+			rotation = 360.0f - (225.0f - rotation);
+		}
+	}
+	else if (rotation >= 247.5 && rotation < 292.5) {
+		anim.y = Top;
+		if (rotation > 270.0f) {
+			rotation = rotation - 270.0f;
+		}
+		else {
+			rotation = 360.0f - (270.0f - rotation);
+		}
+	}
+	else if (rotation >= 292.5 && rotation <= 337.5) {
+		anim.y = TopRight;
+		if (rotation > 315.0f) {
+			rotation = rotation - 315.0f;
+		}
+		else {
+			rotation = 360.0f - (315.0f - rotation);
+		}
+	}
+	else if (rotation >= 337.5 && rotation <= 360) {
+		anim.y = Right;
+		rotation = 360 - rotation;
+	}
+
+	sprite.setRotation(rotation);
 }
