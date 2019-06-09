@@ -15,7 +15,7 @@ class Individual;
 
 class IndividualState {
 public:
-	IndividualState() = default;
+	IndividualState();
 	IndividualState(std::pair<sf::Texture, sf::Texture>*);
 	IndividualState(const IndividualState & state);
 	virtual void action() = 0;
