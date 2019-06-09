@@ -14,6 +14,7 @@ public:
 
 private:
 	sf::Time last_update;
+	sf::Time last_render;
 	std::unique_ptr<RTSState> changeStateToMainMenu();
 	std::unique_ptr<RTSState> changeStateToGameMenu();
 	void processGameInput(RTS*,sf::RenderWindow& window);
