@@ -27,7 +27,7 @@ private:
 	void deleteDanger(const int&);
 	void addRandomDanger(std::unique_ptr<sftools::Chronometer>&);
 	TextureManager textureManager;
-
+	void updateAnim(std::unique_ptr<sftools::Chronometer>&);
 public:
 	Map();
 	void createIndividual(sf::Vector2f);
@@ -45,5 +45,7 @@ public:
 
 	void update(std::unique_ptr<sftools::Chronometer>&);
 	int individualsNumber();
+
+	sf::Time last_anim_update;
 };
 

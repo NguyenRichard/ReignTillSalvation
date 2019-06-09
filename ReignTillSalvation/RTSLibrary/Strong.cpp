@@ -197,10 +197,9 @@ void Strong::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individu
 		subordinates[i]->findMyGroupNew(leaders,i);
 	}
 	me->changeState(changeState(new_leader));
-
 }
 
-void Strong::render(sf::RenderWindow& window) {
+void Strong::render_and_update(sf::RenderWindow& window) {
 
 	sprite.setPosition(coord.x, coord.y);
 	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
@@ -210,21 +209,30 @@ void Strong::render(sf::RenderWindow& window) {
 	}
 	setSpriteDirection(rotation);
 
-	incrementAnim();
+	//incrementAnim();
 	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE,STRONG_SPRITE_SIZE,STRONG_SPRITE_SIZE));
 
 
 	window.draw(sprite);
 	for (const auto & subordinate : subordinates) {
+		subordinate->render_and_update(window);
+	}
+}
+
+void Strong::render(sf::RenderWindow& window) {
+	window.draw(sprite);
+	for (const auto & subordinate : subordinates) {
 		subordinate->render(window);
 	}
-
 }
 
 void Strong::incrementAnim() {
 	anim.x++;
 	if (anim.x*STRONG_SPRITE_SIZE >= textures->second.getSize().x) {
 		anim.x = 0;
+	}
+	for (const auto & subordinate : subordinates) {
+		subordinate->getState()->incrementAnim();
 	}
 }
 

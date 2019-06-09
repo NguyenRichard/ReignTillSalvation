@@ -23,6 +23,7 @@ public:
 		{ return state->directionToward(point); };
 
 	void render(sf::RenderWindow&);
+	void render_and_update(sf::RenderWindow&);
 	void updateMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroupNew(std::vector<std::unique_ptr<Individual>>&, int);
@@ -40,7 +41,6 @@ public:
 private:
 	int ATTRACTION_DIVIDER = 1;
 	std::unique_ptr<IndividualState> state;
-	std::vector<std::unique_ptr<Attraction>> attractions;
 	std::vector<Element*> elements;
 	Element* liked;
 	Element* disliked;

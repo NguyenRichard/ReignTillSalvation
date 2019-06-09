@@ -40,11 +40,7 @@ void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& ev
 }
 
 void GameRunning::render(sf::RenderWindow& window) {
-	if (time->getElapsedTime().asMilliseconds() - last_render.asMilliseconds() > MS_PER_RENDER) {
-		window.clear();
-		renderGame(window);
-		last_render = time->getElapsedTime();
-	}
+	renderGame(window);
 }
 
 void GameRunning::changeState(RTS* rts) {
@@ -88,8 +84,16 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Danger>>& dangers = map->getDangers();
 	std::vector<std::unique_ptr<Law>>& laws = map->getLaws();
 
-	for (const auto & leader : leaders) {
-		leader->render(window);
+	if (time->getElapsedTime().asMilliseconds() - last_render.asMilliseconds() > MS_PER_RENDER) {
+		for (const auto & leader : leaders) {
+			leader->render_and_update(window);
+		}
+		last_render = time->getElapsedTime();
+	}
+	else {
+		for (const auto & leader : leaders) {
+			leader->render(window);
+		}
 	}
 
 	for (const auto & element : elements) {
@@ -108,11 +112,7 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 }
 
 void GameRunning::update() {
-	if (time->getElapsedTime().asMilliseconds() - last_update.asMilliseconds() > MS_PER_RENDER) {
-		std::cout << time->getElapsedTime().asMilliseconds() << "\n";
-		map->update(time);
-		last_update = time->getElapsedTime();
-	}
+	map->update(time);
 }
 
 void::GameRunning::init() {
