@@ -23,11 +23,11 @@ public:
 	virtual ~IndividualState() = default;
 	sf::Sprite* getSprite() { return &sprite; };
 	void setTextures(std::pair<sf::Texture, sf::Texture>* textures) { this->textures = textures; };
-	virtual void updatePositionChaos(std::vector<Element*>&) = 0;
+	virtual void updatePositionChaos(std::vector<std::unique_ptr<Element>>&) = 0;
 	virtual void render(sf::RenderWindow&) = 0;
 	virtual void render_and_update(sf::RenderWindow&) = 0;
 	void applyCollision(const sf::Vector2f&, float);
-	void applyCollisionElements(std::vector<Element*>& elements);
+	void applyCollisionElements(std::vector<std::unique_ptr<Element>>& elements);
 
 	void setCoord(const sf::Vector2f& new_coord) { coord = new_coord; };
 	sf::Vector2f& getCoord() { return coord; };

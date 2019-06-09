@@ -31,8 +31,8 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time, float set_co
 	LineDanger(time, set_countdownAppearance, set_duration, coord,
 		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER, 0, 8.0f) {}
 
-LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time) :
-	Danger(time)
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time,sf::Texture* texture) :
+	Danger(time),texture(texture)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
 	float width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
@@ -60,6 +60,17 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time) :
 	shape.setOutlineThickness(2);
 	color.a = 150.0f;
 	shape.setOutlineColor(color);
+
+
+	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * length / BASE_LASER_SPRITE_LENTGH;
+	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
+	anim_count = 0;
+	sprite.setOrigin(sf::Vector2f(length/2,width/2));
+	//sprite.setPosition(coord);
+	//sprite.setRotation(rotation);
+	sprite.setTexture(*texture);
+	sprite.setTextureRect(sf::IntRect(0, 0, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
+	sprite.setScale(ratio_length, ratio_width);
 }
 
 void LineDanger::updateOpacity(float opacity)
@@ -132,4 +143,19 @@ bool LineDanger::isInTheZone(std::unique_ptr<Individual> &individual)
 	float distancePointToLine = abs(magnitude(vectorBetween) * sin(rotationRelative));
 	bool ret = distancePointToLine < shape.getSize().y / 2;
 	return ret;
+}
+
+
+void LineDanger::render(sf::RenderWindow& window) {
+	if (!countdownFinished) {
+		window.draw(shape);
+	}
+	else {
+		window.draw(sprite);
+		anim_count++;
+		if (anim_count*BASE_LASER_SPRITE_WIDTH >= texture->getSize().y) {
+			anim_count = 0;
+		}
+		sprite.setTextureRect(sf::IntRect(0, anim_count*BASE_LASER_SPRITE_WIDTH, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
+	}
 }

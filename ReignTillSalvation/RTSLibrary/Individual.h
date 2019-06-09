@@ -9,7 +9,7 @@ public:
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f);
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f, Element*, Element*);
 	void changeState(std::unique_ptr<IndividualState>);
-	void updatePosition();
+	void updatePosition(std::vector<std::unique_ptr<Element>>&);
 	void action();
 	IndividualState* getState() const { return state.get(); };
 	void setCoord(const sf::Vector2f& new_coord) { state->setCoord(new_coord); };

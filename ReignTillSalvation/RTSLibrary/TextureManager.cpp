@@ -4,6 +4,7 @@ TextureManager::TextureManager() {
 
 	loadIndividualsSprite();
 	loadElementSprite();
+	loadDangerSprite();
 	map.loadFromFile("res/sprite/background.png");
 }
 
@@ -66,5 +67,20 @@ void TextureManager::loadElementSprite() {
 	}
 	elements.insert({ "plantelement",texture });
 
+
+}
+
+void TextureManager::loadDangerSprite() {
+	sf::Texture texture;
+
+	if (!texture.loadFromFile("res/sprite/explosion.png")) {
+		printf("cannot load explosion.png texture");
+	}
+	dangers.insert({ "explosion",texture });
+
+	if (!texture.loadFromFile("res/sprite/laser.png")) {
+		printf("cannot load laser.png texture");
+	}
+	dangers.insert({ "laser",texture });
 
 }

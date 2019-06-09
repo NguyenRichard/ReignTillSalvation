@@ -64,8 +64,7 @@ void Game::renderGame(sf::RenderWindow& window) {
 
 	sf::Shape* danger_shape;
 	for (const auto &danger : dangers) {
-		danger_shape = &danger->getShape();
-		window.draw(*danger_shape);
+		danger->render(window);
 	}
 
 	for (const auto & law : laws) {

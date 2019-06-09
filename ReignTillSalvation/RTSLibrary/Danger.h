@@ -23,10 +23,12 @@ public:
 	virtual void affectZone(std::vector<std::unique_ptr<Individual>>&) = 0;
 	
 	// returns true if countdown is finished
-	bool update(std::unique_ptr<sftools::Chronometer>&);
+	void update(std::unique_ptr<sftools::Chronometer>&);
 	bool isFinished(std::unique_ptr<sftools::Chronometer>&);
 	bool hasBegun(std::unique_ptr<sftools::Chronometer>&);
 	bool isNextNow(std::unique_ptr<sftools::Chronometer>&);
+	virtual void render(sf::RenderWindow&) = 0;
+	bool getCountdownStatus() { return countdownFinished; }
 
 private:
 	sf::Time timeOfNext;
@@ -35,4 +37,7 @@ private:
 	sf::Time duration;
 
 	virtual void updateOpacity(float opacity) = 0;
+
+protected:
+	bool countdownFinished;
 };

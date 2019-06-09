@@ -8,6 +8,7 @@ Danger::Danger(std::unique_ptr<sftools::Chronometer> &time, float set_countdownA
 	apparitionTime = time->getElapsedTime() + sf::seconds(time_offset);
 	countdownAppearance = sf::seconds(set_countdownAppearance);
 	duration = sf::seconds(set_duration);
+	countdownFinished = false;
 }
 
 Danger::Danger(std::unique_ptr<sftools::Chronometer> &time) :
@@ -17,17 +18,16 @@ Danger::Danger(std::unique_ptr<sftools::Chronometer> &time) :
 		MIN_TIME_BEFORE_NEXT
 			+ (float)randomint(MAX_TIME_BEFORE_NEXT - MIN_TIME_BEFORE_NEXT)) {}
 
-bool Danger::update(std::unique_ptr<sftools::Chronometer> &time)
+void Danger::update(std::unique_ptr<sftools::Chronometer> &time)
 {
 	float opacity = (time->getElapsedTime().asSeconds() - apparitionTime.asSeconds()) / 
 		countdownAppearance.asSeconds() * MAX_COUNTDOWN_OPACITY;
 	if (opacity > MAX_COUNTDOWN_OPACITY) {
 		updateOpacity(DANGER_OPACITY);
-		return true;
+		countdownFinished = true;
 	}
 
 	updateOpacity(opacity);
-	return false;
 }
 
 bool Danger::isFinished(std::unique_ptr<sftools::Chronometer> &time)
