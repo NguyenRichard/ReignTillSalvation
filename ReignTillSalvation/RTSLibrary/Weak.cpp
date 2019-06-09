@@ -140,7 +140,6 @@ void Weak::render(sf::RenderWindow& window) {
 	incrementAnim();
 	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE));
 
-	sprite.setRotation(rotation);
 	window.draw(sprite);
 }
 

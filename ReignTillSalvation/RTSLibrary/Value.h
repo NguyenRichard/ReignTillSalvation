@@ -27,7 +27,7 @@
 #pragma region movement_constant
 #define DISTANCE_RUN_SUBORDINATE		1.0f
 #define DISTANCE_RUN_LEADER				1.0f
-#define DIST_BETWEEN_INDIVIDUAL			48
+#define DIST_BETWEEN_INDIVIDUAL			16*5
 #define DIST_TO_ELEMENTS				50
 #define PI								3.14159265358979323846f
 #define MAX_TURN						180
