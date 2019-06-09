@@ -13,7 +13,7 @@
 
 #pragma region map_initializing_constant
 #define MAX_INDIVIDUALS					0
-#define MAX_ELEMENTS					0
+#define MAX_ELEMENTS					10
 #pragma endregion map_initializing_constant
 
 #pragma region individualsprite
@@ -32,7 +32,6 @@
 #define DISTANCE_RUN_LEADER				1.0f
 #define DIST_BETWEEN_SUBORDINATE		WEAK_SPRITE_SIZE*(WEAK_SPRITE_RATIO-0.5)
 #define DIST_BETWEEN_LEADER				STRONG_SPRITE_SIZE*(STRONG_SPRITE_RATIO-0.5)
-#define DIST_TO_ELEMENTS				50
 #define PI								3.14159265358979323846f
 #define MAX_TURN						180
 
@@ -48,7 +47,9 @@
 #pragma endregion law_constant
 
 #pragma region element_sprite
-#define ELEMENT_SPRITE_SIZE				20
+#define ELEMENT_SPRITE_SIZE				16
+#define ELEMENT_SPRITE_RATIO            4
+#define DIST_TO_ELEMENTS				ELEMENT_SPRITE_SIZE*ELEMENT_SPRITE_RATIO
 #define DEFAULT_RANGE					30
 #define FILL_COLOR						sf::Color(255,255,255,0)
 #define OUTLINE_COLOR					sf::Color(255,255,255,255)
@@ -57,7 +58,7 @@
 #pragma region law_sprite
 #define BAR_WIDTH 34
 #define BAR_HEIGHT 10
-#define BAR_RELATIVE_COORD_X -(BAR_WIDTH-ELEMENT_SPRITE_SIZE)/2 // X is from left to right.
+#define BAR_RELATIVE_COORD_X -(BAR_WIDTH-ELEMENT_SPRITE_SIZE*ELEMENT_SPRITE_RATIO)/2 // X is from left to right.
 #define BAR_RELATIVE_COORD_Y -15 // Y is from top to bottom.
 //Fillbar dimension must be smaller than Bar.
 #define FILLBAR_HEIGHT 8

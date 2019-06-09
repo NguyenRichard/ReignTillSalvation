@@ -4,16 +4,16 @@ TextureManager::TextureManager() {
 
 	loadIndividualsSprite();
 	loadElementSprite();
-	map.loadFromFile("res/sprite/background/png");
+	map.loadFromFile("res/sprite/background.png");
 }
 
 void TextureManager::loadIndividualsSprite() {
 	std::pair<sf::Texture, sf::Texture> textures;
 
-	if (!textures.first.loadFromFile("res/sprite/red.png")) {
+	if (!textures.first.loadFromFile("res/sprite/orange.png")) {
 		printf("cannot load red.png texture");
 	}
-	if (!textures.second.loadFromFile("res/sprite/redleader.png")) {
+	if (!textures.second.loadFromFile("res/sprite/orangeleader.png")) {
 		printf("cannot load redleader.png texture");
 	}
 	individuals.insert({ "fireelement",textures });

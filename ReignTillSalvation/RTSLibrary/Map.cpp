@@ -21,7 +21,7 @@ void Map::createIndividual(sf::Vector2f coord) {
 				));
 	}
 	else {
-		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals[0]), coord));
+		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals.find("darkelement")->second), coord));
 	}
 }
 
@@ -43,7 +43,7 @@ void Map::addElementInMap(std::string name, sf::Vector2f coord) {
 void Map::createElement(std::string name, float range, sf::Color color,
 	std::string attractionMessage, std::string repulsionMessage,std::string cancelMessage) {
 	elements.push_back(std::make_unique<Element>(
-		name, range, color, attractionMessage, repulsionMessage,cancelMessage, &textureManager.elements.find(name)
+		name, range, color, attractionMessage, repulsionMessage,cancelMessage, &textureManager.elements.find(name)->second
 	));
 }
 
@@ -68,7 +68,6 @@ void Map::updatePositions() {
 	for (std::unique_ptr<Individual> &leader : leaders)
 	{
 		leader->updatePosition();
-		leader->applyCollisionElements();
 	}
 }
 
@@ -164,4 +163,8 @@ void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
 			leader->getState()->incrementAnim();
 		last_anim_update = time->getElapsedTime();
 	}
+}
+
+void Map::render(sf::RenderWindow& window) {
+	window.draw(background);
 }

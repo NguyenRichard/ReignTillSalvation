@@ -3,9 +3,10 @@
 
 class GameRunning : public Game {
 public:
-	GameRunning(int width, int height) : Game(width, height) {};
-	GameRunning(const RTSState & state) : Game(state) {};
-	GameRunning(const Game & state, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>);
+	GameRunning(int width, int height, std::unique_ptr<sf::Music> music) : Game(width, height, std::move(music)) {};
+	GameRunning(const RTSState & state, std::unique_ptr<sf::Music> old_music) : Game(state, std::move(old_music)) {};
+	GameRunning(const Game & state, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>,
+		std::unique_ptr<sf::Music> old_music);
 	void processInput(RTS*, sf::RenderWindow& window, sf::Event&) override;
 	void render(sf::RenderWindow& window) override;
 	void update(RTS* rts) override;

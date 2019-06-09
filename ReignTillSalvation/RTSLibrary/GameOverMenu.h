@@ -9,6 +9,7 @@ public:
 	void render(sf::RenderWindow& window) override;
 	void init() override;
 	void changeState(RTS* rts) override;
+	const std::string MUSIC_GAME_OVER = "../ReignTillSalvation/res/musics/game_over.flac";
 
 private:
 	void handleMouseEventClick(RTS*, sf::RenderWindow& window, sf::Event&) override;

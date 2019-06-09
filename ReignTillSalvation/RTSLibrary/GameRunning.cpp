@@ -3,8 +3,9 @@
 #include "GameOverMenu.h"
 
 
-GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time) :
-	Game(state, std::move(new_map), std::move(new_time))
+GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map,
+		std::unique_ptr<sftools::Chronometer> new_time, std::unique_ptr<sf::Music> old_music) :
+		Game(state, std::move(new_map), std::move(new_time), std::move(old_music))
 {
 	time->resume();
 }
@@ -27,7 +28,7 @@ void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& ev
 			for (auto & element : map->getElements()) {
 				coords = &element->getCoords();
 				for (const auto & coord : *coords) {
-					if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE) {
+					if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE*(ELEMENT_SPRITE_RATIO-0.5)) {
 						map->setSelectedElement(element.get());
 						rts->changeState(changeStateToGameMenu());
 						rts->initState();
@@ -56,38 +57,21 @@ std::unique_ptr<RTSState> GameRunning::changeStateToMainMenu(){
 }
 
 std::unique_ptr<RTSState> GameRunning::changeStateToGameMenu() {
-	return std::make_unique<GameMenu>(*this, std::move(map), std::move(time));
+	return std::make_unique<GameMenu>(*this, std::move(map), std::move(time), std::move(music));
 }
 
 std::unique_ptr<RTSState> GameRunning::changeStateToGameOverMenu() {
 	return std::make_unique<GameOverMenu>(*this);
 }
 
-void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
-	std::vector<sf::Vector2f>* coords;
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
-		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
-		for (auto & element : map->getElements()) {
-			coords = &element->getCoords();
-			for (const auto & coord : *coords) {
-				if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE) {
-					map->setSelectedElement(element.get());
-					rts->changeState(changeStateToGameMenu()); 
-					rts->initState();
-				}
-			}
-		}
-	}
-}
-
 void GameRunning::update(RTS* rts) {
 	map->update(time);
-	if (!music.getStatus() == music.Playing)
-		music.play();
-	if (map->getLeaders().size() == 0)
+	if (!music->getStatus() == music->Playing)
+		music->play();
+	if (map->getLeaders().size() == 0) {
 		rts->changeState(changeStateToGameOverMenu());
+		rts->initState();
+	}
 }
 
 void::GameRunning::init() {

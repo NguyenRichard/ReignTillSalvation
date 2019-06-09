@@ -4,7 +4,12 @@
 #pragma region MenuFunctions
 MainMenu::MainMenu(int width, int height) :
 	Menu(), 
-	RTSState(width,height) {}
+	RTSState(width,height, std::make_unique<sf::Music>())
+{
+	music->openFromFile(MAIN_MUSIC_PATH);
+	music->setLoop(true);
+	music->play();
+}
 
 void MainMenu::handleKeyEventAction(RTS* rts,sf::RenderWindow& window) {
 	switch (selectedItemIndex) {
@@ -35,9 +40,11 @@ void MainMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window,sf::Event
 #pragma region RTSStateFunctions
 
 MainMenu::MainMenu(const RTSState& state) : 
-	Menu(), 
-	RTSState(state.getWidth(), state.getHeight()) {
-
+		Menu(), 
+		RTSState(state.getWidth(), state.getHeight(), std::make_unique<sf::Music>()) {
+	music->openFromFile(MAIN_MUSIC_PATH);
+	music->setLoop(true);
+	music->play();
 }
 
 void MainMenu::changeState(RTS* rts) {
@@ -47,7 +54,7 @@ void MainMenu::changeState(RTS* rts) {
 
 std::unique_ptr<RTSState> MainMenu::changeStateToGameRunning() {
 
-	return std::make_unique<GameRunning>(*this);
+	return std::make_unique<GameRunning>(*this, std::move(music));
 
 }
 void MainMenu::processInput(RTS* rts,sf::RenderWindow& window, sf::Event& event) {

@@ -19,7 +19,7 @@ void Weak::action() {
 	std::cout << "I am weak\n";
 }
 
-void Weak::updatePositionChaos() {
+void Weak::updatePositionChaos(std::vector<Element*>& elements) {
 	sf::Vector2f direction = directionToward(leader->getCoord());
 	old_coord = coord;
 
@@ -38,6 +38,7 @@ void Weak::updatePositionChaos() {
 		coord.x -= outside_mvt_x;
 	if (outside_mvt_y > 0)
 		coord.y -= outside_mvt_y;
+	applyCollisionElements(elements);
 }
 
 void Weak::setLeader(Individual* individual) {

@@ -38,3 +38,41 @@ bool IndividualState:: operator <(const IndividualState& individual) {
 void IndividualState::rotateSprite(float degree) {
 	sprite.setRotation(degree);
 }
+
+
+void IndividualState::applyCollision(const sf::Vector2f& coord, float min) {
+
+	float dist = this->distanceToPoint(coord);
+	if (dist < min) {
+		sf::Vector2f direction = this->directionToward(coord);
+		sf::Vector2f my_coord = this->getCoord();
+		float direction_x = my_coord.x - (min - dist)*direction.x;
+		float direction_y = my_coord.y - (min - dist)*direction.y;
+		this->setCoord(sf::Vector2f(direction_x, direction_y));
+
+		sf::Vector2f new_coord = getCoord();
+		if (coord.x < 0)
+			new_coord.x = 0;
+		if (coord.y < 0)
+			new_coord.y = 0;
+
+		float outside_mvt_x = coord.x - WINDOW_WIDTH;
+		float outside_mvt_y = coord.y - WINDOW_HEIGHT;
+
+		if (outside_mvt_x > 0)
+			new_coord.x -= outside_mvt_x;
+		if (outside_mvt_y > 0)
+			new_coord.y -= outside_mvt_y;
+
+		setCoord(new_coord);
+	}
+}
+
+void IndividualState::applyCollisionElements(std::vector<Element*>& elements) {
+	for (const auto & element : elements) {
+		for (auto coord : element->getCoords()) {
+			applyCollision(coord, DIST_TO_ELEMENTS);
+		}
+	}
+
+}

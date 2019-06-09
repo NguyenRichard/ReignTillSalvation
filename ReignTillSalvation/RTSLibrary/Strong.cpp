@@ -32,7 +32,7 @@ void Strong::action() {
 
 std::vector<std::unique_ptr<Individual>>& Strong::getSubordinates() { return subordinates; }
 
-void Strong::updatePositionChaos() {
+void Strong::updatePositionChaos(std::vector<Element*>& elements) {
 	float degree = 0.01 + (1 - 0.01) * randomint(RAND_MAX) / (float) RAND_MAX;
 	// between 1 and 10
 
@@ -66,16 +66,17 @@ void Strong::updatePositionChaos() {
 	if (outside_mvt_y > 0)
 		coord.y -= outside_mvt_y;
 
+	applyCollisionElements(elements);
+
 	for (int i = 0; i < subordinates.size();i++) {
 		subordinates[i]->updatePosition();
-		subordinates[i]->applyCollision(coord,DIST_BETWEEN_LEADER);
+		applyCollision(coord,DIST_BETWEEN_LEADER);
 		for (int j = 0; j < i; j++) {
-			subordinates[i]->applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_SUBORDINATE);
+			applyCollision(subordinates[j]->getCoord(),DIST_BETWEEN_SUBORDINATE);
 		}
 		for (int j = i+1; j < subordinates.size(); j++) {
-			subordinates[i]->applyCollision(subordinates[j]->getCoord(), DIST_BETWEEN_SUBORDINATE);
+			applyCollision(subordinates[j]->getCoord(), DIST_BETWEEN_SUBORDINATE);
 		}
-		subordinates[i]->applyCollisionElements();
 	}
 
 	std::sort(subordinates.begin(), subordinates.end(), [](const std::unique_ptr<Individual>& a, const std::unique_ptr<Individual>& b)->bool {
