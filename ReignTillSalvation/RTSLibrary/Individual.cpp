@@ -86,22 +86,6 @@ void Individual::updatePositionAttraction() {
 void Individual::updatePosition() {
 	updatePositionAttraction();
 	state->updatePositionChaos();
-
-	sf::Vector2f old_coord = state->getOldCoord();
-	sf::Vector2f coord = state->getCoord();
-	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
-	if (direction.x >= 0 && direction.y >= 0) {
-		state->rotateSprite(calculateAngle(direction));
-	}
-	else if (direction.x >= 0 && direction.y < 0) {
-		state->rotateSprite(calculateAngle(direction)+90);
-	}
-	else if (direction.x < 0 && direction.y < 0) {
-		state->rotateSprite(calculateAngle(direction) + 180);
-	}
-	else {
-		state->rotateSprite(calculateAngle(direction) + 270);
-	}
 }
 
 void Individual::render(sf::RenderWindow& window) {

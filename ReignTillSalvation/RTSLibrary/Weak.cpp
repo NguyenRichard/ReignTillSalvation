@@ -127,6 +127,7 @@ void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual
 
 void Weak::render(sf::RenderWindow& window) {
 	sprite.setPosition(coord.x, coord.y);
+	
 	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
 	float rotation = calculateAngle(direction);
 	if (direction.y < 0) {

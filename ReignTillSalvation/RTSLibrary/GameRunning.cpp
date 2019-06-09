@@ -40,7 +40,10 @@ void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& ev
 }
 
 void GameRunning::render(sf::RenderWindow& window) {
-	renderGame(window);
+	if (time->getElapsedTime().asMilliseconds() - last_render.asMilliseconds() > MS_PER_RENDER) {
+		renderGame(window);
+		last_render = time->getElapsedTime();
+	}
 }
 
 void GameRunning::changeState(RTS* rts) {
@@ -104,7 +107,11 @@ void GameRunning::renderGame(sf::RenderWindow& window) {
 }
 
 void GameRunning::update() {
-	map->update(time);
+	if (time->getElapsedTime().asMilliseconds() - last_update.asMilliseconds() > MS_PER_RENDER) {
+		std::cout << time->getElapsedTime().asMilliseconds() << "\n";
+		map->update(time);
+		last_update = time->getElapsedTime();
+	}
 }
 
 void::GameRunning::init() {

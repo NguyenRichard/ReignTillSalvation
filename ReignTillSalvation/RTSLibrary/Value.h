@@ -1,5 +1,10 @@
 #pragma once
 
+#pragma region time
+#define MS_PER_UPDATE					8.0f
+#define MS_PER_RENDER					2.0f
+#pragma endregion time
+
 #pragma region window_size
 #define WINDOW_HEIGHT					1000
 #define WINDOW_WIDTH					1500
@@ -7,7 +12,7 @@
 
 #pragma region map_initializing_constant
 #define MAX_INDIVIDUALS					40
-#define MAX_ELEMENTS					0
+#define MAX_ELEMENTS					10
 #pragma endregion map_initializing_constant
 
 #pragma region individualsprite
