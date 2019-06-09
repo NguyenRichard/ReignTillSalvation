@@ -6,7 +6,7 @@ Map::Map() {
 	if (!textures.first.loadFromFile("res/sprite/blue.png")) {
 		printf("cannot load blue.png texture");
 	}
-	if (!textures.second.loadFromFile("res/sprite/blueleader.png")) {
+	if (!textures.second.loadFromFile("res/sprite/spritesheet.png")) {
 		printf("cannot load blueleader.png texture");
 	}
 
