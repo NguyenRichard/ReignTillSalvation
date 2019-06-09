@@ -20,7 +20,7 @@ public:
 	std::unique_ptr<Map>& getMap() { return map; }
 	std::unique_ptr<sftools::Chronometer> &getTime() { return time; }
 	const std::string XML_FILE_PATH = "resources.xml";
-	const std::string MAIN_MUSIC_PATH = "../ReignTillSalvation/res/musics/main_music.wav";
+	const std::string MAIN_MUSIC_PATH = "../ReignTillSalvation/res/musics/main_music.flac";
 	void renderGame(sf::RenderWindow& window);
 
 protected:

@@ -9,7 +9,7 @@ Game::Game(int width, int height) :
 	map(std::make_unique<Map>()),
 	time(std::make_unique<sftools::Chronometer>(sf::Time::Zero))
 {
-	music.openFromFile("../ReignTillSalvation/res/musics/main_music.wav");
+	music.openFromFile(MAIN_MUSIC_PATH);
 	music.play();
 }
 
