@@ -27,6 +27,7 @@ void GameMenu::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& event
 }
 
 void GameMenu::render(sf::RenderWindow& window) {
+	renderGame(window);
 	renderMenu(window);
 }
 
@@ -51,4 +52,9 @@ void GameMenu::changeState(RTS* rts) {
 void GameMenu::init() {
 	menu = std::make_unique<LawMenu>(map->getSelectedElement(), LAW_MENU_WIDTH, LAW_MENU_HEIGHT);
 	time->pause();
+}
+
+void GameMenu::update() {
+	if (!music.getStatus() == music.Playing)
+		music.play();
 }

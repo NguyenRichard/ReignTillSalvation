@@ -13,7 +13,7 @@
 
 #pragma region map_initializing_constant
 #define MAX_INDIVIDUALS					40
-#define MAX_ELEMENTS					0
+#define MAX_ELEMENTS					10
 #pragma endregion map_initializing_constant
 
 #pragma region individualsprite
