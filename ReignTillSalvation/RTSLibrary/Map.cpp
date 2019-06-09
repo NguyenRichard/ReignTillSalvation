@@ -3,7 +3,7 @@
 Map::Map() {
 	std::pair<sf::Texture, sf::Texture> textures;
 	
-	if (!textures.first.loadFromFile("res/sprite/blue.png")) {
+	if (!textures.first.loadFromFile("res/sprite/spritesheet.png")) {
 		printf("cannot load blue.png texture");
 	}
 	if (!textures.second.loadFromFile("res/sprite/spritesheet.png")) {
