@@ -6,7 +6,13 @@
 #include "gtest/gtest.h"
 
 TEST(TestIndividual_ChangeState, WeaktoStrong) {
+	std::pair<sf::Texture, sf::Texture> textures;
+
+	textures.first.loadFromFile("res/sprite/orange.png");
+	textures.second.loadFromFile("res/sprite/orangeleader.png");
+
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(20, 300));
+	individual->setTextures(&textures);
 	Weak* weak = dynamic_cast<Weak*>(individual->getState());
 	sf::Vector2f coord_before = weak->getCoord();
 	ASSERT_TRUE(weak != NULL);
@@ -24,8 +30,15 @@ TEST(TestIndividual_ChangeState, WeaktoStrong) {
 }
 
 TEST(TestIndividual_ChangeState, StrongtoWeak) {
+	std::pair<sf::Texture, sf::Texture> textures;
+
+	textures.first.loadFromFile("res/sprite/orange.png");
+	textures.second.loadFromFile("res/sprite/orangeleader.png");
+
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(20, 300));
 	std::unique_ptr<Individual> new_leader = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(40, 300));
+	individual->setTextures(&textures);
+	new_leader->setTextures(&textures);
 	Strong* strong = dynamic_cast<Strong*>(individual->getState());
 	sf::Vector2f coord_before = strong->getCoord();
 	ASSERT_TRUE(strong != NULL);
@@ -73,11 +86,11 @@ TEST(TestIndividual_findSubPosition, Failure) {
 	std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinates();
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(980, 970)))); //dist 36
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(950, 1000))));//dist 50
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1061))));//dist 61
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(940, 1020))));//dist 63 
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1001+ GROUP_LEAD_RANGE))));//dist 61
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(910, 1080))));//dist 63 
 
 	Individual individual2{ std::make_unique<Strong>(), sf::Vector2f(1200,1070) };
-	Individual individual1{ std::make_unique<Weak>(), sf::Vector2f(1000,1070) };
+	Individual individual1{ std::make_unique<Weak>(), sf::Vector2f(1000,1020+ GROUP_LEAD_RANGE) };
 
 	EXPECT_EQ(-1, strong->findSubPosition(*individual1.getState()));
 	EXPECT_EQ(-1, strong->findSubPosition(*individual2.getState()));
@@ -91,9 +104,9 @@ TEST(TestIndividual_stillInGroup, TestCase1) {
 	std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinates();
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(980, 970))));
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(950, 1000))));
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1060))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1000 + GROUP_LEAD_RANGE))));
 	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(940, 1020))));
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1070))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1020 + GROUP_LEAD_RANGE))));
 
 	EXPECT_TRUE(strong->stillInGroup(0));
 	EXPECT_TRUE(strong->stillInGroup(1));
@@ -108,11 +121,16 @@ TEST(TestIndividual_stillInGroup, TestCase2) {
 	std::unique_ptr<Individual> master(std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(1000, 1000)));
 	Strong* strong = static_cast<Strong*>(master->getState());
 	std::vector<std::unique_ptr<Individual>>& subordinates = strong->getSubordinates();
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1010, 1070))));
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1020, 1060))));
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1061))));
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1040, 1050))));
-	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(1000, 1070))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(),
+		sf::Vector2f(1000+ (1 / 6)*GROUP_LEAD_RANGE, 1010+ GROUP_LEAD_RANGE))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), 
+		sf::Vector2f(1000+(1 / 3)*GROUP_LEAD_RANGE, 1000+ STRONG_SPRITE_SIZE * GROUP_LEAD_RANGE))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), 
+		sf::Vector2f(1000, 1001+ GROUP_LEAD_RANGE))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), 
+		sf::Vector2f(1000+ GROUP_LEAD_RANGE, 990+ GROUP_LEAD_RANGE))));
+	subordinates.push_back(std::move(std::make_unique<Individual>(std::make_unique<Weak>(), 
+		sf::Vector2f(1000, 1010+GROUP_LEAD_RANGE))));
 
 	EXPECT_FALSE(strong->stillInGroup(0));
 	EXPECT_FALSE(strong->stillInGroup(1));
