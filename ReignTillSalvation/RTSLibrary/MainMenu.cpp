@@ -91,20 +91,31 @@ void MainMenu::init() {
 	options[0].setString(option_names[0]);
 	options[0].setCharacterSize(char_size);
 	sf::FloatRect rect = options[0].getGlobalBounds();
-	//SFML draw with the top-left corner as origin, so we have to center the position.
-	options[0].setPosition(sf::Vector2f(width / 2 - rect.width, (height / (number_choice + 1)) * 1 - rect.height));
+	options[0].setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
+	options[0].setPosition(sf::Vector2f(width / 2, (height / (number_choice + 1)) * 1 + 250));
 
 	for (int i = 1; i < option_names.size(); i++) {
 		options[i].setFont(font);
 		options[i].setFillColor(nselectedColor);
 		options[i].setString(option_names[i]);
 		options[i].setCharacterSize(char_size);
-		options[i].setPosition(sf::Vector2f(width / 2 - rect.width, (height / (number_choice + 1)) * (i + 1) - rect.height));
+		rect = options[i].getGlobalBounds();
+		options[i].setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
+		options[i].setPosition(sf::Vector2f(width / 2, (height / (number_choice + 1)) * (0.6f * i + 1) + 250));
 	}
 }
 
 void MainMenu::render(sf::RenderWindow& window) {
+	sf::Text title;
+	title.setString("Reign till Salvation");
+	title.setFont(font);
+	title.setFillColor(sf::Color::White);
+	title.setCharacterSize(char_size * 2.5f);
+	sf::FloatRect rect = title.getGlobalBounds();
+	title.setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
+	title.setPosition(sf::Vector2f(width / 2, height / 2 -300));
 	Menu::render(window);
+	window.draw(title);
 }
 
 #pragma endregion RTSStateFunctions

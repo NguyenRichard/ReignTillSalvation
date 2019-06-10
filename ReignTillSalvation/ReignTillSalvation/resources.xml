@@ -3,24 +3,24 @@
 <ElementsCollection>
 
 <Element name="darkelement" range="200" color="Purple" sprite=""
-         attractionMessage="placeholder Dark Element attraction"
-         repulsionMessage="placeholder Dark Element repulsion"
-         cancelMessage="placeholder Dark Element cancel"
+         attractionMessage="Into the darkness they go, the wise and the lovely"
+         repulsionMessage="Fear of the dark"
+         cancelMessage="No dark. Nope."
 />
 <Element name="waterelement" range="150" color="Blue" sprite=""
-         attractionMessage="placeholder Water Element attraction"
-         repulsionMessage="placeholder Water Element repulsion"
-         cancelMessage="placeholder Water Element cancel"
+         attractionMessage="Y'all must drink"
+         repulsionMessage="Careful, water is poisonous"
+         cancelMessage="Water? Where?"
 /> 
 <Element name="plantelement" range="100" color="Green" sprite=""
-         attractionMessage="placeholder Plant Element attraction"
-         repulsionMessage="placeholder Plant Element repulsion"
-         cancelMessage="placeholder Plant Element cancel"
+         attractionMessage="These plants are so soothing"
+         repulsionMessage="Did I see teeth on this plant?"
+         cancelMessage="Well, they're just plants..."
 />
 <Element name="fireelement" range="250" color="Red" sprite=""
-         attractionMessage="placeholder Fire Element attraction"
-         repulsionMessage="placeholder Fire Element repulsion"
-         cancelMessage="placeholder Fire Element cancel"
+         attractionMessage="Isn't fire just mesmerizing?"
+         repulsionMessage="TIL that fire burn"
+         cancelMessage="Fire. Meh."
 />
 
 </ElementsCollection>
