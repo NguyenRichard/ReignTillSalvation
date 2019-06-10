@@ -44,6 +44,9 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time,sf::Texture* 
 	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape.setPosition(coord);
 
+//	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * length / BASE_LASER_SPRITE_LENTGH;
+//	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
+
 	sf::Vector2f direction;
 	direction.x = (float)randomint(10) / 10;
 	direction.y = (float)randomint(10) / 10;
@@ -62,15 +65,17 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time,sf::Texture* 
 	shape.setOutlineColor(color);
 
 
-	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * length / BASE_LASER_SPRITE_LENTGH;
-	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
 	anim_count = 0;
-	sprite.setOrigin(sf::Vector2f(length/2,width/2));
-	//sprite.setPosition(coord);
-	//sprite.setRotation(rotation);
+	if (coord.y - coord.x*(direction.y / direction.x < 0 || coord.y - coord.x*(direction.y / direction.x >= WINDOW_HEIGHT))) {
+		sprite.setPosition(sf::Vector2f(0, coord.y - coord.x*(direction.y / direction.x)));
+	}
+	else {
+		sprite.setPosition(sf::Vector2f((coord.x*(direction.y / direction.x) - coord.y)/ (direction.y / direction.x), 0));
+	}
+	sprite.setRotation(rotation);
 	sprite.setTexture(*texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
-	sprite.setScale(ratio_length, ratio_width);
+//	sprite.setScale(ratio_length, ratio_width);
 }
 
 void LineDanger::updateOpacity(float opacity)
@@ -147,6 +152,11 @@ bool LineDanger::isInTheZone(std::unique_ptr<Individual> &individual)
 
 
 void LineDanger::render(sf::RenderWindow& window) {
+	sf::CircleShape circle;
+	circle.setPosition(shape.getOrigin());
+	circle.setFillColor(sf::Color::Yellow);
+	circle.setRadius(20);
+	window.draw(circle);
 	if (!countdownFinished) {
 		window.draw(shape);
 	}
