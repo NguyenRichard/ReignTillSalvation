@@ -11,6 +11,7 @@ Game Asset package:
 micro human: https://mome-g.itch.io/micro-human;
 Magical Animation: https://itch.io/queue/c/188467/effects?game_id=325286;
 Pixel Explosion: https://itch.io/queue/c/188467/effects?game_id=359213;
+Dungeon Tileset: https://0x72.itch.io/16x16-dungeon-tileset
 
 
 Follow this tutorial to install the libraries.
