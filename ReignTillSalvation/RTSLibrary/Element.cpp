@@ -25,7 +25,7 @@ Element::Element(std::string name, float range, sf::Color color, std::string att
 {
 	rangeShape = sf::CircleShape(range);
 	sf::Color fill = color;
-	fill.a = 50.0f;
+	fill.a = 30.0f;
 	rangeShape.setFillColor(fill);
 	sprite.setTexture(*texture);
 	sprite.setScale(ELEMENT_SPRITE_RATIO, ELEMENT_SPRITE_RATIO);
