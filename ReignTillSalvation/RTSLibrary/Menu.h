@@ -13,7 +13,7 @@ class Menu {
 protected:
 	int selectedItemIndex;
 	sf::Color selectedColor;
-	sf::Color nselectedColor;
+	sf::Color nselectedColor;	
 	sf::Font font;
 	int char_size;
 	int number_choice;
