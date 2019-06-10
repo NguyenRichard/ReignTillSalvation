@@ -3,12 +3,13 @@
 
 class GameRunning : public Game {
 public:
-	GameRunning(int width, int height) : Game(width, height) {};
-	GameRunning(const RTSState & state) : Game(state) {};
-	GameRunning(const Game & state, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>);
+	GameRunning(int width, int height, std::unique_ptr<sf::Music> music) : Game(width, height, std::move(music)) {};
+	GameRunning(const RTSState & state, std::unique_ptr<sf::Music> old_music) : Game(state, std::move(old_music)) {};
+	GameRunning(const Game & state, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>,
+		std::unique_ptr<sf::Music> old_music);
 	void processInput(RTS*, sf::RenderWindow& window, sf::Event&) override;
 	void render(sf::RenderWindow& window) override;
-	void update() override;
+	void update(RTS* rts) override;
 	void init() override;
 	void changeState(RTS* rts) override;
 
@@ -17,6 +18,8 @@ private:
 	sf::Time last_render;
 	std::unique_ptr<RTSState> changeStateToMainMenu();
 	std::unique_ptr<RTSState> changeStateToGameMenu();
-	void processGameInput(RTS*, sf::RenderWindow& window);
+	std::unique_ptr<RTSState> changeStateToGameOverMenu();
+	void processGameInput(RTS*,sf::RenderWindow& window);
 	void parseXML();
+	bool mustMoveElementCoord(sf::Vector2f &coord);
 };

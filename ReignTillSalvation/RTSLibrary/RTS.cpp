@@ -15,7 +15,7 @@ void RTS::render(sf::RenderWindow& window) {
 }
 
 void RTS::update() {
-	state->update();
+	state->update(this);
 }
 
 void RTS::processInput(sf::RenderWindow& window,sf::Event& event) {

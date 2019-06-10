@@ -1,9 +1,11 @@
 #include "GameRunning.h"
 #include "GameMenu.h"
+#include "GameOverMenu.h"
 
 
-GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time) :
-	Game(state, std::move(new_map), std::move(new_time))
+GameRunning::GameRunning(const Game & state, std::unique_ptr<Map> new_map,
+		std::unique_ptr<sftools::Chronometer> new_time, std::unique_ptr<sf::Music> old_music) :
+		Game(state, std::move(new_map), std::move(new_time), std::move(old_music))
 {
 	time->resume();
 }
@@ -55,44 +57,53 @@ std::unique_ptr<RTSState> GameRunning::changeStateToMainMenu(){
 }
 
 std::unique_ptr<RTSState> GameRunning::changeStateToGameMenu() {
-	return std::make_unique<GameMenu>(*this, std::move(map), std::move(time));
+	return std::make_unique<GameMenu>(*this, std::move(map), std::move(time), std::move(music));
 }
 
-void GameRunning::processGameInput(RTS* rts,sf::RenderWindow& window) {
-	std::vector<sf::Vector2f>* coords;
+std::unique_ptr<RTSState> GameRunning::changeStateToGameOverMenu() {
+	return std::make_unique<GameOverMenu>(*this);
+}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		sf::Vector2i mousePixelPosition = sf::Mouse::getPosition(window);
-		sf::Vector2f mouseWorldPosition = window.mapPixelToCoords(mousePixelPosition);
-		for (auto & element : map->getElements()) {
-			coords = &element->getCoords();
-			for (const auto & coord : *coords) {
-				if (distanceBetween(coord, mouseWorldPosition) < ELEMENT_SPRITE_SIZE) {
-					map->setSelectedElement(element.get());
-					rts->changeState(changeStateToGameMenu()); 
-					rts->initState();
-				}
-			}
-		}
+void GameRunning::update(RTS* rts) {
+	map->update(time);
+	if (!music->getStatus() == music->Playing)
+		music->play();
+	if (map->getLeaders().size() == 0) {
+		rts->changeState(changeStateToGameOverMenu());
+		rts->initState();
 	}
 }
 
-void GameRunning::update() {
-	map->update(time);
-	if (!music.getStatus() == music.Playing)
-		music.play();
-}
-
-void::GameRunning::init() {
+void GameRunning::init() {
 	time->resume();
 	parseXML();
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
 		map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
+	sf::Vector2f coord;
 	for (int i = 0; i < MAX_ELEMENTS; i++) {
-		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(),
-			sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
+		coord = sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT));
+		while (mustMoveElementCoord(coord));
+		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(), coord);
 	}
+}
+
+bool GameRunning::mustMoveElementCoord(sf::Vector2f &coord) {
+	for (auto &element : map->getElements())
+		for (auto &other_coord : element->getCoords())
+			if (distanceBetween(coord, other_coord) < 2 * ELEMENT_SPRITE_SIZE * ELEMENT_SPRITE_RATIO) {
+				float signX = (other_coord.x > WINDOW_WIDTH / 2) ? -1 : 1;
+				float signY = (other_coord.y > WINDOW_HEIGHT / 2) ? -1 : 1;
+				
+				coord.x = other_coord.x;
+				coord.y = other_coord.y;
+
+				coord.x += signX * 2 * ELEMENT_SPRITE_SIZE * (ELEMENT_SPRITE_RATIO + 0.5) / sqrt(2);
+				coord.y += signY * 2 * ELEMENT_SPRITE_SIZE * (ELEMENT_SPRITE_RATIO + 0.5) / sqrt(2);
+
+				return true;
+			}
+	return false;
 }
 
 void GameRunning::parseXML() {

@@ -4,38 +4,28 @@
 
 #pragma region GameFunctions
 
-Game::Game(int width, int height) :
-	RTSState(width, height),
+Game::Game(int width, int height, std::unique_ptr<sf::Music> old_music) :
+	RTSState(width, height, std::move(old_music)),
 	map(std::make_unique<Map>()),
 	time(std::make_unique<sftools::Chronometer>(sf::Time::Zero))
-{
-	music.openFromFile(MAIN_MUSIC_PATH);
-	music.play();
-}
+{}
 
 #pragma endregion GameFunctions
 
 #pragma region RTSStateFunctions
 
-Game::Game(const RTSState& state) :
-	RTSState(state),
+Game::Game(const RTSState& state, std::unique_ptr<sf::Music> old_music) :
+	RTSState(state, std::move(old_music)),
 	map(std::make_unique<Map>()),
 	time(std::make_unique<sftools::Chronometer>(sf::Time::Zero))
-{
-	music.openFromFile(MAIN_MUSIC_PATH);
-	music.setLoop(true);
-	music.play();
-}
+{}
 
-Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time) :
-	RTSState(state), 
+Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time,
+	std::unique_ptr<sf::Music> old_music) :
+	RTSState(state, std::move(old_music)), 
 	map(std::move(new_map)),
 	time(std::move(new_time))
-{
-	music.openFromFile(MAIN_MUSIC_PATH);
-	music.setLoop(true);
-	music.play();
-}
+{}
 
 void Game::renderGame(sf::RenderWindow& window) {
 	std::vector<std::unique_ptr<Individual>>& leaders = map->getLeaders();
