@@ -1,7 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Chronometer.hpp"
+#include "SoundManager.h"
 
 #include "Value.h"
 #include "OtherFunctions.h"
@@ -17,18 +19,20 @@ public:
 	// countdownAppearance and duration are times in seconds
 	Danger(std::unique_ptr<sftools::Chronometer>&, float set_countdownAppearance,
 		float set_duration, float time_offset, float time_before_next);
-	Danger(std::unique_ptr<sftools::Chronometer>&);
+	Danger(std::unique_ptr<sftools::Chronometer>&, float wait);
 
 	virtual sf::Shape &getShape() = 0;
 	virtual void affectZone(std::vector<std::unique_ptr<Individual>>&) = 0;
+	virtual void render(sf::RenderWindow&) = 0;
 	
 	// returns true if countdown is finished
 	void update(std::unique_ptr<sftools::Chronometer>&);
 	bool isFinished(std::unique_ptr<sftools::Chronometer>&);
 	bool hasBegun(std::unique_ptr<sftools::Chronometer>&);
 	bool isNextNow(std::unique_ptr<sftools::Chronometer>&);
-	virtual void render(sf::RenderWindow&) = 0;
 	bool getCountdownStatus() { return countdownFinished; }
+
+	virtual void resetBuffer() = 0;
 
 private:
 	sf::Time timeOfNext;
@@ -39,5 +43,6 @@ private:
 	virtual void updateOpacity(float opacity) = 0;
 
 protected:
+	bool firstRenderBeenDone;
 	bool countdownFinished;
 };

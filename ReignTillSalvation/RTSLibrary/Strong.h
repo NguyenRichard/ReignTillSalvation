@@ -33,7 +33,7 @@ public:
 	int findSubPosition(const IndividualState&);
 	void makeSubordinate(Individual*, std::vector<std::unique_ptr<Individual>>&,Individual* new_leader, int);
 	//new_leader must be a Strong.
-
+	int countIndividuals();
 
 private:
 	std::vector<std::unique_ptr<Individual>> subordinates; //must be sorted 

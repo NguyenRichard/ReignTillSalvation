@@ -24,8 +24,9 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
 	CircleDanger(time, setCountdownAppearance, setDuration, coord,
 		DEFAULT_RADIUS_DANGER, 0, 8.0f) {}
 
-CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, sf::Texture* texture) :
-	Danger(time), texture(texture)
+CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, sf::Texture* texture,
+	sf::SoundBuffer* buffer) :
+	Danger(time, wait), texture(texture), buffer(buffer)
 {
 	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
 	shape = sf::CircleShape(radius);
@@ -103,6 +104,12 @@ void CircleDanger::render(sf::RenderWindow& window) {
 		window.draw(shape);
 	}
 	else {
+		if (!firstRenderBeenDone)
+		{
+			firstRenderBeenDone = true;
+			playSound();
+		}
+
 		window.draw(sprite);
 		anim_count++;
 		if (anim_count*BASE_EXPLOSION_SPRITE_SIZE >= texture->getSize().x) {
@@ -110,4 +117,12 @@ void CircleDanger::render(sf::RenderWindow& window) {
 		}
 		sprite.setTextureRect(sf::IntRect(anim_count*BASE_EXPLOSION_SPRITE_SIZE, 0, BASE_EXPLOSION_SPRITE_SIZE, BASE_EXPLOSION_SPRITE_SIZE));
 	}
+}
+
+void CircleDanger::playSound()
+{
+	sound.setBuffer(*buffer);
+	sound.setVolume(30);
+	sound.setLoop(false);
+	sound.play();
 }

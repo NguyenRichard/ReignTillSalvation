@@ -31,8 +31,9 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time, float set_co
 	LineDanger(time, set_countdownAppearance, set_duration, coord,
 		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER, 0, 8.0f) {}
 
-LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time,sf::Texture* texture) :
-	Danger(time),texture(texture)
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, sf::Texture* texture,
+		sf::SoundBuffer* buffer) :
+	Danger(time, wait), texture(texture), buffer(buffer)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
 	float width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
@@ -161,6 +162,12 @@ void LineDanger::render(sf::RenderWindow& window) {
 		window.draw(shape);
 	}
 	else {
+		if (!firstRenderBeenDone)
+		{
+			firstRenderBeenDone = true;
+			playSound();
+		}
+
 		window.draw(sprite);
 		anim_count++;
 		if (anim_count*BASE_LASER_SPRITE_WIDTH >= texture->getSize().y) {
@@ -168,4 +175,12 @@ void LineDanger::render(sf::RenderWindow& window) {
 		}
 		sprite.setTextureRect(sf::IntRect(0, anim_count*BASE_LASER_SPRITE_WIDTH, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
 	}
+}
+
+void LineDanger::playSound()
+{
+	sound.setBuffer(*buffer);
+	sound.setVolume(30);
+	sound.setLoop(false);
+	sound.play();
 }

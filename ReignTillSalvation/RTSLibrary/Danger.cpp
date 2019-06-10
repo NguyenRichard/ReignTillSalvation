@@ -9,14 +9,17 @@ Danger::Danger(std::unique_ptr<sftools::Chronometer> &time, float set_countdownA
 	countdownAppearance = sf::seconds(set_countdownAppearance);
 	duration = sf::seconds(set_duration);
 	countdownFinished = false;
+	firstRenderBeenDone = false;
 }
 
-Danger::Danger(std::unique_ptr<sftools::Chronometer> &time) :
-	Danger(time, DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER,
+Danger::Danger(std::unique_ptr<sftools::Chronometer> &time, float wait) :
+	Danger(
+		time,
+		DEFAULT_COUNTDOWN_DANGER,
+		DEFAULT_DURATION_DANGER,
 		MIN_TIME_BEFORE_APPARITION
 			+ (float)randomint(MAX_TIME_BEFORE_APPARITION - MIN_TIME_BEFORE_APPARITION),
-		MIN_TIME_BEFORE_NEXT
-			+ (float)randomint(MAX_TIME_BEFORE_NEXT - MIN_TIME_BEFORE_NEXT)) {}
+		wait)  {}
 
 void Danger::update(std::unique_ptr<sftools::Chronometer> &time)
 {

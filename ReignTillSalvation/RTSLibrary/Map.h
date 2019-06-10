@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
 #include "Individual.h"
 #include "Strong.h"
 #include "Element.h"
@@ -25,9 +26,11 @@ private:
 	void updatePositions();
 	void updateDangers(std::unique_ptr<sftools::Chronometer>&);
 	void deleteDanger(const int&);
-	void addRandomDanger(std::unique_ptr<sftools::Chronometer>&);
+	void addRandomDanger(std::unique_ptr<sftools::Chronometer>&, float);
 	TextureManager textureManager;
+	SoundManager soundManager;
 	void updateAnim(std::unique_ptr<sftools::Chronometer>&);
+	int totalCountIndividuals();
 public:
 	Map();
 	void createIndividual(sf::Vector2f);

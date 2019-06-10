@@ -19,7 +19,6 @@ private:
 	std::unique_ptr<RTSState> changeStateToMainMenu();
 	std::unique_ptr<RTSState> changeStateToGameMenu();
 	std::unique_ptr<RTSState> changeStateToGameOverMenu();
-	void processGameInput(RTS*,sf::RenderWindow& window);
 	void parseXML();
 	bool mustMoveElementCoord(sf::Vector2f &coord);
 };

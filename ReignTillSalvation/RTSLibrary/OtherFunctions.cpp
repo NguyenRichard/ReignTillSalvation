@@ -25,6 +25,8 @@ sf::Color stringToColor(const std::string &color) {
 		return sf::Color::Magenta;
 	if (color.compare("Cyan") == 0)
 		return sf::Color::Cyan;
+	if (color.compare("Purple") == 0)
+		return sf::Color(255.0f, 0.0f, 255.0f);
 }
 
 float distanceBetween(sf::Vector2f p1, sf::Vector2f p2)

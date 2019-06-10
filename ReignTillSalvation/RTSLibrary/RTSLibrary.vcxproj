@@ -179,6 +179,7 @@
     <ClInclude Include="RTS.h" />
     <ClInclude Include="RTSLibrary.h" />
     <ClInclude Include="RTSState.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Strong.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Value.h" />
@@ -211,6 +212,7 @@
     </ClCompile>
     <ClCompile Include="RTS.cpp" />
     <ClCompile Include="RTSLibrary.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Strong.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="ViewManager.cpp" />
