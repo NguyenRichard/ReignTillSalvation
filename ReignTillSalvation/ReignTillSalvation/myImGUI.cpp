@@ -356,7 +356,7 @@ void gameInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 	ImGui::SetWindowFontScale(window.getSize().y / 600);
 
 
-	std::string string = "Number of individuals: " + std::to_string(game->getMap()->individualsNumber());
+	std::string string = "Number of individuals: " + std::to_string(game->getMap()->totalCountIndividuals());
 	ImGui::Text(string.c_str());
 
 	ImGui::End(); // end window

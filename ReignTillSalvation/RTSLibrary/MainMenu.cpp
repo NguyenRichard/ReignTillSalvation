@@ -74,7 +74,7 @@ void MainMenu::processInput(RTS* rts,sf::RenderWindow& window, sf::Event& event)
 
 void MainMenu::init() {
 
-	if (!font.loadFromFile("res/fonts/impact.ttf")) {
+	if (!font.loadFromFile(FONT_PATH)) {
 		std::cout << "Impossible to load font for menu";
 		return;
 	}

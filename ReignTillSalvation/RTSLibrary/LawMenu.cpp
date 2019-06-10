@@ -7,7 +7,7 @@ LawMenu::LawMenu(Element* element, int width, int height) :
 	element(element)
 {
 
-	if (!font.loadFromFile("res/fonts/impact.ttf")) {
+	if (!font.loadFromFile(FONT_PATH)) {
 		std::cout << "Impossible to load font for menu";
 		return;
 	}
