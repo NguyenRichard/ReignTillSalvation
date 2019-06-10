@@ -79,6 +79,14 @@ void MainMenu::init() {
 		return;
 	}
 
+	if (!texture.loadFromFile("res/sprite/MainMenu.png")) {
+		std::cout << "Impossible to load background for menu";
+		return;
+	}
+
+	selectedColor = sf::Color::Yellow;
+	background.setTexture(texture);
+
 	std::vector<std::string> option_names;
 	option_names.push_back("Play");
 	option_names.push_back("Options");
@@ -106,16 +114,8 @@ void MainMenu::init() {
 }
 
 void MainMenu::render(sf::RenderWindow& window) {
-	sf::Text title;
-	title.setString("Reign till Salvation");
-	title.setFont(font);
-	title.setFillColor(sf::Color::White);
-	title.setCharacterSize(char_size * 2.5f);
-	sf::FloatRect rect = title.getGlobalBounds();
-	title.setOrigin(sf::Vector2f(rect.width / 2, rect.height / 2));
-	title.setPosition(sf::Vector2f(width / 2, height / 2 -300));
+	window.draw(background);
 	Menu::render(window);
-	window.draw(title);
 }
 
 #pragma endregion RTSStateFunctions
