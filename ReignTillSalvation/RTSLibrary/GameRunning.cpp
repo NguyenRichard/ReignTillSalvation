@@ -80,10 +80,19 @@ void GameRunning::init() {
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
 		map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
 	}
+
 	sf::Vector2f coord;
 	for (int i = 0; i < MAX_ELEMENTS; i++) {
 		coord = sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT));
-		while (mustMoveElementCoord(coord));
+		int count = 0;
+		while (mustMoveElementCoord(coord)) {
+			count++;
+			if (count % 10 == 0)
+				coord = sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT));
+			if (count > 50) {
+				return;
+			}
+		}
 		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(), coord);
 	}
 }
@@ -92,8 +101,14 @@ bool GameRunning::mustMoveElementCoord(sf::Vector2f &coord) {
 	for (auto &element : map->getElements())
 		for (auto &other_coord : element->getCoords())
 			if (distanceBetween(coord, other_coord) < 2 * ELEMENT_SPRITE_SIZE * ELEMENT_SPRITE_RATIO) {
-				float signX = (other_coord.x > WINDOW_WIDTH / 2) ? -1 : 1;
-				float signY = (other_coord.y > WINDOW_HEIGHT / 2) ? -1 : 1;
+				float signX = (other_coord.x < 2 * ELEMENT_SPRITE_SIZE * ELEMENT_SPRITE_RATIO
+					&& coord.x < other_coord.x) ? 1 : randomint(1);
+				signX = (other_coord.x > WINDOW_WIDTH -  2 * ELEMENT_SPRITE_SIZE * ELEMENT_SPRITE_RATIO
+					&& coord.x > other_coord.x) ? -1 : randomint(1);
+				float signY = (other_coord.y < 2 * ELEMENT_SPRITE_SIZE * ELEMENT_SPRITE_RATIO
+					&& coord.y < other_coord.y) ? -1 : randomint(1);
+				signY = (other_coord.y > WINDOW_HEIGHT - 2 * ELEMENT_SPRITE_SIZE * ELEMENT_SPRITE_RATIO
+					&& coord.y > other_coord.y) ? -1 : randomint(1);
 				
 				coord.x = other_coord.x;
 				coord.y = other_coord.y;
