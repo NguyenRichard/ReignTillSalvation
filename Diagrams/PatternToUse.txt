@@ -1,5 +1,5 @@
 Observer - ??
 State - For object that will change state (Weak/Strong, GameController) OK
-Game Loop - Limiting update speed
-Update - Already used for our Individuals update
+Game Loop - Limiting update speed OK
+Update - Already used for our Individuals update OK
 Strategy - For different the different type of danger
