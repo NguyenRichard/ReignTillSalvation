@@ -6,10 +6,11 @@ Gameplay:
 The player will have to keep a population alive in this game. The population is composed of many individuals who are attracted or repelled by elements on the map. However, if you let them go as they wish, the dangers that will appear will kill them. So save them by making rules that compel them to be attracted or repelled by the element of your choice, so as to control their movement.
 
 Library used: SFML, imGUI, imGUI-SFML Binding, SFML tools and pugixml.
+
 Game Asset package:
-micro human: https://mome-g.itch.io/micro-human
-Magical Animation: https://itch.io/queue/c/188467/effects?game_id=325286
-Pixel Explosion: https://itch.io/queue/c/188467/effects?game_id=359213
+micro human: https://mome-g.itch.io/micro-human;
+Magical Animation: https://itch.io/queue/c/188467/effects?game_id=325286;
+Pixel Explosion: https://itch.io/queue/c/188467/effects?game_id=359213;
 
 
 Follow this tutorial to install the libraries.
