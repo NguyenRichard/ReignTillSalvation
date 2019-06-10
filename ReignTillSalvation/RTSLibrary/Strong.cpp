@@ -4,6 +4,7 @@
 
 Strong::Strong(std::pair<sf::Texture, sf::Texture>* textures) : IndividualState(textures) 
 {
+	sprite.setPosition(coord.x, coord.y);
 	sprite.setTexture(textures->second);
 	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
 	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
@@ -13,6 +14,7 @@ Strong::Strong(std::pair<sf::Texture, sf::Texture>* textures) : IndividualState(
 Strong::Strong(const IndividualState & state) : 
 	IndividualState(state)
 {
+	sprite.setPosition(coord.x, coord.y);
 	sprite.setTexture(textures->second);
 	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
 	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));

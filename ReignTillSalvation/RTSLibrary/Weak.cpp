@@ -3,6 +3,7 @@
 Weak::Weak(const IndividualState & state) : 
 	IndividualState(state) 
 {
+	sprite.setPosition(coord.x, coord.y);
 	sprite.setTexture(textures->first);
 	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE));
 	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));

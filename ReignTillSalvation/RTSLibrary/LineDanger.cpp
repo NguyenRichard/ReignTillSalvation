@@ -45,12 +45,11 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape.setPosition(coord);
 
-//	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * length / BASE_LASER_SPRITE_LENTGH;
-//	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
 
 	sf::Vector2f direction;
-	direction.x = (float)randomint(10) / 10;
-	direction.y = (float)randomint(10) / 10;
+	direction.x = (float)(1 + randomint(9)) / 10;
+	direction.y = (float)(1 + randomint(9)) / 10;
+	direction.y *= (randomint(1) == 0) ? 1 : -1;
 	direction.x = direction.x / magnitude(direction);
 	direction.y = direction.y / magnitude(direction);
 	float rotation = 180.0f / PI * atan(direction.y / direction.x);
@@ -67,16 +66,34 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 
 
 	anim_count = 0;
-	if (coord.y - coord.x*(direction.y / direction.x < 0 || coord.y - coord.x*(direction.y / direction.x >= WINDOW_HEIGHT))) {
-		sprite.setPosition(sf::Vector2f(0, coord.y - coord.x*(direction.y / direction.x)));
+	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * sqrt(pow(WINDOW_WIDTH,2)+pow(WINDOW_HEIGHT,2)) / BASE_LASER_SPRITE_LENTGH;
+	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
+	sprite.setOrigin(sf::Vector2f(BASE_LASER_SPRITE_LENTGH / 2, BASE_LASER_SPRITE_WIDTH / 2));
+	
+	if (direction.y / direction.x < 0) {
+		if (coord.y - coord.x*(direction.y / direction.x) > 0
+			&& coord.y - coord.x*(direction.y / direction.x) <= WINDOW_HEIGHT) {
+			sprite.setPosition(sf::Vector2f(0, coord.y - coord.x*(direction.y / direction.x)));
+		}
+		else {
+			sprite.setPosition(sf::Vector2f((WINDOW_HEIGHT - coord.y + coord.x*(direction.y / direction.x)) / (direction.y / direction.x), WINDOW_HEIGHT));
+		}	
+		sprite.setRotation(180.0f+rotation);
 	}
 	else {
-		sprite.setPosition(sf::Vector2f((coord.x*(direction.y / direction.x) - coord.y)/ (direction.y / direction.x), 0));
+		if ((coord.x*(direction.y / direction.x) - coord.y) / (direction.y / direction.x) > 0 
+			&& (coord.x*(direction.y / direction.x) - coord.y) / (direction.y / direction.x) <= WINDOW_WIDTH) 
+		{
+			sprite.setPosition(sf::Vector2f((coord.x*(direction.y / direction.x) - coord.y) / (direction.y / direction.x), 0));
+		}
+		else {
+			sprite.setPosition(sf::Vector2f(0, coord.y - coord.x*(direction.y / direction.x)));
+		}
+		sprite.setRotation(rotation);
 	}
-	sprite.setRotation(rotation);
 	sprite.setTexture(*texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
-//	sprite.setScale(ratio_length, ratio_width);
+	sprite.setScale(ratio_length, ratio_width);
 }
 
 void LineDanger::updateOpacity(float opacity)
