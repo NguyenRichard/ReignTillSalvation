@@ -47,7 +47,6 @@ public:
 	bool operator <(const IndividualState&);
 
 	virtual void incrementAnim() = 0;
-	virtual int countIndividuals() = 0;
 
 protected:
 	sf::Sprite sprite;

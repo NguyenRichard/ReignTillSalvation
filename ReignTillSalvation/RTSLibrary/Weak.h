@@ -27,7 +27,6 @@ public:
 	void incrementAnim() override;
 	void setSpriteDirection(float rotation);
 	//new_leader must be a Strong.
-	int countIndividuals() { return 1; }
 
 private:
 	Individual* leader; //must be a Strong.

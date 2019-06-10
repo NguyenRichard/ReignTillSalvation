@@ -30,7 +30,6 @@ private:
 	TextureManager textureManager;
 	SoundManager soundManager;
 	void updateAnim(std::unique_ptr<sftools::Chronometer>&);
-	int totalCountIndividuals();
 public:
 	Map();
 	void createIndividual(sf::Vector2f);
@@ -48,9 +47,11 @@ public:
 	void render(sf::RenderWindow&);
 
 	void update(std::unique_ptr<sftools::Chronometer>&);
-	int individualsNumber();
+	int totalCountIndividuals();
 
 	sf::Time last_anim_update;
 	sf::Sprite background;
+	sf::Text individualsCount;
+	sf::Font font;
 };
 

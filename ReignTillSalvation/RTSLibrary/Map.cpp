@@ -3,6 +3,14 @@
 
 Map::Map() {
 	background.setTexture(textureManager.map);
+	if (!font.loadFromFile(FONT_PATH)) {
+		std::cout << "Impossible to load font for map";
+		return;
+	}
+	individualsCount.setFont(font);
+	individualsCount.setCharacterSize(INDIVIDUALS_COUNT_CHARACTER_SIZE);
+	individualsCount.setFillColor(INDIVIDUALS_COUNT_FILLCOLOR);
+	individualsCount.setString(std::to_string(MAX_INDIVIDUALS) + "/" + std::to_string(MAX_INDIVIDUALS));
 }
 
 void Map::createIndividual(sf::Vector2f coord) {
@@ -105,7 +113,7 @@ void Map::update(std::unique_ptr<sftools::Chronometer>& time) {
 	updateAnim(time);
 }
 
-int Map::individualsNumber() {
+int Map::totalCountIndividuals() {
 	int sum = 0;
 	for (const auto & leader : leaders) {
 		sum += leader->myStrength()+1;
@@ -173,11 +181,6 @@ void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
 
 void Map::render(sf::RenderWindow& window) {
 	window.draw(background);
-}
-
-int Map::totalCountIndividuals() {
-	int count = 0;
-	for (auto& leader : leaders)
-		count += leader->getState()->countIndividuals();
-	return count;
+	individualsCount.setString(std::to_string(totalCountIndividuals()) + "/" + std::to_string(MAX_INDIVIDUALS));
+	window.draw(individualsCount);
 }

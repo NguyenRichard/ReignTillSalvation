@@ -1,5 +1,7 @@
 #pragma once
 
+#define FONT_PATH						"res/fonts/impact.ttf"
+
 #pragma region time
 #define MS_PER_UPDATE					2.0f
 #define MS_PER_RENDER					50.0f
@@ -12,8 +14,10 @@
 #pragma endregion window_size
 
 #pragma region map_initializing_constant
-#define MAX_INDIVIDUALS					100
-#define MAX_ELEMENTS					10
+#define MAX_INDIVIDUALS						100
+#define MAX_ELEMENTS						10
+#define INDIVIDUALS_COUNT_FILLCOLOR			sf::Color(255,255,255,100)
+#define INDIVIDUALS_COUNT_CHARACTER_SIZE	64
 #pragma endregion map_initializing_constant
 
 #pragma region individualsprite

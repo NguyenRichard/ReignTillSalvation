@@ -316,7 +316,3 @@ void Strong::setSpriteDirection(float rotation) {
 
 	sprite.setRotation(rotation);
 }
-
-int Strong::countIndividuals() {
-	return 1 + subordinates.size();
-}
