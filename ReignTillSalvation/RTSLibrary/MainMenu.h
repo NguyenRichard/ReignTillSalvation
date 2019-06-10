@@ -15,5 +15,7 @@ private:
 	void handleKeyEventAction(RTS*,sf::RenderWindow& window) override;
 	void processInput(RTS*,sf::RenderWindow& window, sf::Event&) override;
 	std::unique_ptr<RTSState> changeStateToGameRunning();
+	sf::Sprite background;
+	sf::Texture texture;
 
 };
