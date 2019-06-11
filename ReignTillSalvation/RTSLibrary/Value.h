@@ -4,8 +4,8 @@
 
 #pragma region time
 #define MS_PER_UPDATE					2.0f
-#define MS_PER_RENDER					50.0f
-#define MS_PER_ANIM						50.0f
+#define MS_PER_RENDER					2.0f
+#define MS_PER_ANIM						60.0f
 #pragma endregion time
 
 #pragma region window_size

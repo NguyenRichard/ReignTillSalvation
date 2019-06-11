@@ -223,5 +223,5 @@ void Weak::setSpriteDirection(float rotation) {
 		rotation = 360 - rotation;
 	}
 
-	sprite.setRotation(rotation);
+	//sprite.setRotation(rotation);
 }
