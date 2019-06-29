@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Element.h"
+#include "ObjectLogic.h"
 
-class Attraction
+class Attraction : public ObjectLogic
 {
 public:
 	Attraction(Element element, int power) :

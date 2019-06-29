@@ -12,7 +12,6 @@ Weak::Weak(const IndividualState & state) :
 
 std::unique_ptr<IndividualState> Weak::changeState() {
 	std::unique_ptr<Strong> strong = std::make_unique<Strong>(*this);
-	strong->getSprite()->setTexture(textures->second);
 	return move(strong);
 }
 

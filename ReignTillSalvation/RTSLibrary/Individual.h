@@ -3,8 +3,9 @@
 #include "Attraction.h"
 #include "SFML/Graphics.hpp"
 #include "Value.h"
+#include "ObjectLogic.h"
 
-class Individual {
+class Individual : public ObjectLogic {
 public:
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f);
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f, Element*, Element*);

@@ -3,11 +3,12 @@
 #include <SFML\Graphics.hpp>
 #include "Value.h"
 #include "OtherFunctions.h"
+#include "ObjectLogic.h"
 
 class Attraction;
 
 
-class Element
+class Element : public ObjectLogic
 {
 public:
 	Element(std::string name);

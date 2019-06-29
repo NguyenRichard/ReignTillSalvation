@@ -23,7 +23,6 @@ Strong::Strong(const IndividualState & state) :
 
 std::unique_ptr<IndividualState> Strong::changeState(Individual* new_leader) {
 	std::unique_ptr<Weak> weak = std::make_unique<Weak>(*this);
-	weak->getSprite()->setTexture(textures->first);
 	weak->setLeader(new_leader);
 	return move(weak);
 }

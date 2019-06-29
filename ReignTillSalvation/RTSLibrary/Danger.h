@@ -9,11 +9,12 @@
 #include "OtherFunctions.h"
 #include "Individual.h"
 #include "Strong.h"
+#include "ObjectLogic.h"
 
 #define MAX_COUNTDOWN_OPACITY			80.0f
 #define DANGER_OPACITY					150.0f
 
-class Danger
+class Danger : public ObjectLogic
 {
 public:
 	// countdownAppearance and duration are times in seconds

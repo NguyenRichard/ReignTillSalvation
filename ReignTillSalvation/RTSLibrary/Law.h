@@ -1,10 +1,11 @@
 #pragma once
 #include "Element.h"
+#include "ObjectLogic.h"
 
 
 enum LawType { Attraction, Repulsion, Cancel };
 
-class Law {
+class Law : public ObjectLogic {
 private:
 	Element* element;
 	LawType type;

@@ -12,8 +12,9 @@
 #include "CircleDanger.h"
 #include "LineDanger.h"
 #include "TextureManager.h"
+#include "ObjectLogic.h"
 
-class Map
+class Map : public ObjectLogic
 {
 private:
 	std::vector<std::unique_ptr<Individual>> leaders;

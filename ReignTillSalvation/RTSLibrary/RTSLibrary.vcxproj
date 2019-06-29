@@ -173,8 +173,10 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="ObjectLogic.h" />
     <ClInclude Include="OtherFunctions.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Renderable.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RTS.h" />
     <ClInclude Include="RTSLibrary.h" />
