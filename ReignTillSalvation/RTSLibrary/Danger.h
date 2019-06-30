@@ -46,4 +46,5 @@ private:
 protected:
 	bool firstRenderBeenDone;
 	bool countdownFinished;
+	float opacity;
 };

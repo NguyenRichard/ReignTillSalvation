@@ -13,6 +13,8 @@ public:
 	sf::CircleShape &getShape() { return shape; };
 	void render(sf::RenderWindow&) override;
 	void resetBuffer() { sound.resetBuffer(); }
+
+	void updateDrawabbles(std::vector <std::pair<sf::Drawable, std::vector<sf::Texture*>>>);
 private:
 	sf::CircleShape shape;
 	sf::Sprite sprite;

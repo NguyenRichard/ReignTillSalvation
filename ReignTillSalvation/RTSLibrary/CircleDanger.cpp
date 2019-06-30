@@ -52,13 +52,6 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wa
 	sprite.setScale(ratio, ratio);
 }
 
-void CircleDanger::updateOpacity(float opacity)
-{
-	sf::Color color = shape.getFillColor();
-	color.a = opacity;
-	shape.setFillColor(color);
-}
-
 void CircleDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
 {
 	sf::Vector2f center = shape.getPosition();
@@ -125,4 +118,24 @@ void CircleDanger::playSound()
 	sound.setVolume(30);
 	sound.setLoop(false);
 	sound.play();
+}
+
+void CircleDanger::updateDrawabbles(std::vector <std::pair<sf::Drawable, std::vector<sf::Texture*>>> drawables)
+{
+	if (!countdownFinished) {
+		sf::Color color = shape.getFillColor();
+		color.a = opacity;
+		shape.setFillColor(color);
+	}
+
+	else
+	{
+		if (drawables[1].first == NULL) {
+			sprite.setOrigin(drawables[0].first.getOrigin());
+			sprite.setPosition(drawables[0].first.getOrigin());
+			sprite.setTexture(drawables[1].second);
+			sprite.setTextureRect(drawables[0].first.getTextureRect());
+			sprite.setScale(drawables[0].first.getScale);
+		}
+	}
 }

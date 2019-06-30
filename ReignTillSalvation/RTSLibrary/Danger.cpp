@@ -23,14 +23,12 @@ Danger::Danger(std::unique_ptr<sftools::Chronometer> &time, float wait) :
 
 void Danger::update(std::unique_ptr<sftools::Chronometer> &time)
 {
-	float opacity = (time->getElapsedTime().asSeconds() - apparitionTime.asSeconds()) / 
+	opacity = (time->getElapsedTime().asSeconds() - apparitionTime.asSeconds()) / 
 		countdownAppearance.asSeconds() * MAX_COUNTDOWN_OPACITY;
 	if (opacity > MAX_COUNTDOWN_OPACITY) {
-		updateOpacity(DANGER_OPACITY);
+		opacity = DANGER_OPACITY;
 		countdownFinished = true;
 	}
-
-	updateOpacity(opacity);
 }
 
 bool Danger::isFinished(std::unique_ptr<sftools::Chronometer> &time)
