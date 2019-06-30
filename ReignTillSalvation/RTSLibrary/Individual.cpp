@@ -88,14 +88,6 @@ void Individual::updatePosition(std::vector<std::unique_ptr<Element>>& map_eleme
 	state->updatePositionChaos(map_elements);
 }
 
-void Individual::render(sf::RenderWindow& window) {
-	state->render(window);
-}
-
-void Individual::render_and_update(sf::RenderWindow& window) {
-	state->render_and_update(window);
-}
-
 float Individual::distanceToIndividual(const Individual & individual) const {
 	return state->distanceToIndividual(*individual.state.get());
 }
@@ -152,6 +144,3 @@ void Individual::addElement(Element* element) {
 	elements.push_back(element);
 }
 
-void Individual::setTextures(std::pair<sf::Texture, sf::Texture>* textures) {
-	state->setTextures(textures);
-}
