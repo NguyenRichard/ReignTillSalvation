@@ -5,7 +5,7 @@
 
 class Renderable {
 private:
-	std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::vector<sf::Texture*>>> drawables;
+	std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>,int>>> drawables;
 	ObjectLogic* object;
 	int animcount; // if animcount = -1, no animation.
 public:

@@ -5,7 +5,8 @@
 #include "Value.h"
 #include "ObjectLogic.h"
 
-class Individual : public ObjectLogic {
+
+class Individual {
 public:
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f);
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f, Element*, Element*);
@@ -21,15 +22,12 @@ public:
 	sf::Vector2f directionToward(const sf::Vector2f &point) const 
 		{ return state->directionToward(point); };
 
-	void render(sf::RenderWindow&);
-	void render_and_update(sf::RenderWindow&);
 	void updateMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroup(std::vector<std::unique_ptr<Individual>>&, int);
 	void findMyGroupNew(std::vector<std::unique_ptr<Individual>>&, int);
 	int findSubPosition(const Individual&);
 	int myStrength() const { return state->myStrength(); };
 
-	void setTextures(std::pair<sf::Texture, sf::Texture>*);
 	void setLiked(Element* el_liked);
 	void setDisliked(Element* el_disliked);
 	void addElement(Element* element);
@@ -43,6 +41,7 @@ private:
 	std::vector<Element*> elements;
 	Element* liked;
 	Element* disliked;
+	Dir direction; //Sprite information
 
 	void updatePositionAttraction();
 };

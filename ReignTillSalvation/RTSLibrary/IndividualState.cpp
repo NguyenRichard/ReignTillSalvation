@@ -35,10 +35,6 @@ bool IndividualState:: operator <(const IndividualState& individual) {
 	return myStrength() < individual.myStrength();
 }
 
-void IndividualState::rotateSprite(float degree) {
-	sprite.setRotation(degree);
-}
-
 
 void IndividualState::applyCollision(const sf::Vector2f& compare_coord, float min) {
 
@@ -75,3 +71,96 @@ void IndividualState::applyCollisionElements(std::vector<std::unique_ptr<Element
 	}
 
 }
+
+
+void IndividualState::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
+
+	sf::Sprite* sprite = static_cast<sf::Sprite*>(drawables[0].first.get());
+	sprite->setPosition(coord.x, coord.y);
+	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.x);
+	float rotation = calculateAngle(direction);
+	if (direction.y < 0) {
+		rotation = 360.0f - rotation;
+	}
+	sf::IntRect rect = sprite->getTextureRect();
+	setSpriteDirection(rotation, rect);
+	sprite->setTextureRect(rect);
+}
+
+
+void IndividualState::setSpriteDirection(float rotation, sf::IntRect& rect) {
+	if ((rotation >= 0 && rotation < 22.5)) {
+		rect.top = Right * rect.height;
+	}
+	else if (rotation >= 22.5 && rotation < 67.5) {
+		rect.top = DownRight * rect.height;
+		if (rotation > 45.0f) {
+			rotation = rotation - 45.0f;
+		}
+		else {
+			rotation = 360.0f - (45.0f - rotation);
+		}
+	}
+	else if (rotation >= 67.5 && rotation < 112.5) {
+		rect.top = Down * rect.height;
+		if (rotation > 90.0f) {
+			rotation = rotation - 90.0f;
+		}
+		else {
+			rotation = 360.0f - (90.0f - rotation);
+		}
+	}
+	else if (rotation >= 112.5 && rotation < 157.5) {
+		rect.top = DownLeft * rect.height;
+		if (rotation > 135.0f) {
+			rotation = rotation - 135.0f;
+		}
+		else {
+			rotation = 360.0f - (135.0f - rotation);
+		}
+	}
+	else if (rotation >= 157.5 && rotation < 202.5) {
+		rect.top = Left * rect.height;
+		if (rotation > 185.0f) {
+			rotation = rotation - 185.0f;
+		}
+		else {
+			rotation = 360.0f - (185.0f - rotation);
+		}
+	}
+	else if (rotation >= 202.5 && rotation < 247.5) {
+		rect.top = TopLeft * rect.height;
+		if (rotation > 225.0f) {
+			rotation = rotation - 225.0f;
+		}
+		else {
+			rotation = 360.0f - (225.0f - rotation);
+		}
+	}
+	else if (rotation >= 247.5 && rotation < 292.5) {
+		rect.top = Top * rect.height;
+		if (rotation > 270.0f) {
+			rotation = rotation - 270.0f;
+		}
+		else {
+			rotation = 360.0f - (270.0f - rotation);
+		}
+	}
+	else if (rotation >= 292.5 && rotation <= 337.5) {
+		rect.top = TopRight * rect.height;
+		if (rotation > 315.0f) {
+			rotation = rotation - 315.0f;
+		}
+		else {
+			rotation = 360.0f - (315.0f - rotation);
+		}
+	}
+	else if (rotation >= 337.5 && rotation <= 360) {
+		rect.top = Right * rect.height;
+		rotation = 360 - rotation;
+	}
+
+	//	sprite.setRotation(rotation);
+}
+
+

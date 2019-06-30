@@ -10,22 +10,19 @@
 #include "Value.h"
 #include "Element.h"
 
-enum Dir {Down, DownLeft, Left, TopLeft, Top, TopRight, Right, DownRight};
 
 class Individual;
 
-class IndividualState {
+enum Dir { Down, DownLeft, Left, TopLeft, Top, TopRight, Right, DownRight };
+
+class IndividualState : public ObjectLogic {
 public:
 	IndividualState();
 	IndividualState(std::pair<sf::Texture, sf::Texture>*);
 	IndividualState(const IndividualState & state);
 	virtual void action() = 0;
 	virtual ~IndividualState() = default;
-	sf::Sprite* getSprite() { return &sprite; };
-	void setTextures(std::pair<sf::Texture, sf::Texture>* textures) { this->textures = textures; };
 	virtual void updatePositionChaos(std::vector<std::unique_ptr<Element>>&) = 0;
-	virtual void render(sf::RenderWindow&) = 0;
-	virtual void render_and_update(sf::RenderWindow&) = 0;
 	void applyCollision(const sf::Vector2f&, float);
 	void applyCollisionElements(std::vector<std::unique_ptr<Element>>& elements);
 
@@ -36,7 +33,7 @@ public:
 	float distanceToIndividual(const IndividualState& individual) const;
 	sf::Vector2f directionToward(const sf::Vector2f&) const;
 	void setOldCoord(const sf::Vector2f &coord) { old_coord = coord; };
-	void rotateSprite(float degree);
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>) override;
 
 	virtual void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
 	virtual void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>&, int) = 0;
@@ -49,11 +46,10 @@ public:
 	virtual void incrementAnim() = 0;
 
 protected:
-	sf::Sprite sprite;
-	std::pair<sf::Texture, sf::Texture>* textures;
+	void setSpriteDirection(float, sf::IntRect&);
+
 	sf::Vector2f coord;
 	sf::Vector2f old_coord;
-	sf::Vector2i anim;
 };
 
 #endif

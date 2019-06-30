@@ -15,8 +15,6 @@ public:
 	const Individual* getLeader() const { return leader; };
 	float distanceToLeader() const { return distanceToIndividual(*leader->getState()); };
 	std::unique_ptr<IndividualState> changeState();
-	void render(sf::RenderWindow&) override;
-	void render_and_update(sf::RenderWindow&) override;
 
 	void updateMyGroup(Individual*,std::vector<std::unique_ptr<Individual>>&,int) override;
 	void findGroup(Individual*,std::vector<std::unique_ptr<Individual>>& leaders, int my_position) override;
@@ -24,10 +22,12 @@ public:
 	int myStrength() const override { return -1; };
 	int findSubPosition(const IndividualState&) override { return -1; };
 	void makeSubordinate(Individual*,std::vector<std::unique_ptr<Individual>>& new_leader,std::unique_ptr<Individual>&,int);
-	void incrementAnim() override;
-	void setSpriteDirection(float rotation);
 	//new_leader must be a Strong.
+	void incrementAnim() override;
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>) override;
 
 private:
+
+
 	Individual* leader; //must be a Strong.
 };
