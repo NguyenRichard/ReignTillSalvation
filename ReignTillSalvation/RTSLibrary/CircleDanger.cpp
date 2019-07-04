@@ -42,7 +42,7 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wa
 	shape.setOutlineThickness(2);
 	color.a = 150.0f;
 	shape.setOutlineColor(color);
-
+	/*
 	float ratio = MULTIPLY_RATIO_EXPLOSION*radius/BASE_EXPLOSION_SPRITE_SIZE;
 	anim_count = 0;
 	sprite.setOrigin(sf::Vector2f(ratio*BASE_EXPLOSION_SPRITE_SIZE, ratio*BASE_EXPLOSION_SPRITE_SIZE));
@@ -50,6 +50,7 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wa
 	sprite.setTexture(*texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, BASE_EXPLOSION_SPRITE_SIZE, BASE_EXPLOSION_SPRITE_SIZE));
 	sprite.setScale(ratio, ratio);
+	*/
 }
 
 void CircleDanger::affectZone(std::vector<std::unique_ptr<Individual>> &leaders)
@@ -120,22 +121,34 @@ void CircleDanger::playSound()
 	sound.play();
 }
 
-void CircleDanger::updateDrawabbles(std::vector <std::pair<sf::Drawable, std::vector<sf::Texture*>>> drawables)
+void CircleDanger::updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables)
 {
 	if (!countdownFinished) {
-		sf::Color color = shape.getFillColor();
+		sf::CircleShape* old_shape = static_cast<sf::CircleShape*>(drawables[0].first.get());
+		sf::Color color = old_shape->getFillColor();
 		color.a = opacity;
-		shape.setFillColor(color);
+		old_shape->setFillColor(color);
 	}
 
 	else
 	{
-		if (drawables[1].first == NULL) {
-			sprite.setOrigin(drawables[0].first.getOrigin());
-			sprite.setPosition(drawables[0].first.getOrigin());
-			sprite.setTexture(drawables[1].second);
-			sprite.setTextureRect(drawables[0].first.getTextureRect());
-			sprite.setScale(drawables[0].first.getScale);
+		// if the sprite has not yet been moved
+		if (drawables[0].first != nullptr)
+		{
+			sf::CircleShape* old_shape = static_cast<sf::CircleShape*>(drawables[0].first.get());
+			std::unique_ptr<sf::Sprite> new_sprite = std::make_unique<sf::Sprite>();
+			new_sprite->setOrigin(old_shape->getOrigin());
+			new_sprite->setPosition(old_shape->getPosition());
+			new_sprite->setTexture(*drawables[1].second.first[0]);
+			new_sprite->setTextureRect(old_shape->getTextureRect());
+			new_sprite->setScale(old_shape->getScale());
+			drawables[1].first = std::move(new_sprite);
+			drawables[0].first.release();
+
+			drawables[1].second.second = 0;
 		}
+
+		else
+			drawables[1].second.second++;
 	}
 }

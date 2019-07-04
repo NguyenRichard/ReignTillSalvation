@@ -1,5 +1,5 @@
 #include "LineDanger.h"
-
+/*
 LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
 		float set_countdownAppearance, float set_duration, sf::Vector2f coord,
 		sf::Vector2f direction, float width, float time_offset, float time_before_next) :
@@ -13,7 +13,7 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
 
 	direction.x = direction.x / magnitude(direction);
 	direction.y = direction.y / magnitude(direction);
-	float rotation = 180.0f / PI * atan(direction.y / direction.x);
+	rotation = 180.0f / PI * atan(direction.y / direction.x);
 	if (direction.y < 0)
 		rotation += 180.0f;
 	shape.setRotation(rotation);
@@ -24,35 +24,33 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time,
 	shape.setOutlineThickness(2);
 	color.a = 150.0f;
 	shape.setOutlineColor(color);
-}
-
+}*/
+/*
 LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time, float set_countdownAppearance,
 		float set_duration, sf::Vector2f coord) :
 	LineDanger(time, set_countdownAppearance, set_duration, coord,
-		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER, 0, 8.0f) {}
+		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER, 0, 8.0f) {}*/
 
 LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, sf::Texture* texture,
 		sf::SoundBuffer* buffer) :
 	Danger(time, wait), texture(texture), buffer(buffer)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
-	float width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
+	width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
 	shape = sf::RectangleShape(sf::Vector2f(length, width));
 
-	sf::Vector2f coord;
 	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
 	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
 	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape.setPosition(coord);
 
 
-	sf::Vector2f direction;
 	direction.x = (float)(1 + randomint(9)) / 10;
 	direction.y = (float)(1 + randomint(9)) / 10;
 	direction.y *= (randomint(1) == 0) ? 1 : -1;
 	direction.x = direction.x / magnitude(direction);
 	direction.y = direction.y / magnitude(direction);
-	float rotation = 180.0f / PI * atan(direction.y / direction.x);
+	rotation = 180.0f / PI * atan(direction.y / direction.x);
 	if (direction.y < 0)
 		rotation += 180.0f;
 	shape.setRotation(rotation);
@@ -64,7 +62,7 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 	color.a = 150.0f;
 	shape.setOutlineColor(color);
 
-
+	/*
 	anim_count = 0;
 	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * sqrt(pow(WINDOW_WIDTH,2)+pow(WINDOW_HEIGHT,2)) / BASE_LASER_SPRITE_LENTGH;
 	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
@@ -94,6 +92,7 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 	sprite.setTexture(*texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
 	sprite.setScale(ratio_length, ratio_width);
+	*/
 }
 
 void LineDanger::updateOpacity(float opacity)
@@ -200,4 +199,84 @@ void LineDanger::playSound()
 	sound.setVolume(30);
 	sound.setLoop(false);
 	sound.play();
+}
+
+void LineDanger::updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables)
+{
+	if (!countdownFinished) {
+		sf::RectangleShape* old_shape = static_cast<sf::RectangleShape*>(drawables[0].first.get());
+		sf::Color color = old_shape->getFillColor();
+		color.a = opacity;
+		old_shape->setFillColor(color);
+	}
+
+	else
+	{
+		// if the sprite has not yet been moved
+		if (drawables[0].first != nullptr)
+		{
+			sf::RectangleShape* old_shape = static_cast<sf::RectangleShape*>(drawables[0].first.get());
+			std::unique_ptr<sf::Sprite> new_sprite = std::make_unique<sf::Sprite>();
+
+			float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
+			width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
+			shape = sf::RectangleShape(sf::Vector2f(length, width));
+
+			coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
+			coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
+			shape.setOrigin(sf::Vector2f(length / 2, width / 2));
+			shape.setPosition(coord);
+
+
+			direction.x = (float)(1 + randomint(9)) / 10;
+			direction.y = (float)(1 + randomint(9)) / 10;
+			direction.y *= (randomint(1) == 0) ? 1 : -1;
+			direction.x = direction.x / magnitude(direction);
+			direction.y = direction.y / magnitude(direction);
+			rotation = 180.0f / PI * atan(direction.y / direction.x);
+			if (direction.y < 0)
+				rotation += 180.0f;
+			shape.setRotation(rotation);
+
+
+			anim_count = 0;
+			float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * sqrt(pow(WINDOW_WIDTH,2)+pow(WINDOW_HEIGHT,2)) / BASE_LASER_SPRITE_LENTGH;
+			float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
+			sprite.setOrigin(sf::Vector2f(BASE_LASER_SPRITE_LENTGH / 2, BASE_LASER_SPRITE_WIDTH / 2));
+	
+			if (direction.y / direction.x < 0) {
+				if (coord.y - coord.x*(direction.y / direction.x) > 0
+					&& coord.y - coord.x*(direction.y / direction.x) <= WINDOW_HEIGHT) {
+					sprite.setPosition(sf::Vector2f(0, coord.y - coord.x*(direction.y / direction.x)));
+				}
+				else {
+					sprite.setPosition(sf::Vector2f((WINDOW_HEIGHT - coord.y + coord.x*(direction.y / direction.x)) / (direction.y / direction.x), WINDOW_HEIGHT));
+				}	
+				sprite.setRotation(180.0f+rotation);
+			}
+			else {
+				if ((coord.x*(direction.y / direction.x) - coord.y) / (direction.y / direction.x) > 0 
+					&& (coord.x*(direction.y / direction.x) - coord.y) / (direction.y / direction.x) <= WINDOW_WIDTH) 
+				{
+					sprite.setPosition(sf::Vector2f((coord.x*(direction.y / direction.x) - coord.y) / (direction.y / direction.x), 0));
+				}
+				else {
+					sprite.setPosition(sf::Vector2f(0, coord.y - coord.x*(direction.y / direction.x)));
+				}
+				sprite.setRotation(rotation);
+			}
+
+			new_sprite->setTexture(*drawables[1].second.first[0]);
+			new_sprite->setTextureRect(sf::IntRect(0, 0, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
+			new_sprite->setScale(ratio_length, ratio_width);
+
+			drawables[1].first = std::move(new_sprite);
+			drawables[0].first.release();
+
+			drawables[1].second.second = 0;
+		}
+
+		else
+			drawables[1].second.second++;
+	}
 }

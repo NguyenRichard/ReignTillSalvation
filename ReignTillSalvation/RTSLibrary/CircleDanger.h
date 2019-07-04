@@ -14,7 +14,7 @@ public:
 	void render(sf::RenderWindow&) override;
 	void resetBuffer() { sound.resetBuffer(); }
 
-	void updateDrawabbles(std::vector <std::pair<sf::Drawable, std::vector<sf::Texture*>>>);
+	void updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>);
 private:
 	sf::CircleShape shape;
 	sf::Sprite sprite;
@@ -22,7 +22,5 @@ private:
 	int anim_count;
 	sf::SoundBuffer* buffer;
 	sf::Sound sound;
-
-	void updateOpacity(float opacity);
 	void playSound();
 };

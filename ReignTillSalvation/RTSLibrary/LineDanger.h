@@ -14,6 +14,8 @@ public:
 	sf::RectangleShape &getShape() { return shape; };
 	void render(sf::RenderWindow&) override;
 	void resetBuffer() { sound.resetBuffer(); }
+
+	void updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>);
 private:
 	sf::RectangleShape shape;
 
@@ -24,6 +26,11 @@ private:
 	int anim_count;
 	sf::SoundBuffer* buffer;
 	sf::Sound sound;
+
+	float width;
+	float rotation;
+	sf::Vector2f direction;
+	sf::Vector2f coord;
 
 	void playSound();
 };
