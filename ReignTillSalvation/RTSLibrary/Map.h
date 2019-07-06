@@ -13,6 +13,7 @@
 #include "LineDanger.h"
 #include "TextureManager.h"
 #include "ObjectLogic.h"
+#include "Renderable.h"
 
 class Map : public ObjectLogic
 {
@@ -27,10 +28,13 @@ private:
 	void updatePositions();
 	void updateDangers(std::unique_ptr<sftools::Chronometer>&);
 	void deleteDanger(const int&);
-	void addRandomDanger(std::unique_ptr<sftools::Chronometer>&, float);
+	CircleDanger* addRandomCircleDanger(std::unique_ptr<sftools::Chronometer>&, float);
+	LineDanger* addRandomLineDanger(std::unique_ptr<sftools::Chronometer>&, float);
 	TextureManager textureManager;
 	SoundManager soundManager;
 	void updateAnim(std::unique_ptr<sftools::Chronometer>&);
+
+	std::vector<std::unique_ptr<Renderable>> renderables;
 public:
 	Map();
 	void createIndividual(sf::Vector2f);
