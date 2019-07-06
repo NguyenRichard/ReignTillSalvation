@@ -10,6 +10,5 @@ private:
 	int animcount; // if animcount = -1, no animation. (WARNING: Drawable must be a sprite if animcount != -1)
 public:
 	void render(sf::RenderWindow& window);
-	void updateDrawables();
 	void updateAnimation();
 };

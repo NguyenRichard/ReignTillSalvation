@@ -10,4 +10,6 @@ void Renderable::updateAnimation() {
 	if (animcount == -1) {
 		return;
 	}
+
+
 }
