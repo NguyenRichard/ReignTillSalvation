@@ -245,8 +245,12 @@ void Strong::incrementAnim() {
 void Strong::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
 
 	if (drawables[0].second.second != 1) {
-		static_cast<sf::Sprite*>(drawables[0].first.get())->setTexture(*drawables[0].second.first[1]);
+		sf::Sprite* sprite = static_cast<sf::Sprite*>(drawables[0].first.get());
 		drawables[0].second.second = 1;
+		sprite->setTexture(*drawables[0].second.first[1]);
+		sprite->setTextureRect(sf::IntRect(0, 0, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
+		sprite->setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
+		sprite->setScale(5, 5);
 	}
 	IndividualState::updateDrawables(drawables);
 }

@@ -28,6 +28,7 @@ public:
 	int findSubPosition(const Individual&);
 	int myStrength() const { return state->myStrength(); };
 
+	Element* getLiked() { return liked; }
 	void setLiked(Element* el_liked);
 	void setDisliked(Element* el_disliked);
 	void addElement(Element* element);
