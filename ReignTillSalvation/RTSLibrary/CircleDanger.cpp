@@ -30,7 +30,6 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wa
 {
 	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
 	shape = sf::CircleShape(radius);
-	sf::Vector2f coord;
 	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
 	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
 	shape.setOrigin(sf::Vector2f(radius, radius));
