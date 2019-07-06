@@ -9,6 +9,8 @@ private:
 	ObjectLogic* object;
 	int animcount; // if animcount = -1, no animation. (WARNING: Drawable must be a sprite if animcount != -1)
 public:
+	Renderable(CircleDanger*, const TextureManager&);
+	Renderable(LineDanger*, const TextureManager&);
 	void render(sf::RenderWindow& window);
 	void updateAnimation();
 };

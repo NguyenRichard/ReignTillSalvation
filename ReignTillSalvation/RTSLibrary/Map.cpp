@@ -125,9 +125,11 @@ void Map::updateDangers(std::unique_ptr<sftools::Chronometer>& time) {
 	if (dangers.empty() || dangers.back()->isNextNow(time)) {
 		int nbIndividuals = totalCountIndividuals();
 		if (randomint(1) == 0)
-			addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f));
+			renderables.push_back(std::make_unique<Renderable>(
+				addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))), textureManager);
 		else
-			addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f));
+			renderables.push_back(std::make_unique<Renderable>(
+				addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))), textureManager);
 	}
 
 	for (int i = dangers.size() - 1; i >= 0; i--) {
@@ -170,8 +172,11 @@ CircleDanger* Map::addRandomCircleDanger(std::unique_ptr<sftools::Chronometer> &
 
 LineDanger* Map::addRandomLineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait)
 {
-	dangers.push_back(std::make_unique<LineDanger>(time, wait, &textureManager.dangers.find("laser")->second,
-			&soundManager.sounds.find("laser")->second));
+	std::unique_ptr<LineDanger> danger = std::make_unique<LineDanger>(time, wait, &textureManager.dangers.find("laser")->second,
+		&soundManager.sounds.find("laser")->second);
+	LineDanger* lineDanger = danger.get();
+	dangers.push_back(std::move(danger));
+	return lineDanger;
 }
 
 void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
