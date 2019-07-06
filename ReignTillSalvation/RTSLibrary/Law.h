@@ -19,5 +19,6 @@ public:
 	Element* getElement() { return element; };
 	LawType getType() { return type; };
 	void render(sf::RenderWindow&);
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) override;
 
 };

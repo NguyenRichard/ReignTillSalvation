@@ -144,7 +144,7 @@ void Weak::render(sf::RenderWindow& window) {
 }
 
 
-void Strong::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
+void Weak::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
 
 	if (drawables[0].second.second != 0) {
 		static_cast<sf::Sprite*>(drawables[0].first.get())->setTexture(*drawables[0].second.first[0]);

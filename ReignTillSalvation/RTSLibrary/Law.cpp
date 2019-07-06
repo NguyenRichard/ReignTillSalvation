@@ -48,6 +48,17 @@ void Law::render(sf::RenderWindow& window) {
 			coord.y - ELEMENT_SPRITE_SIZE / 2 + BAR_RELATIVE_COORD_Y);
 		fillBar.setPosition(coord.x - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_X,
 			coord.y - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_Y);
+		window.draw(bar);
+		window.draw(fillBar);
+
+	}
+}
+
+void Law::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
+	//Each coordinate of the element have two drawables, a bar and a fill bar. We only need to update the fillbar.
+	sf::RectangleShape* fillbar;
+	for (int i = 0; i < drawables.size()-1; i+=2) {
+		fillbar = static_cast<sf::RectangleShape*>(drawables[i].first.get());
 		if (element->getPower() > 0) {
 			fillBar.setFillColor(ATTRACTION_COLOR);
 		}
@@ -55,8 +66,6 @@ void Law::render(sf::RenderWindow& window) {
 			fillBar.setFillColor(REPULSION_COLOR);
 		}
 		fillBar.setSize(sf::Vector2f((abs(element->getPower()))*FILLBAR_WIDTH / MAX_POWER, FILLBAR_HEIGHT));
-		window.draw(bar);
-		window.draw(fillBar);
-
 	}
+
 }
