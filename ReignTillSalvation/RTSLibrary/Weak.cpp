@@ -147,8 +147,12 @@ void Weak::render(sf::RenderWindow& window) {
 void Weak::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
 
 	if (drawables[0].second.second != 0) {
-		static_cast<sf::Sprite*>(drawables[0].first.get())->setTexture(*drawables[0].second.first[0]);
+		sf::Sprite* sprite = static_cast<sf::Sprite*>(drawables[0].first.get());
 		drawables[0].second.second = 0;
+		sprite->setTexture(*drawables[0].second.first[0]);
+		sprite->setTextureRect(sf::IntRect(0, 0, WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE));
+		sprite->setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
+		sprite->setScale(3, 3);
 	}
 	IndividualState::updateDrawables(drawables);
 }
