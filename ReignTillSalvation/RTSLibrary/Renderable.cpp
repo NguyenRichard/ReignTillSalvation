@@ -91,6 +91,29 @@ Renderable::Renderable(LineDanger* danger, TextureManager &textureManager)
 		nullptr, std::pair<std::vector<sf::Texture*>, int>(textures, 0)));
 }
 
+Renderable::Renderable(Law* law, TextureManager &textureManager) {
+	std::vector<sf::Vector2f> element_coords = law->getElement()->getCoords();
+
+	std::unique_ptr<sf::RectangleShape> bar;
+	std::unique_ptr<sf::RectangleShape> fillBar;
+
+	for (const auto & coord : element_coords) {
+		bar = std::make_unique<sf::RectangleShape>();
+		fillBar = std::make_unique<sf::RectangleShape>();
+		bar->setPosition(coord.x - ELEMENT_SPRITE_SIZE / 2 + BAR_RELATIVE_COORD_X,
+			coord.y - ELEMENT_SPRITE_SIZE / 2 + BAR_RELATIVE_COORD_Y);
+		fillBar->setPosition(coord.x - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_X,
+			coord.y - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_Y);
+		drawables.push_back(std::move
+		(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>
+			(std::move(bar), std::pair<std::vector<sf::Texture*>, int>(std::vector<sf::Texture*>(), -1)))); // -1 because there are no texture.
+		drawables.push_back(std::move
+		(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>
+			(std::move(fillBar), std::pair<std::vector<sf::Texture*>, int>(std::vector<sf::Texture*>(), -1)))); // -1 because there are no texture.
+	}
+
+}
+
 void Renderable::render(sf::RenderWindow& window) {
 	for (const auto& drawable : drawables) {
 		if (drawable.first != nullptr) {

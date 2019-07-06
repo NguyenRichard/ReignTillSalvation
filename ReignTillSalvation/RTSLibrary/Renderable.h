@@ -4,6 +4,7 @@
 #include "IndividualState.h"
 #include "TextureManager.h"
 #include "SFML/Graphics.hpp"
+#include "Law.h"
 
 
 enum AnimationType { topDown, leftRight, None };
@@ -19,6 +20,7 @@ public:
 	Renderable(CircleDanger*, TextureManager&);
 	Renderable(LineDanger*, TextureManager&);
 	Renderable(Individual*, TextureManager&);
+	Renderable(Law*, TextureManager&);
 	void render(sf::RenderWindow& window); //
 	void updateAnimation(); // Drawable must be a sprite to animate.
 };

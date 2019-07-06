@@ -41,13 +41,7 @@ bool Law::done() {
 }
 
 void Law::render(sf::RenderWindow& window) {
-	std::vector<sf::Vector2f> element_coords = element->getCoords();
 
-	for (const auto & coord : element_coords) {
-		bar.setPosition(coord.x - ELEMENT_SPRITE_SIZE / 2 + BAR_RELATIVE_COORD_X,
-			coord.y - ELEMENT_SPRITE_SIZE / 2 + BAR_RELATIVE_COORD_Y);
-		fillBar.setPosition(coord.x - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_X,
-			coord.y - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_Y);
 		window.draw(bar);
 		window.draw(fillBar);
 
