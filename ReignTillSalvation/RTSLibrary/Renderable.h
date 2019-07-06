@@ -3,6 +3,7 @@
 #include "ObjectLogic.h"
 #include "IndividualState.h"
 #include "TextureManager.h"
+#include "SFML/Graphics.hpp"
 
 
 enum AnimationType { topDown, leftRight, None };
@@ -15,14 +16,9 @@ private:
 	AnimationType type;
 
 public:
-<<<<<<< HEAD
-	Renderable(CircleDanger*, const TextureManager&);
-	Renderable(LineDanger*, const TextureManager&);
-	void render(sf::RenderWindow& window);
-	void updateAnimation();
-=======
+	Renderable(CircleDanger*, TextureManager&);
+	Renderable(LineDanger*, TextureManager&);
 	Renderable(Individual*, TextureManager&);
 	void render(sf::RenderWindow& window); //
 	void updateAnimation(); // Drawable must be a sprite to animate.
->>>>>>> f431030f8fe71b2750b55eb9757bd20018754541
 };

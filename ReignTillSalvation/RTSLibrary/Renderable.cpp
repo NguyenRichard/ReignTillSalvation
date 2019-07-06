@@ -1,6 +1,8 @@
 #include "Renderable.h"
 #include "Individual.h"
 #include "Value.h"
+#include "CircleDanger.h"
+#include "LineDanger.h"
 
 
 Renderable::Renderable(Individual* individual, TextureManager& textureManager) :
@@ -28,13 +30,13 @@ Renderable::Renderable(Individual* individual, TextureManager& textureManager) :
 			)));
 }
 
-Renderable::Renderable(CircleDanger* danger, const TextureManager &textureManager) : object(danger)
+Renderable::Renderable(CircleDanger* danger, TextureManager &textureManager) : 
+	object(danger)
 {
 	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
-	shape = std::make_unique<sf::CircleShape>(radius);
-	sf::Vector2f coord;
-	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
-	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
+	std::unique_ptr<sf::CircleShape> shape = std::make_unique<sf::CircleShape>(radius);
+
+	sf::Vector2f coord = danger->getCoord();
 	shape->setOrigin(sf::Vector2f(radius, radius));
 	shape->setPosition(coord);
 
@@ -45,32 +47,29 @@ Renderable::Renderable(CircleDanger* danger, const TextureManager &textureManage
 	color.a = 150.0f;
 	shape->setOutlineColor(color);
 
-	drawables.push_back(std::move(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(std::move(shape), NULL)));
+	drawables.push_back(std::move
+	(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>
+		(std::move(shape), std::pair<std::vector<sf::Texture*>, int>(std::vector<sf::Texture*>(), -1)))); // -1 because there are no texture.
 
-	std::vector<sfvector<sf:Texture * >> textures;
+	std::vector<sf::Texture *> textures;
 	textures.push_back(&textureManager.dangers.find("explosion")->second);
 	drawables.push_back(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(
-		nullptr, std::pair<textures, 0>));
+		nullptr, std::pair<std::vector<sf::Texture*>, int>(textures, 0)));
 }
 
-Renderable::Renderable(LineDanger* danger, const TextureManager &textureManager) : object(danger)
+Renderable::Renderable(LineDanger* danger, TextureManager &textureManager) 
+	: object(danger)
 {
 	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
-	width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
-	std::unique_ptr<sf:RectangleShape> shape = std::make_unique<sf::RectangleShape>(sf::Vector2f(length, width));
+	float width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
+	std::unique_ptr<sf::RectangleShape> shape = std::make_unique<sf::RectangleShape>(sf::Vector2f(length, width));
 
-	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
-	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
+	sf::Vector2f coord = danger->getCoord();
 	shape->setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape->setPosition(coord);
 
-
-	direction.x = (float)(1 + randomint(9)) / 10;
-	direction.y = (float)(1 + randomint(9)) / 10;
-	direction.y *= (randomint(1) == 0) ? 1 : -1;
-	direction.x = direction.x / magnitude(direction);
-	direction.y = direction.y / magnitude(direction);
-	rotation = 180.0f / PI * atan(direction.y / direction.x);
+	sf::Vector2f direction = danger->getDirection();
+	float rotation = 180.0f / PI * atan(direction.y / direction.x);
 	if (direction.y < 0)
 		rotation += 180.0f;
 	shape->setRotation(rotation);
@@ -82,12 +81,14 @@ Renderable::Renderable(LineDanger* danger, const TextureManager &textureManager)
 	color.a = 150.0f;
 	shape->setOutlineColor(color);
 
-	drawables.push_back(std::move(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(std::move(shape), NULL)));
+	drawables.push_back(std::move
+	(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>
+		(std::move(shape), std::pair<std::vector<sf::Texture*>, int>(std::vector<sf::Texture*>(), -1)))); // -1 because there are no texture.
 
-	std::vector<sfvector<sf:Texture * >> textures;
+	std::vector<sf::Texture *> textures;
 	textures.push_back(&textureManager.dangers.find("laser")->second);
 	drawables.push_back(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(
-		nullptr, std::pair<textures, 0>));
+		nullptr, std::pair<std::vector<sf::Texture*>, int>(textures, 0)));
 }
 
 void Renderable::render(sf::RenderWindow& window) {
