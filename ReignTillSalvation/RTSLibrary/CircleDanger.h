@@ -13,6 +13,7 @@ public:
 	sf::CircleShape &getShape() { return shape; };
 	void render(sf::RenderWindow&) override;
 	void resetBuffer() { sound.resetBuffer(); }
+	sf::Vector2f getCoord() { return coord; }
 
 	void updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>);
 private:
@@ -23,4 +24,5 @@ private:
 	sf::SoundBuffer* buffer;
 	sf::Sound sound;
 	void playSound();
+	sf::Vector2f coord;
 };
