@@ -14,7 +14,7 @@
 #include "TextureManager.h"
 #include "ObjectLogic.h"
 
-class Map : public ObjectLogic
+class Map
 {
 private:
 	std::vector<std::unique_ptr<Individual>> leaders;

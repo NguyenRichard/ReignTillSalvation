@@ -42,6 +42,7 @@ private:
 	sf::Time duration;
 
 	virtual void updateOpacity(float opacity) = 0;
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override = 0;
 
 protected:
 	bool firstRenderBeenDone;

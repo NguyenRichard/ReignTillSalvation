@@ -15,7 +15,8 @@ public:
 	void resetBuffer() { sound.resetBuffer(); }
 	sf::Vector2f getCoord() { return coord; }
 
-	void updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&);
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override;
+
 private:
 	//sf::CircleShape shape;
 	//sf::Sprite sprite;

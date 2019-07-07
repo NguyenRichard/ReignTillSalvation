@@ -27,11 +27,11 @@ Individual* Map::createIndividual(sf::Vector2f coord) {
 			std::make_unique<Individual>(
 				std::make_unique<Strong>(&textureManager.individuals.find(liked->getName())->second), coord, liked, disliked
 				));
-		return leaders.back.get();
+		return leaders.back().get();
 	}
 	else {
 		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals.find("darkelement")->second), coord));
-		return leaders.back.get();
+		return leaders.back().get();
 	}
 }
 
@@ -72,7 +72,7 @@ Law* Map::createLaw(Element* element, LawType type) {
 			subordinate->addElement(element);
 		}
 	}
-	return laws.back.get();
+	return laws.back().get();
 }
 
 void Map::updatePositions() {
