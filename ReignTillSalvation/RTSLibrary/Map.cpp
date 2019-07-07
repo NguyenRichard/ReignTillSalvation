@@ -112,7 +112,6 @@ void Map::update() {
 	updatePositions();
 	updateGroup();
 	updateLaws();
-	updateAnim(time);
 }
 
 int Map::totalCountIndividuals() {
@@ -157,21 +156,10 @@ LineDanger* Map::addRandomLineDanger(std::unique_ptr<sftools::Chronometer> &time
 	return lineDanger;
 }
 
-void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
-{
-	if (time->getElapsedTime().asMilliseconds() - last_anim_update.asMilliseconds() > MS_PER_ANIM) {
-		for (auto & renderable : renderables) {
-			renderable->updateAnimation();
-		}
-	}
-}
 
 /*void Map::render(sf::RenderWindow& window) {
 	window.draw(background);
 	individualsCount.setString(std::to_string(totalCountIndividuals()) + "/" + std::to_string(MAX_INDIVIDUALS));
-	for (auto & renderable : renderables) {
-		renderable->render(window);
-	}
 
 	window.draw(individualsCount);
 }*/

@@ -28,9 +28,18 @@ Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sft
 {}
 
 void Game::renderGame(sf::RenderWindow& window) {
-
 	map->render(window);
+	for (auto & renderable : renderables) {
+		renderable->render(window);
+	}
+}
 
+void Game::renderAnimation(sf::RenderWindow& window) {
+	if (time->getElapsedTime().asMilliseconds() - last_anim_update.asMilliseconds() > MS_PER_ANIM) {
+		for (auto & renderable : renderables) {
+			renderable->updateAnimation();
+		}
+	}
 }
 
 #pragma endregion RTSStateFunctions

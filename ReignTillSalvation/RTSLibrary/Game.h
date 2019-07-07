@@ -6,6 +6,7 @@
 #include "RTSState.h"
 #include "Map.h"
 #include "MainMenu.h"
+#include "Renderable.h"
 
 class Game : public RTSState{
 public:
@@ -20,10 +21,11 @@ public:
 	std::unique_ptr<sftools::Chronometer> &getTime() { return time; }
 	const std::string XML_FILE_PATH = "resources.xml";
 	void renderGame(sf::RenderWindow& window);
+	void renderAnimation(sf::RenderWindow& window);
 
 protected:
 	std::unique_ptr<Map> map;
 	std::unique_ptr<sftools::Chronometer> time;
-	sf::Time last_render;
+	sf::Time last_anim_update;
 	std::vector<std::unique_ptr<Renderable>> renderables;
 };
