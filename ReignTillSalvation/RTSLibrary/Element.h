@@ -28,8 +28,9 @@ public:
 	std::string getAttractionMessage() { return attractionMessage; };
 	std::string getRepulsionMessage() { return repulsionMessage; };
 	std::string getCancelMessage() { return cancelMessage; };
-	void render(sf::RenderWindow& window);
-	void changeSprite();
+	//void render(sf::RenderWindow& window);
+	//void changeSprite();
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&);
 
 	bool operator ==(const Element&);
 

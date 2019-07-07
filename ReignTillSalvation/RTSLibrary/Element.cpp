@@ -41,7 +41,7 @@ std::vector<sf::Vector2f> Element::getCoords() const {
 	return coords;
 }
 
-void Element::render(sf::RenderWindow& window) {
+/*void Element::render(sf::RenderWindow& window) {
 	sprite.setOrigin(ELEMENT_SPRITE_SIZE / 2, ELEMENT_SPRITE_SIZE / 2);
 	changeSprite();
 	for (const auto & element_coord : coords) {
@@ -51,7 +51,7 @@ void Element::render(sf::RenderWindow& window) {
 		window.draw(sprite);
 		window.draw(rangeShape);
 	}
-}
+}*/
 
 
 bool Element:: operator ==(const Element &element) {
@@ -59,7 +59,7 @@ bool Element:: operator ==(const Element &element) {
 }
 
 
-void Element::changeSprite() {
+/*void Element::changeSprite() {
 	if (power > 2*MAX_POWER / LAW_PROPORTION) {
 		sprite.setTextureRect(sf::IntRect(1 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
 	}
@@ -68,5 +68,27 @@ void Element::changeSprite() {
 	}
 	else {
 		sprite.setTextureRect(sf::IntRect(0 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+	}
+}*/
+
+void Element::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> &drawables)
+{
+	for (auto &drawable : drawables)
+	{
+		if (drawable.second.first.size() > 0) {
+			sf::Sprite* sprite = static_cast<sf::Sprite*>(drawable.first.get());
+			if (power > 2*MAX_POWER / LAW_PROPORTION) {
+				sprite->setTextureRect(
+					sf::IntRect(1 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+			}
+			else if (power < -2*MAX_POWER / LAW_PROPORTION) {
+				sprite->setTextureRect(
+					sf::IntRect(2 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+			}
+			else {
+				sprite->setTextureRect(
+					sf::IntRect(0 * ELEMENT_SPRITE_SIZE, 0, ELEMENT_SPRITE_SIZE, ELEMENT_SPRITE_SIZE));
+			}
+		}
 	}
 }

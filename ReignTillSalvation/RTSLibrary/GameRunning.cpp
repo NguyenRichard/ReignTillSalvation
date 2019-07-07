@@ -95,6 +95,10 @@ void GameRunning::init() {
 		}
 		map->addElementInMap(map->getElements()[randomint(map->getElements().size()-1)]->getName(), coord);
 	}
+
+	for (const auto &element : map->getElements())
+	{
+	}
 }
 
 bool GameRunning::mustMoveElementCoord(sf::Vector2f &coord) {

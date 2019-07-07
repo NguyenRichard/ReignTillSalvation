@@ -17,7 +17,7 @@ public:
 	sf::Vector2f getCoord() { return coord; }
 	sf::Vector2f getDirection() { return direction; }
 
-	void updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>);
+	void updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&);
 private:
 	sf::RectangleShape shape;
 

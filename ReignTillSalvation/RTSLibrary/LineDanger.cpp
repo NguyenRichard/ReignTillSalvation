@@ -201,7 +201,7 @@ void LineDanger::playSound()
 	sound.play();
 }
 
-void LineDanger::updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables)
+void LineDanger::updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> &drawables)
 {
 	if (!countdownFinished) {
 		sf::RectangleShape* old_shape = static_cast<sf::RectangleShape*>(drawables[0].first.get());

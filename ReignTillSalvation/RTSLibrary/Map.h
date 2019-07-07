@@ -34,7 +34,6 @@ private:
 	SoundManager soundManager;
 	void updateAnim(std::unique_ptr<sftools::Chronometer>&);
 
-	std::vector<std::unique_ptr<Renderable>> renderables;
 public:
 	Map();
 	Individual* createIndividual(sf::Vector2f);
