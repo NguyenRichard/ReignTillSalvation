@@ -5,6 +5,8 @@
 #include "TextureManager.h"
 #include "SFML/Graphics.hpp"
 #include "Law.h"
+#include "CircleDanger.h"
+#include "LineDanger.h"
 
 
 enum AnimationType { topDown, leftRight, None };
@@ -21,6 +23,7 @@ public:
 	Renderable(LineDanger*, TextureManager&);
 	Renderable(Individual*, TextureManager&);
 	Renderable(Law*, TextureManager&);
+	Renderable(Element*, TextureManager&);
 	void render(sf::RenderWindow& window); //
 	void updateAnimation(); // Drawable must be a sprite to animate.
 };

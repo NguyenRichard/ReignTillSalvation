@@ -91,6 +91,39 @@ Renderable::Renderable(LineDanger* danger, TextureManager &textureManager)
 		nullptr, std::pair<std::vector<sf::Texture*>, int>(textures, 0)));
 }
 
+Renderable::Renderable(Element* element, TextureManager &textures)
+{
+	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
+	float range = element->getRangeUnmutable();
+
+	for (auto coord : element->getCoords()) {
+		std::unique_ptr<sf::CircleShape> rangeShape = std::make_unique<sf::CircleShape>(range);
+		rangeShape->setFillColor(FILL_COLOR);
+		rangeShape->setOutlineThickness(2);
+		rangeShape->setOutlineColor(color);
+		rangeShape->setOrigin(range, range);
+		rangeShape->setPosition(coord);
+
+		drawables.push_back(std::move(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(
+			std::move(rangeShape), std::pair<std::vector<sf::Texture*>, int>(std::vector<sf::Texture*>(), -1)
+		)));
+	}
+	
+	std::vector<sf::Texture*> texturesVect;
+	texturesVect.push_back(&textures.elements.find(element->getName())->second);
+	for (auto coord : element->getCoords()) {
+		std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>();
+		sprite->setTexture(textures.elements.find(element->getName())->second);
+		sprite->setScale(ELEMENT_SPRITE_RATIO, ELEMENT_SPRITE_RATIO);
+		sprite->setOrigin(ELEMENT_SPRITE_SIZE / 2, ELEMENT_SPRITE_SIZE / 2);
+		sprite->setPosition(coord);
+
+		drawables.push_back(std::move(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(
+			std::move(sprite), std::pair<std::vector<sf::Texture*>, int>(texturesVect, 1)
+		)));
+	}
+}
+
 Renderable::Renderable(Law* law, TextureManager &textureManager) {
 	std::vector<sf::Vector2f> element_coords = law->getElement()->getCoords();
 

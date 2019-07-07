@@ -120,7 +120,7 @@ void CircleDanger::playSound()
 	sound.play();
 }
 
-void CircleDanger::updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables)
+void CircleDanger::updateDrawabbles(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> &drawables)
 {
 	if (!countdownFinished) {
 		sf::CircleShape* old_shape = static_cast<sf::CircleShape*>(drawables[0].first.get());
