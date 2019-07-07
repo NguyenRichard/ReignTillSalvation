@@ -22,9 +22,9 @@ public:
 		float set_duration, float time_offset, float time_before_next);
 	Danger(std::unique_ptr<sftools::Chronometer>&, float wait);
 
-	virtual sf::Shape &getShape() = 0;
+	//virtual sf::Shape &getShape() = 0;
 	virtual void affectZone(std::vector<std::unique_ptr<Individual>>&) = 0;
-	virtual void render(sf::RenderWindow&) = 0;
+	//virtual void render(sf::RenderWindow&) = 0;
 	
 	// returns true if countdown is finished
 	void update(std::unique_ptr<sftools::Chronometer>&);
@@ -41,7 +41,7 @@ private:
 	sf::Time countdownAppearance;
 	sf::Time duration;
 
-	virtual void updateOpacity(float opacity) = 0;
+	//virtual void updateOpacity(float opacity) = 0;
 	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override = 0;
 
 protected:

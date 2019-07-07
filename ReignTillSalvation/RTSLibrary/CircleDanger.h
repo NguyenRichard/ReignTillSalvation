@@ -12,7 +12,7 @@ public:
 	void affectZone(std::vector<std::unique_ptr<Individual>>&);
 	//sf::CircleShape &getShape() { return shape; };
 	//void render(sf::RenderWindow&) override;
-	void resetBuffer() { sound.resetBuffer(); }
+	void resetBuffer() override { sound.resetBuffer(); }
 	sf::Vector2f getCoord() { return coord; }
 
 	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override;

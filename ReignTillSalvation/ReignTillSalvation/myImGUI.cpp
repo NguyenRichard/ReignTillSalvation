@@ -1,7 +1,7 @@
 #include "myImGUI.h"
 
 #define MAX_INPUT_NAME 50
-
+/* WARNING: Not working with the changement in render
 int imGUImain(){
 
 	static bool showIndividualInfo = false;
@@ -122,7 +122,9 @@ int imGUImain(){
 	return EXIT_SUCCESS;
 
 }
+*/
 
+/*
 void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 
 
@@ -514,4 +516,4 @@ void showDanger(Danger& danger, int uid)
 		ImGui::TreePop();
 	}
 	ImGui::PopID();*/
-}
+/* }*/

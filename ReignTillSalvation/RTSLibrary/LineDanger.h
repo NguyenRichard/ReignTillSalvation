@@ -13,7 +13,7 @@ public:
 	void affectZone(std::vector<std::unique_ptr<Individual>>&);
 	sf::RectangleShape &getShape() { return shape; };
 	//void render(sf::RenderWindow&) override;
-	void resetBuffer() { sound.resetBuffer(); }
+	void resetBuffer() override { sound.resetBuffer(); }
 	sf::Vector2f getCoord() { return coord; }
 	sf::Vector2f getDirection() { return direction; }
 
