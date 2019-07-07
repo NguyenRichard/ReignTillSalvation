@@ -98,6 +98,7 @@ void GameRunning::init() {
 
 	for (const auto &element : map->getElements())
 	{
+		renderables.push_back(Renderable(element, map->getTextureManager()));
 	}
 }
 
