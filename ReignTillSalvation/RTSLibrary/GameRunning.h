@@ -21,5 +21,4 @@ private:
 	std::unique_ptr<RTSState> changeStateToGameOverMenu();
 	void parseXML();
 	bool mustMoveElementCoord(sf::Vector2f &coord);
-	std::vector<std::unique_ptr<Renderable>> renderables;
 };

@@ -25,4 +25,5 @@ protected:
 	std::unique_ptr<Map> map;
 	std::unique_ptr<sftools::Chronometer> time;
 	sf::Time last_render;
+	std::vector<std::unique_ptr<Renderable>> renderables;
 };
