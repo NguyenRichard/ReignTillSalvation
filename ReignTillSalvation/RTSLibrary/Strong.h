@@ -12,7 +12,6 @@
 class Strong : public IndividualState {
 public:
 	Strong() = default;
-	Strong(std::pair<sf::Texture, sf::Texture>*);
 	Strong(const IndividualState & state);
 	void action() override;
 	std::vector<std::unique_ptr<Individual>>& getSubordinates();
