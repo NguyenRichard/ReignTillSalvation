@@ -36,7 +36,7 @@ bool Law::done() {
 }
 
 
-void Law::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
+void Law::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>& drawables) {
 	//Each coordinate of the element have two drawables, a bar and a fill bar. We only need to update the fillbar.
 
 	sf::RectangleShape* fillBar;

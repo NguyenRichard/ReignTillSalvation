@@ -43,7 +43,7 @@ public:
 	void setSelectedElement(Element* element) { selected_element = element; };
 	Element* getSelectedElement() { return selected_element; };
 	std::vector<std::unique_ptr<Danger>>& getDangers() { return dangers; };
-	//void render(sf::RenderWindow&);
+	void render(sf::RenderWindow&);
 
 	void update();
 	int totalCountIndividuals();

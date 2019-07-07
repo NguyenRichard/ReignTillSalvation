@@ -157,9 +157,9 @@ LineDanger* Map::addRandomLineDanger(std::unique_ptr<sftools::Chronometer> &time
 }
 
 
-/*void Map::render(sf::RenderWindow& window) {
+void Map::render(sf::RenderWindow& window) {
 	window.draw(background);
 	individualsCount.setString(std::to_string(totalCountIndividuals()) + "/" + std::to_string(MAX_INDIVIDUALS));
 
 	window.draw(individualsCount);
-}*/
+}

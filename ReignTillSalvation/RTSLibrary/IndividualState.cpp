@@ -64,7 +64,7 @@ void IndividualState::applyCollisionElements(std::vector<std::unique_ptr<Element
 }
 
 
-void IndividualState::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
+void IndividualState::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>& drawables) {
 
 	sf::Sprite* sprite = static_cast<sf::Sprite*>(drawables[0].first.get());
 	sprite->setPosition(coord.x, coord.y);

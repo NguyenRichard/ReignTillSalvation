@@ -39,7 +39,8 @@ public:
 	virtual int findSubPosition(const IndividualState&) = 0;
 	virtual int myStrength() const = 0;
 
-	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>) override;
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override;
+
 
 	bool operator <(const IndividualState&);
 
