@@ -3,11 +3,11 @@
 
 Element::Element(std::string name) :
 	name(name), coords(), range(DEFAULT_RANGE), power(0.0f) {
-	rangeShape = sf::CircleShape(range);
-	rangeShape.setFillColor(FILL_COLOR);
-	rangeShape.setOutlineThickness(2);
-	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
-	rangeShape.setOutlineColor(color);
+	//rangeShape = sf::CircleShape(range);
+	//rangeShape.setFillColor(FILL_COLOR);
+	//rangeShape.setOutlineThickness(2);
+	//sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
+	//rangeShape.setOutlineColor(color);
 }
 
 Element::Element(std::string name, float new_range) :
@@ -20,15 +20,15 @@ Element::Element(std::string name, float range, sf::Color color, std::string att
 		name(name), coords(), range(range), power(0),
 		attractionMessage(attractionMessage),
 		repulsionMessage(repulsionMessage),
-		cancelMessage(cancelMessage),
-		texture(texture)
+		cancelMessage(cancelMessage)
+		//texture(texture)
 {
-	rangeShape = sf::CircleShape(range);
-	sf::Color fill = color;
-	fill.a = 30.0f;
-	rangeShape.setFillColor(fill);
-	sprite.setTexture(*texture);
-	sprite.setScale(ELEMENT_SPRITE_RATIO, ELEMENT_SPRITE_RATIO);
+	//rangeShape = sf::CircleShape(range);
+	//sf::Color fill = color;
+	//fill.a = 30.0f;
+	//rangeShape.setFillColor(fill);
+	//sprite.setTexture(*texture);
+	//sprite.setScale(ELEMENT_SPRITE_RATIO, ELEMENT_SPRITE_RATIO);
 
 
 }

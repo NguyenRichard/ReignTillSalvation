@@ -65,13 +65,14 @@ std::unique_ptr<RTSState> GameRunning::changeStateToGameOverMenu() {
 }
 
 void GameRunning::update(RTS* rts) {
-	map->update(time);
+	map->update();
 	if (!music->getStatus() == music->Playing)
 		music->play();
 	if (map->getLeaders().size() == 0) {
 		rts->changeState(changeStateToGameOverMenu());
 		rts->initState();
 	}
+	updateDangers();
 }
 
 void GameRunning::init() {
@@ -98,7 +99,7 @@ void GameRunning::init() {
 
 	for (const auto &element : map->getElements())
 	{
-		renderables.push_back(Renderable(element, map->getTextureManager()));
+		renderables.push_back(std::make_unique<Renderable>(element.get(), map->getTextureManager()));
 	}
 }
 
@@ -124,6 +125,30 @@ bool GameRunning::mustMoveElementCoord(sf::Vector2f &coord) {
 				return true;
 			}
 	return false;
+}
+
+void GameRunning::updateDangers() {
+	if (map->getDangers().empty() || map->getDangers().back()->isNextNow(time)) {
+		int nbIndividuals = map->totalCountIndividuals();
+		if (randomint(1) == 0)
+			renderables.push_back(std::make_unique<Renderable>(
+				map->addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))));
+		else
+			renderables.push_back(std::make_unique<Renderable>(
+				map->addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))));
+	}
+
+	for (int i = map->getDangers().size() - 1; i >= 0; i--) {
+		std::unique_ptr<Danger> &danger = map->getDangers()[i];
+		if (danger->hasBegun(time))
+			danger->update(time);
+			if (danger->getCountdownStatus()) {
+				if (danger->isFinished(time))
+					map->deleteDanger(i);
+				else
+					danger->affectZone(map->getLeaders());
+			}
+	}
 }
 
 void GameRunning::parseXML() {

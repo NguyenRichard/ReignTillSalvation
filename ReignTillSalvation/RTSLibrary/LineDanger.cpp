@@ -35,14 +35,14 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 		sf::SoundBuffer* buffer) :
 	Danger(time, wait), texture(texture), buffer(buffer)
 {
-	float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
+	//float length = (float)2 * sqrt(pow(WINDOW_HEIGHT, 2) + pow(WINDOW_WIDTH, 2));
 	width = (float)MIN_WIDTH_DANGER + randomint(MAX_WIDTH_DANGER - MIN_WIDTH_DANGER);
-	shape = sf::RectangleShape(sf::Vector2f(length, width));
+	/*shape = sf::RectangleShape(sf::Vector2f(length, width));
 
 	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
 	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
 	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
-	shape.setPosition(coord);
+	shape.setPosition(coord);*/
 
 
 	direction.x = (float)(1 + randomint(9)) / 10;
@@ -53,7 +53,7 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 	rotation = 180.0f / PI * atan(direction.y / direction.x);
 	if (direction.y < 0)
 		rotation += 180.0f;
-	shape.setRotation(rotation);
+	/*shape.setRotation(rotation);
 
 	sf::Color color = sf::Color::Red;
 	color.a = 0;
@@ -62,7 +62,6 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 	color.a = 150.0f;
 	shape.setOutlineColor(color);
 
-	/*
 	anim_count = 0;
 	float ratio_length = MULTIPLY_RATIO_LASER_LENTGH * sqrt(pow(WINDOW_WIDTH,2)+pow(WINDOW_HEIGHT,2)) / BASE_LASER_SPRITE_LENTGH;
 	float ratio_width = MULTIPLY_RATIO_LASER_WIDTH * width / BASE_LASER_SPRITE_WIDTH;
@@ -168,7 +167,7 @@ bool LineDanger::isInTheZone(std::unique_ptr<Individual> &individual)
 }
 
 
-void LineDanger::render(sf::RenderWindow& window) {
+/*void LineDanger::render(sf::RenderWindow& window) {
 	sf::CircleShape circle;
 	circle.setPosition(shape.getOrigin());
 	circle.setFillColor(sf::Color::Yellow);
@@ -191,7 +190,7 @@ void LineDanger::render(sf::RenderWindow& window) {
 		}
 		sprite.setTextureRect(sf::IntRect(0, anim_count*BASE_LASER_SPRITE_WIDTH, BASE_LASER_SPRITE_LENTGH, BASE_LASER_SPRITE_WIDTH));
 	}
-}
+}*/
 
 void LineDanger::playSound()
 {

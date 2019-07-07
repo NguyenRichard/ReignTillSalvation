@@ -12,6 +12,7 @@ public:
 	void update(RTS* rts) override;
 	void init() override;
 	void changeState(RTS* rts) override;
+	void updateDangers();
 
 private:
 	sf::Time last_update;

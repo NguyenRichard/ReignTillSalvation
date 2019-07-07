@@ -12,7 +12,7 @@ public:
 	LineDanger(std::unique_ptr< sftools::Chronometer>&, float, sf::Texture*, sf::SoundBuffer* buffer);
 	void affectZone(std::vector<std::unique_ptr<Individual>>&);
 	sf::RectangleShape &getShape() { return shape; };
-	void render(sf::RenderWindow&) override;
+	//void render(sf::RenderWindow&) override;
 	void resetBuffer() { sound.resetBuffer(); }
 	sf::Vector2f getCoord() { return coord; }
 	sf::Vector2f getDirection() { return direction; }

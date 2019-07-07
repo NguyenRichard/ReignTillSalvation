@@ -108,11 +108,10 @@ void Map::updateLaws() {
 	}
 }
 
-void Map::update(std::unique_ptr<sftools::Chronometer>& time) {
+void Map::update() {
 	updatePositions();
 	updateGroup();
 	updateLaws();
-	updateDangers(time);
 	updateAnim(time);
 }
 
@@ -124,36 +123,12 @@ int Map::totalCountIndividuals() {
 	return sum;
 }
 
-void Map::updateDangers(std::unique_ptr<sftools::Chronometer>& time) {
-	if (dangers.empty() || dangers.back()->isNextNow(time)) {
-		int nbIndividuals = totalCountIndividuals();
-		if (randomint(1) == 0)
-			renderables.push_back(std::make_unique<Renderable>(
-				addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f)), textureManager));
-		else
-			renderables.push_back(std::make_unique<Renderable>(
-				addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f)), textureManager));
-	}
-
-	for (int i = dangers.size() - 1; i >= 0; i--) {
-		std::unique_ptr<Danger> &danger = dangers[i];
-		if (danger->hasBegun(time))
-			danger->update(time);
-			if (danger->getCountdownStatus()) {
-				if (danger->isFinished(time))
-					deleteDanger(i);
-				else
-					danger->affectZone(leaders);
-			}
-	}
-}
-
 void Map::deleteDanger(const int &i) {
 	dangers[i]->resetBuffer();
 	dangers.erase(dangers.begin() + i);
 }
 
-void Map::addDangerInMap(std::unique_ptr<sftools::Chronometer> &time,
+/*void Map::addDangerInMap(std::unique_ptr<sftools::Chronometer> &time,
 		std::string shape, sf::Vector2f coord) {
 	if (shape == "circle")
 		dangers.push_back(std::make_unique<CircleDanger>(time,
@@ -162,7 +137,7 @@ void Map::addDangerInMap(std::unique_ptr<sftools::Chronometer> &time,
 	if (shape == "line")
 		dangers.push_back(std::make_unique<LineDanger>(time,
 			DEFAULT_COUNTDOWN_DANGER, DEFAULT_DURATION_DANGER, coord));
-}
+}*/
 
 CircleDanger* Map::addRandomCircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wait)
 {
@@ -191,7 +166,7 @@ void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
 	}
 }
 
-void Map::render(sf::RenderWindow& window) {
+/*void Map::render(sf::RenderWindow& window) {
 	window.draw(background);
 	individualsCount.setString(std::to_string(totalCountIndividuals()) + "/" + std::to_string(MAX_INDIVIDUALS));
 	for (auto & renderable : renderables) {
@@ -199,4 +174,4 @@ void Map::render(sf::RenderWindow& window) {
 	}
 
 	window.draw(individualsCount);
-}
+}*/

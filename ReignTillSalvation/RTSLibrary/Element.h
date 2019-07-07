@@ -18,8 +18,8 @@ public:
 	void addCoord(sf::Vector2f);
 	std::string getName() const { return name; };
 	std::vector<sf::Vector2f>& getCoords() { return coords; };
-	sf::CircleShape* getRangeShape() { return &rangeShape; };
-	sf::Sprite* getSprite() { return &sprite; };
+	//sf::CircleShape* getRangeShape() { return &rangeShape; };
+	//sf::Sprite* getSprite() { return &sprite; };
 	float& getRangeMutable() { return range; };
 	float getRangeUnmutable() { return range; };
 	std::vector<sf::Vector2f> getCoords() const;
@@ -38,9 +38,9 @@ private:
 	std::string name;
 	std::vector<sf::Vector2f> coords;
 	float range;
-	sf::CircleShape rangeShape;
-	sf::Sprite sprite;
-	sf::Texture* texture;
+	//sf::CircleShape rangeShape;
+	//sf::Sprite sprite;
+	//sf::Texture* texture;
 	std::string attractionMessage;
 	std::string repulsionMessage;
 	std::string cancelMessage;
