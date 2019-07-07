@@ -12,6 +12,7 @@ public:
 	void update(RTS* rts) override;
 	void init() override;
 	void changeState(RTS* rts) override;
+	void createLaw(Element*, LawType);
 private:
 	void renderMenu(sf::RenderWindow& window);
 	std::unique_ptr<RTSState> changeStateToGameRunning();

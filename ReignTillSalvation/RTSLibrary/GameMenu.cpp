@@ -58,3 +58,7 @@ void GameMenu::update(RTS* rts) {
 	if (!music->getStatus() == music->Playing)
 		music->play();
 }
+
+void GameMenu::createLaw(Element* element, LawType type) {
+	renderables.push_back(std::make_unique<Renderable>(map->createLaw(element, type)));
+}

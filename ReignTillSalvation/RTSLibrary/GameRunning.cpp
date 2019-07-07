@@ -43,6 +43,7 @@ void GameRunning::processInput(RTS* rts, sf::RenderWindow& window, sf::Event& ev
 
 void GameRunning::render(sf::RenderWindow& window) {
 	renderGame(window);
+	renderAnimation(window);
 }
 
 void GameRunning::changeState(RTS* rts) {
@@ -78,7 +79,7 @@ void GameRunning::init() {
 	time->resume();
 	parseXML();
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
-		map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)));
+		renderables.push_back(std::make_unique<Renderable>(map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)))));
 	}
 
 	sf::Vector2f coord;

@@ -98,19 +98,18 @@ void LawMenu::handleMouseEventClick(RTS* rts,sf::RenderWindow& window, sf::Event
 void LawMenu::handleKeyEventAction(RTS* rts,sf::RenderWindow& window) {
 	GameMenu* game = dynamic_cast<GameMenu*>(rts->getState());
 	if (game != NULL) {
-		std::unique_ptr<Map>& map = game->getMap();
 		Strong* strong;
 		switch (selectedItemIndex) {
 		case 0:
-			map->createLaw(element, Attraction);
+			game->createLaw(element, Attraction);
 			game->changeState(rts);
 			break;
 		case 1:
-			map->createLaw(element, Repulsion);
+			game->createLaw(element, Repulsion);
 			game->changeState(rts);
 			break;
 		case 2:
-			map->createLaw(element, Cancel);
+			game->createLaw(element, Cancel);
 			game->changeState(rts);
 			break;
 		case 3:
