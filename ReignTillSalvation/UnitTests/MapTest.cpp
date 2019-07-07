@@ -15,7 +15,7 @@ TEST(TestMap, onlyStrongs) {
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 + GROUP_LEAD_RANGE));
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
-	map.update(std::move(std::make_unique<sftools::Chronometer>()));
+	map.update();
 	EXPECT_EQ(5, map.getLeaders().size());
 	for (const std::unique_ptr<Individual> &leader : map.getLeaders())
 		EXPECT_EQ(0, dynamic_cast<Strong*>(leader->getState())->getSubordinates().size());
@@ -36,7 +36,7 @@ TEST(TestMap, SimpleGroup) {
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
 	// ^ independent
-	map.update(std::move(std::make_unique<sftools::Chronometer>()));
+	map.update();
 	EXPECT_EQ(3, map.getLeaders().size());
 
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
@@ -67,7 +67,7 @@ TEST(TestMap, ComplexGroup) {
 		WINDOW_WIDTH / 2 - GROUP_LEAD_RANGE, WINDOW_HEIGHT / 2 - GROUP_LEAD_RANGE));
 	// ^ independent
 
-	map.update(std::move(std::make_unique<sftools::Chronometer>()));
+	map.update();
 	EXPECT_EQ(2, map.getLeaders().size());
 
 	std::vector<std::unique_ptr<Individual>>& leaders = map.getLeaders();
@@ -82,7 +82,7 @@ TEST(TestMap, LeaderMove) {
 		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2));
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 + GROUP_LEAD_RANGE / 2, WINDOW_HEIGHT / 2));
-	map.update(std::move(std::make_unique<sftools::Chronometer>()));
+	map.update();
 	// now only one leader with two subordinates
 
 	map.createIndividual(sf::Vector2f(
@@ -90,7 +90,7 @@ TEST(TestMap, LeaderMove) {
 	map.createIndividual(sf::Vector2f(
 		WINDOW_WIDTH / 2 - (9 / 10) * GROUP_LEAD_RANGE - GROUP_SUB_RANGE / 2, WINDOW_HEIGHT / 2));
 
-	map.update(std::move(std::make_unique<sftools::Chronometer>()));
+	map.update();
 
 	EXPECT_EQ(1, map.getLeaders().size());
 

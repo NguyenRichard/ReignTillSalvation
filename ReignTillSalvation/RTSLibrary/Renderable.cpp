@@ -158,10 +158,10 @@ void Renderable::render(sf::RenderWindow& window) {
 
 void Renderable::updateAnimation() {
 
+	sf::Sprite* sprite = nullptr;
+	sf::IntRect* rect = nullptr;
 	switch (type) {
 		case topDown:
-			sf::Sprite* sprite;
-			sf::IntRect* rect;
 			for (const auto& drawable : drawables) {
 				sprite = static_cast<sf::Sprite*>(drawable.first.get());
 				*rect = sprite->getTextureRect();
@@ -172,8 +172,6 @@ void Renderable::updateAnimation() {
 			}
 			break;
 		case leftRight:
-			sf::Sprite* sprite;
-			sf::IntRect* rect;
 			for (const auto& drawable : drawables) {
 				sprite = static_cast<sf::Sprite*>(drawable.first.get());
 				*rect = sprite->getTextureRect();

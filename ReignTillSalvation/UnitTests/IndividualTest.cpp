@@ -12,7 +12,6 @@ TEST(TestIndividual_ChangeState, WeaktoStrong) {
 	textures.second.loadFromFile("res/sprite/orangeleader.png");
 
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(20, 300));
-	individual->setTextures(&textures);
 	Weak* weak = dynamic_cast<Weak*>(individual->getState());
 	sf::Vector2f coord_before = weak->getCoord();
 	ASSERT_TRUE(weak != NULL);
@@ -37,8 +36,6 @@ TEST(TestIndividual_ChangeState, StrongtoWeak) {
 
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(20, 300));
 	std::unique_ptr<Individual> new_leader = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(40, 300));
-	individual->setTextures(&textures);
-	new_leader->setTextures(&textures);
 	Strong* strong = dynamic_cast<Strong*>(individual->getState());
 	sf::Vector2f coord_before = strong->getCoord();
 	ASSERT_TRUE(strong != NULL);
