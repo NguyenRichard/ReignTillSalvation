@@ -104,6 +104,7 @@ Renderable::Renderable(Law* law, TextureManager &textureManager) {
 			coord.y - ELEMENT_SPRITE_SIZE / 2 + BAR_RELATIVE_COORD_Y);
 		fillBar->setPosition(coord.x - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_X,
 			coord.y - ELEMENT_SPRITE_SIZE / 2 + FILLBAR_RELATIVE_COORD_Y);
+		bar->setFillColor(sf::Color::White);
 		drawables.push_back(std::move
 		(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>
 			(std::move(bar), std::pair<std::vector<sf::Texture*>, int>(std::vector<sf::Texture*>(), -1)))); // -1 because there are no texture.

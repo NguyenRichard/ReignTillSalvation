@@ -1,24 +1,9 @@
 #include "Strong.h"
 #include "OtherFunctions.h"
 
-
-Strong::Strong(std::pair<sf::Texture, sf::Texture>* textures) : IndividualState(textures) 
-{
-	sprite.setPosition(coord.x, coord.y);
-	sprite.setTexture(textures->second);
-	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
-	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
-	sprite.setScale(5, 5);
-}
-
 Strong::Strong(const IndividualState & state) : 
 	IndividualState(state)
 {
-	sprite.setPosition(coord.x, coord.y);
-	sprite.setTexture(textures->second);
-	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
-	sprite.setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
-	sprite.setScale(5, 5);
 }
 
 std::unique_ptr<IndividualState> Strong::changeState(Individual* new_leader) {
@@ -203,44 +188,6 @@ void Strong::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individu
 	}
 	me->changeState(changeState(new_leader));
 }
-
-void Strong::render_and_update(sf::RenderWindow& window) {
-
-	sprite.setPosition(coord.x, coord.y);
-	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
-	float rotation = calculateAngle(direction);
-	if (direction.y < 0) {
-		rotation = 360.0f - rotation;
-	}
-	setSpriteDirection(rotation);
-
-	//incrementAnim();
-	sprite.setTextureRect(sf::IntRect(anim.x*STRONG_SPRITE_SIZE, anim.y*STRONG_SPRITE_SIZE,STRONG_SPRITE_SIZE,STRONG_SPRITE_SIZE));
-
-
-	window.draw(sprite);
-	for (const auto & subordinate : subordinates) {
-		subordinate->render_and_update(window);
-	}
-}
-
-void Strong::render(sf::RenderWindow& window) {
-	window.draw(sprite);
-	for (const auto & subordinate : subordinates) {
-		subordinate->render(window);
-	}
-}
-
-void Strong::incrementAnim() {
-	anim.x++;
-	if (anim.x*STRONG_SPRITE_SIZE >= textures->second.getSize().x) {
-		anim.x = 0;
-	}
-	for (const auto & subordinate : subordinates) {
-		subordinate->getState()->incrementAnim();
-	}
-}
-
 
 void Strong::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>> drawables) {
 

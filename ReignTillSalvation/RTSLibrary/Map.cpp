@@ -13,7 +13,7 @@ Map::Map() {
 	individualsCount.setString(std::to_string(MAX_INDIVIDUALS) + "/" + std::to_string(MAX_INDIVIDUALS));
 }
 
-void Map::createIndividual(sf::Vector2f coord) {
+Individual* Map::createIndividual(sf::Vector2f coord) {
 	int nb_elements = elements.size();
 	if (nb_elements > 0) {
 		int rdm1 = randomint(nb_elements - 1);
@@ -27,9 +27,11 @@ void Map::createIndividual(sf::Vector2f coord) {
 			std::make_unique<Individual>(
 				std::make_unique<Strong>(&textureManager.individuals.find(liked->getName())->second), coord, liked, disliked
 				));
+		return leaders.back.get();
 	}
 	else {
 		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals.find("darkelement")->second), coord));
+		return leaders.back.get();
 	}
 }
 
@@ -55,7 +57,7 @@ void Map::createElement(std::string name, float range, sf::Color color,
 	));
 }
 
-void Map::createLaw(Element* element, LawType type) {
+Law* Map::createLaw(Element* element, LawType type) {
 	for (int i = laws.size()-1; i >= 0; i--) {
 		if (laws[i]->getElement() == element) {
 			laws.erase(laws.begin() + i);
@@ -70,6 +72,7 @@ void Map::createLaw(Element* element, LawType type) {
 			subordinate->addElement(element);
 		}
 	}
+	return laws.back.get();
 }
 
 void Map::updatePositions() {
@@ -126,10 +129,10 @@ void Map::updateDangers(std::unique_ptr<sftools::Chronometer>& time) {
 		int nbIndividuals = totalCountIndividuals();
 		if (randomint(1) == 0)
 			renderables.push_back(std::make_unique<Renderable>(
-				addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))), textureManager);
+				addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f)), textureManager));
 		else
 			renderables.push_back(std::make_unique<Renderable>(
-				addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))), textureManager);
+				addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f)), textureManager));
 	}
 
 	for (int i = dangers.size() - 1; i >= 0; i--) {
@@ -182,14 +185,18 @@ LineDanger* Map::addRandomLineDanger(std::unique_ptr<sftools::Chronometer> &time
 void Map::updateAnim(std::unique_ptr<sftools::Chronometer>& time)
 {
 	if (time->getElapsedTime().asMilliseconds() - last_anim_update.asMilliseconds() > MS_PER_ANIM) {
-		for (auto &leader : leaders)
-			leader->getState()->incrementAnim();
-		last_anim_update = time->getElapsedTime();
+		for (auto & renderable : renderables) {
+			renderable->updateAnimation();
+		}
 	}
 }
 
 void Map::render(sf::RenderWindow& window) {
 	window.draw(background);
 	individualsCount.setString(std::to_string(totalCountIndividuals()) + "/" + std::to_string(MAX_INDIVIDUALS));
+	for (auto & renderable : renderables) {
+		renderable->render(window);
+	}
+
 	window.draw(individualsCount);
 }

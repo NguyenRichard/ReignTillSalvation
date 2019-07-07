@@ -3,11 +3,6 @@
 Weak::Weak(const IndividualState & state) : 
 	IndividualState(state) 
 {
-	sprite.setPosition(coord.x, coord.y);
-	sprite.setTexture(textures->first);
-	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE, WEAK_SPRITE_SIZE));
-	sprite.setOrigin(sf::Vector2f(WEAK_SPRITE_SIZE / 2, WEAK_SPRITE_SIZE / 2));
-	sprite.setScale(3, 3);
 }
 
 std::unique_ptr<IndividualState> Weak::changeState() {
@@ -120,27 +115,6 @@ void Weak::makeSubordinate(Individual* me,std::vector<std::unique_ptr<Individual
 	setLeader(new_leader.get());
 	moveIndividuals(subordinates, strong->getSubordinates(), my_position, new_position);
 
-}
-
-void Weak::render_and_update(sf::RenderWindow& window) {
-	sprite.setPosition(coord.x, coord.y);
-	
-	sf::Vector2f direction(coord.x - old_coord.x, coord.y - old_coord.y);
-	float rotation = calculateAngle(direction);
-	if (direction.y < 0) {
-		rotation = 360.0f-rotation;
-	}
-	setSpriteDirection(rotation);
-
-	//incrementAnim();
-
-	sprite.setTextureRect(sf::IntRect(anim.x*WEAK_SPRITE_SIZE, anim.y*WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE,WEAK_SPRITE_SIZE));
-
-	window.draw(sprite);
-}
-
-void Weak::render(sf::RenderWindow& window) {
-	window.draw(sprite);
 }
 
 
