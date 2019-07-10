@@ -6,10 +6,7 @@
 #include "gtest/gtest.h"
 
 TEST(TestIndividual_ChangeState, WeaktoStrong) {
-	std::pair<sf::Texture, sf::Texture> textures;
 
-	textures.first.loadFromFile("res/sprite/orange.png");
-	textures.second.loadFromFile("res/sprite/orangeleader.png");
 
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Weak>(), sf::Vector2f(20, 300));
 	Weak* weak = dynamic_cast<Weak*>(individual->getState());
@@ -29,10 +26,6 @@ TEST(TestIndividual_ChangeState, WeaktoStrong) {
 }
 
 TEST(TestIndividual_ChangeState, StrongtoWeak) {
-	std::pair<sf::Texture, sf::Texture> textures;
-
-	textures.first.loadFromFile("res/sprite/orange.png");
-	textures.second.loadFromFile("res/sprite/orangeleader.png");
 
 	std::unique_ptr<Individual> individual = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(20, 300));
 	std::unique_ptr<Individual> new_leader = std::make_unique<Individual>(std::make_unique<Strong>(), sf::Vector2f(40, 300));
