@@ -80,7 +80,8 @@ void GameRunning::init() {
 	time->resume();
 	parseXML();
 	for (int i = 0; i < MAX_INDIVIDUALS; i++) {
-		renderables.push_back(std::make_unique<Renderable>(map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT)))));
+		renderables.push_back(std::make_unique<Renderable>(
+			map->createIndividual(sf::Vector2f(randomint(WINDOW_WIDTH), randomint(WINDOW_HEIGHT))), map->getTextureManager()));
 	}
 
 	sf::Vector2f coord;
@@ -133,10 +134,10 @@ void GameRunning::updateDangers() {
 		int nbIndividuals = map->totalCountIndividuals();
 		if (randomint(1) == 0)
 			renderables.push_back(std::make_unique<Renderable>(
-				map->addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))));
+				map->addRandomCircleDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f)), map->getTextureManager()));
 		else
 			renderables.push_back(std::make_unique<Renderable>(
-				map->addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f))));
+				map->addRandomLineDanger(time, COEFF_TIME_BEFORE_NEXT * (log10(nbIndividuals) + 1.0f)), map->getTextureManager()));
 	}
 
 	for (int i = map->getDangers().size() - 1; i >= 0; i--) {

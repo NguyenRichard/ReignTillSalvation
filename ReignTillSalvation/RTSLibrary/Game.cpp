@@ -30,7 +30,10 @@ Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sft
 void Game::renderGame(sf::RenderWindow& window) {
 	map->render(window);
 	for (auto & renderable : renderables) {
-		renderable->render(window);
+		if (renderable->getObject())
+			renderable->render(window);
+		else
+			renderable.reset();
 	}
 }
 
