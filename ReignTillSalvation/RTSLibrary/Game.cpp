@@ -29,6 +29,15 @@ Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sft
 
 void Game::renderGame(sf::RenderWindow& window) {
 	map->render(window);
+	for (std::vector<std::unique_ptr<Renderable>>::iterator it = renderables.begin(); it < renderables.end(); )
+	{
+		if (it->getObject()) {
+			it->render(window);
+			it++;
+		}
+		else
+			it = renderables.erase(it);
+	}
 	for (auto & renderable : renderables) {
 		if (renderable->getObject())
 			renderable->render(window);
