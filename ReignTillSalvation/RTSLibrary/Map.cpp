@@ -25,12 +25,12 @@ Individual* Map::createIndividual(sf::Vector2f coord) {
 		Element* disliked = elements[rdm2].get();
 		leaders.push_back(
 			std::make_unique<Individual>(
-				std::make_unique<Strong>(&textureManager.individuals.find(liked->getName())->second), coord, liked, disliked
+				std::make_unique<Strong>(), coord, liked, disliked
 				));
 		return leaders.back().get();
 	}
 	else {
-		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(&textureManager.individuals.find("darkelement")->second), coord));
+		leaders.push_back(std::make_unique<Individual>(std::make_unique<Strong>(), coord));
 		return leaders.back().get();
 	}
 }
