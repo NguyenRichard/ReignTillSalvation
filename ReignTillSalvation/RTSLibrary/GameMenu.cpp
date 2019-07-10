@@ -60,5 +60,5 @@ void GameMenu::update(RTS* rts) {
 }
 
 void GameMenu::createLaw(Element* element, LawType type) {
-	renderables.push_back(std::make_unique<Renderable>(map->createLaw(element, type)));
+	renderables.push_back(std::make_unique<Renderable>(map->createLaw(element, type), map->getTextureManager()));
 }

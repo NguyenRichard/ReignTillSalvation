@@ -26,4 +26,5 @@ public:
 	Renderable(Element*, TextureManager&);
 	void render(sf::RenderWindow& window); //
 	void updateAnimation(); // Drawable must be a sprite to animate.
+	ObjectLogic* getObject() { return object; };
 };

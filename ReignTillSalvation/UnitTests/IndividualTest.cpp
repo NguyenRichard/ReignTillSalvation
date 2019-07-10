@@ -1,7 +1,5 @@
 #include "pch.h"
-#include "../RTSLibrary/Individual.h"
 #include "../RTSLibrary/Strong.h"
-#include "../RTSLibrary/Weak.h"
 #include "SFML/Graphics.hpp"
 #include "gtest/gtest.h"
 
