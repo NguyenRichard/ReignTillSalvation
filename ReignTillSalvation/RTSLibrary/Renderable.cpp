@@ -18,7 +18,7 @@ Renderable::Renderable(Individual* individual, TextureManager& textureManager) :
 	textures[0] = &textures_from_manger->first;
 	textures[1] = &textures_from_manger->second;
 
-	std::unique_ptr<sf::Sprite> sprite;
+	std::unique_ptr<sf::Sprite> sprite = std::make_unique<sf::Sprite>();
 	sprite->setTexture(*textures[0]);
 	sprite->setTextureRect(sf::IntRect(0, 0, STRONG_SPRITE_SIZE, STRONG_SPRITE_SIZE));
 	sprite->setOrigin(sf::Vector2f(STRONG_SPRITE_SIZE / 2, STRONG_SPRITE_SIZE / 2));
@@ -159,26 +159,26 @@ void Renderable::render(sf::RenderWindow& window) {
 void Renderable::updateAnimation() {
 
 	sf::Sprite* sprite = nullptr;
-	sf::IntRect* rect = nullptr;
+	sf::IntRect rect;
 	switch (type) {
 		case topDown:
 			for (const auto& drawable : drawables) {
 				sprite = static_cast<sf::Sprite*>(drawable.first.get());
-				*rect = sprite->getTextureRect();
-				sprite->setTextureRect(sf::IntRect(rect->left,
-												animcount*rect->height,
-												rect->width,
-												rect->height));
+				rect = sprite->getTextureRect();
+				sprite->setTextureRect(sf::IntRect(rect.left,
+												animcount*rect.height,
+												rect.width,
+												rect.height));
 			}
 			break;
 		case leftRight:
 			for (const auto& drawable : drawables) {
 				sprite = static_cast<sf::Sprite*>(drawable.first.get());
-				*rect = sprite->getTextureRect();
-				sprite->setTextureRect(sf::IntRect(animcount*rect->width,
-												rect->top,
-												rect->width,
-												rect->height));
+				rect = sprite->getTextureRect();
+				sprite->setTextureRect(sf::IntRect(animcount*rect.width,
+												rect.top,
+												rect.width,
+												rect.height));
 			}
 			break;
 		default: //None included
