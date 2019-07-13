@@ -6,7 +6,7 @@
 
 
 Renderable::Renderable(Individual* individual, TextureManager& textureManager) :
-	object(individual->getState())
+	object(individual)
 {
 	animcount = 0;
 	type = leftRight;

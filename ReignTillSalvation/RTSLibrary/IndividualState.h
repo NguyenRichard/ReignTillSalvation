@@ -15,7 +15,7 @@ class Individual;
 
 enum Dir { Down, DownLeft, Left, TopLeft, Top, TopRight, Right, DownRight };
 
-class IndividualState : public ObjectLogic {
+class IndividualState {
 public:
 	IndividualState() {};
 	IndividualState(const IndividualState & state);
@@ -39,7 +39,7 @@ public:
 	virtual int findSubPosition(const IndividualState&) = 0;
 	virtual int myStrength() const = 0;
 
-	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override;
+	virtual void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&);
 
 
 	bool operator <(const IndividualState&);

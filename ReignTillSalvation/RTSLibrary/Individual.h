@@ -6,7 +6,7 @@
 #include "ObjectLogic.h"
 
 
-class Individual {
+class Individual : public ObjectLogic {
 public:
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f);
 	Individual(std::unique_ptr<IndividualState>, sf::Vector2f, Element*, Element*);
@@ -33,6 +33,8 @@ public:
 	void setDisliked(Element* el_disliked);
 	void addElement(Element* element);
 	void deleteElement(Element* element);
+
+	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override;
 
 	bool operator <(const Individual&);
 

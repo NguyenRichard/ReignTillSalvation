@@ -144,3 +144,6 @@ void Individual::addElement(Element* element) {
 	elements.push_back(element);
 }
 
+void Individual::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>& drawables) {
+	state->updateDrawables(drawables);
+}
