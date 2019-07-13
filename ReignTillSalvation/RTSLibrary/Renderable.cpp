@@ -39,6 +39,7 @@ Renderable::Renderable(CircleDanger* danger, TextureManager &textureManager) :
 	sf::Vector2f coord = danger->getCoord();
 	shape->setOrigin(sf::Vector2f(radius, radius));
 	shape->setPosition(coord);
+	type = leftRight;
 
 	sf::Color color = sf::Color::Red;
 	color.a = 0;
@@ -67,6 +68,7 @@ Renderable::Renderable(LineDanger* danger, TextureManager &textureManager)
 	sf::Vector2f coord = danger->getCoord();
 	shape->setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape->setPosition(coord);
+	type = topDown;
 
 	sf::Vector2f direction = danger->getDirection();
 	float rotation = 180.0f / PI * atan(direction.y / direction.x);
@@ -95,6 +97,8 @@ Renderable::Renderable(Element* element, TextureManager &textures)
 {
 	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
 	float range = element->getRangeUnmutable();
+
+	type = leftRight;
 
 	for (auto coord : element->getCoords()) {
 		std::unique_ptr<sf::CircleShape> rangeShape = std::make_unique<sf::CircleShape>(range);
@@ -163,22 +167,26 @@ void Renderable::updateAnimation() {
 	switch (type) {
 		case topDown:
 			for (const auto& drawable : drawables) {
-				sprite = static_cast<sf::Sprite*>(drawable.first.get());
-				rect = sprite->getTextureRect();
-				sprite->setTextureRect(sf::IntRect(rect.left,
-												animcount*rect.height,
-												rect.width,
-												rect.height));
+				sprite = dynamic_cast<sf::Sprite*>(drawable.first.get());
+				if (sprite) {
+					rect = sprite->getTextureRect();
+					sprite->setTextureRect(sf::IntRect(rect.left,
+						animcount*rect.height,
+						rect.width,
+						rect.height));
+				}
 			}
 			break;
 		case leftRight:
 			for (const auto& drawable : drawables) {
-				sprite = static_cast<sf::Sprite*>(drawable.first.get());
-				rect = sprite->getTextureRect();
-				sprite->setTextureRect(sf::IntRect(animcount*rect.width,
-												rect.top,
-												rect.width,
-												rect.height));
+				sprite = dynamic_cast<sf::Sprite*>(drawable.first.get());
+				if (sprite) {
+					rect = sprite->getTextureRect();
+					sprite->setTextureRect(sf::IntRect(animcount*rect.width,
+						rect.top,
+						rect.width,
+						rect.height));
+				}
 			}
 			break;
 		default: //None included

@@ -274,6 +274,8 @@ void LineDanger::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Draw
 			drawables[0].first.release();
 
 			drawables[1].second.second = 0;
+
+			
 		}
 
 		else
