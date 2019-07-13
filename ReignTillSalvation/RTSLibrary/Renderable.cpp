@@ -99,7 +99,7 @@ Renderable::Renderable(Element* element, TextureManager &textures)
 	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
 	float range = element->getRangeUnmutable();
 
-	type = leftRight;
+	type = None;
 
 	for (auto coord : element->getCoords()) {
 		std::unique_ptr<sf::CircleShape> rangeShape = std::make_unique<sf::CircleShape>(range);
@@ -124,7 +124,7 @@ Renderable::Renderable(Element* element, TextureManager &textures)
 		sprite->setPosition(coord);
 
 		drawables.push_back(std::move(std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>(
-			std::move(sprite), std::pair<std::vector<sf::Texture*>, int>(texturesVect, 1)
+			std::move(sprite), std::pair<std::vector<sf::Texture*>, int>(texturesVect, 0)
 		)));
 	}
 }
@@ -172,24 +172,33 @@ void Renderable::updateAnimation() {
 		case topDown:
 			for (const auto& drawable : drawables) {
 				sprite = dynamic_cast<sf::Sprite*>(drawable.first.get());
-				if (sprite) {
+				if (sprite && drawable.first != nullptr) {
 					rect = sprite->getTextureRect();
 					sprite->setTextureRect(sf::IntRect(rect.left,
 						animcount*rect.height,
 						rect.width,
 						rect.height));
+					animcount++;
+
+					if (animcount >= drawable.second.first[drawable.second.second]->getSize().y/rect.height) {
+						animcount = 0;
+					}
 				}
 			}
 			break;
 		case leftRight:
 			for (const auto& drawable : drawables) {
 				sprite = dynamic_cast<sf::Sprite*>(drawable.first.get());
-				if (sprite) {
+				if (sprite && drawable.first != nullptr) {
 					rect = sprite->getTextureRect();
 					sprite->setTextureRect(sf::IntRect(animcount*rect.width,
 						rect.top,
 						rect.width,
 						rect.height));
+					animcount++;
+					if (animcount >= drawable.second.first[drawable.second.second]->getSize().x / rect.width) {
+						animcount = 0;
+					}
 				}
 			}
 			break;
