@@ -1,7 +1,7 @@
 #include "myImGUI.h"
 
 #define MAX_INPUT_NAME 50
-/* WARNING: Not working with the changement in render
+
 int imGUImain(){
 
 	static bool showIndividualInfo = false;
@@ -104,7 +104,7 @@ int imGUImain(){
 		if(showIndividualInfo) individualWindow(window, rts, &showIndividualInfo);
 		if (showElementInfo) elementWindow(window, rts, &showElementInfo, input_name);
 		if (showLawInfo) lawWindow(window, rts,&showLawInfo);
-		if (showDangerInfo) dangerWindow(window, rts,&showDangerInfo, input_shape);
+		//if (showDangerInfo) dangerWindow(window, rts,&showDangerInfo, input_shape);
 		if (showGlobalInfo) globalInformation(window, rts, &showGlobalInfo);
 
 
@@ -122,9 +122,9 @@ int imGUImain(){
 	return EXIT_SUCCESS;
 
 }
-*/
 
-/*
+
+
 void globalInformation(sf::RenderWindow & window, RTS& rts, bool* p_open) {
 
 
@@ -421,7 +421,7 @@ void showLaw(Law& law, int uid)
 	}
 	ImGui::PopID();
 }
-
+/*
 void dangerWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input_shape) {
 	Game* game = static_cast<GameRunning*>(rts.getState());
 	ImGui::SetNextWindowSize(sf::Vector2f(window.getSize().
@@ -461,10 +461,10 @@ void dangerWindow(sf::RenderWindow & window, RTS& rts, bool* p_open, char* input
 	}
 	ImGui::End();
 
-}
-
+}*/
+/*
 void showDanger(Danger& danger, int uid)
-{/*
+{
 	ImGui::PushID(uid);                      // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
 	ImGui::AlignTextToFramePadding();  // Text and Tree nodes are less high than regular widgets, here we add vertical spacing to make the tree lines equal high.
 	bool node_open = ImGui::TreeNode("Object", "%s", danger.getName().c_str());
@@ -515,5 +515,5 @@ void showDanger(Danger& danger, int uid)
 
 		ImGui::TreePop();
 	}
-	ImGui::PopID();*/
-/* }*/
+	ImGui::PopID();
+ }*/

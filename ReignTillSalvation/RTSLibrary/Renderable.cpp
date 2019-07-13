@@ -153,8 +153,9 @@ Renderable::Renderable(Law* law, TextureManager &textureManager) {
 }
 
 void Renderable::render(sf::RenderWindow& window) {
+	object->updateDrawables(drawables);
 	for (const auto& drawable : drawables) {
-		if (drawable.first != nullptr) {
+		if (drawable.first != nullptr){
 			window.draw(*drawable.first);
 		}
 	}
