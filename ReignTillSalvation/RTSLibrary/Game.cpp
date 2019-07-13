@@ -21,10 +21,11 @@ Game::Game(const RTSState& state, std::unique_ptr<sf::Music> old_music) :
 {}
 
 Game::Game(const Game & state, std::unique_ptr<Map> new_map, std::unique_ptr<sftools::Chronometer> new_time,
-	std::unique_ptr<sf::Music> old_music) :
+	std::unique_ptr<sf::Music> old_music, std::vector<std::unique_ptr<Renderable>> renderables) :
 	RTSState(state, std::move(old_music)), 
 	map(std::move(new_map)),
-	time(std::move(new_time))
+	time(std::move(new_time)),
+	renderables(std::move(renderables))
 {}
 
 void Game::renderGame(sf::RenderWindow& window) {
@@ -42,7 +43,7 @@ void Game::renderGame(sf::RenderWindow& window) {
 
 	for (int i = renderables.size() - 1; i >= 0; i--) {
 		auto& renderable = renderables[i];
-		if (renderable->getObject())
+		if (renderable->getObject() != nullptr && renderable->getObject() != (ObjectLogic*) 0xDDDDDDDD)
 			renderable->render(window);
 		else
 			renderables.erase(renderables.begin() + i);

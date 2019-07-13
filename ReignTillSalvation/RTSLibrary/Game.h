@@ -12,7 +12,8 @@ class Game : public RTSState{
 public:
 	Game(int width, int height, std::unique_ptr<sf::Music> music);
 	Game(const RTSState & state, std::unique_ptr<sf::Music> old_music);
-	Game(const Game & state, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>, std::unique_ptr<sf::Music> old_music);
+	Game(const Game&, std::unique_ptr<Map>, std::unique_ptr<sftools::Chronometer>,
+		std::unique_ptr<sf::Music>, std::vector<std::unique_ptr<Renderable>>);
 	void processInput(RTS*,sf::RenderWindow& window,sf::Event&) override = 0;
 	void render(sf::RenderWindow& window) override = 0;
 	void update(RTS* rts) override = 0;

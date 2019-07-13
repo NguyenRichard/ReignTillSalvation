@@ -25,15 +25,17 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
 	CircleDanger(time, setCountdownAppearance, setDuration, coord,
 		DEFAULT_RADIUS_DANGER, 0, 8.0f) {}
 
-CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, sf::Texture* texture,
+CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wait,
 	sf::SoundBuffer* buffer) :
 	Danger(time, wait), /*texture(texture),*/ buffer(buffer)
 {/*
 	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
-	shape = sf::CircleShape(radius);
-	coord.x = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER);
-	coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER);
-	shape.setOrigin(sf::Vector2f(radius, radius));
+	shape = sf::CircleShape(radius);*/
+	coord = sf::Vector2f(
+		(float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER),
+		coord.y = (float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER)
+	);
+	/*shape.setOrigin(sf::Vector2f(radius, radius));
 	shape.setPosition(coord);
 
 	sf::Color color = sf::Color::Red;
@@ -146,8 +148,5 @@ void CircleDanger::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Dr
 
 			drawables[1].second.second = 0;
 		}
-
-		else
-			drawables[1].second.second++;
 	}
 }

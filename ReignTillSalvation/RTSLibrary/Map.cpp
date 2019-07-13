@@ -140,7 +140,7 @@ void Map::deleteDanger(const int &i) {
 
 CircleDanger* Map::addRandomCircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wait)
 {
-	std::unique_ptr<CircleDanger> danger = std::make_unique<CircleDanger>(time, wait, &textureManager.dangers.find("explosion")->second,
+	std::unique_ptr<CircleDanger> danger = std::make_unique<CircleDanger>(time, wait,
 			&soundManager.sounds.find("explosion")->second);
 	CircleDanger* circleDanger = danger.get();
 	dangers.push_back(std::move(danger));
@@ -149,7 +149,7 @@ CircleDanger* Map::addRandomCircleDanger(std::unique_ptr<sftools::Chronometer> &
 
 LineDanger* Map::addRandomLineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait)
 {
-	std::unique_ptr<LineDanger> danger = std::make_unique<LineDanger>(time, wait, &textureManager.dangers.find("laser")->second,
+	std::unique_ptr<LineDanger> danger = std::make_unique<LineDanger>(time, wait,
 		&soundManager.sounds.find("laser")->second);
 	LineDanger* lineDanger = danger.get();
 	dangers.push_back(std::move(danger));

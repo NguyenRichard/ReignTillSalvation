@@ -8,7 +8,7 @@ public:
 	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, float, sf::Vector2f coord,
 		float radius, float time_offset, float time_before_next);
 	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, float, sf::Vector2f coord);
-	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, sf::Texture*, sf::SoundBuffer* buffer);
+	CircleDanger(std::unique_ptr<sftools::Chronometer>&, float, sf::SoundBuffer* buffer);
 	void affectZone(std::vector<std::unique_ptr<Individual>>&);
 	//sf::CircleShape &getShape() { return shape; };
 	//void render(sf::RenderWindow&) override;

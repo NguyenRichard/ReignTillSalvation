@@ -31,7 +31,7 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer>& time, float set_co
 	LineDanger(time, set_countdownAppearance, set_duration, coord,
 		DEFAULT_DIRECTION_DANGER, DEFAULT_WIDTH_DANGER, 0, 8.0f) {}*/
 
-LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, sf::Texture* texture,
+LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait,
 		sf::SoundBuffer* buffer) :
 	Danger(time, wait), texture(texture), buffer(buffer)
 {
@@ -44,7 +44,10 @@ LineDanger::LineDanger(std::unique_ptr<sftools::Chronometer> &time, float wait, 
 	shape.setOrigin(sf::Vector2f(length / 2, width / 2));
 	shape.setPosition(coord);*/
 
-
+	coord = sf::Vector2f(
+		(float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER),
+		(float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_HEIGHT - 2 * DEFAULT_RADIUS_DANGER)
+	);
 	direction.x = (float)(1 + randomint(9)) / 10;
 	direction.y = (float)(1 + randomint(9)) / 10;
 	direction.y *= (randomint(1) == 0) ? 1 : -1;
@@ -273,12 +276,7 @@ void LineDanger::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Draw
 			drawables[1].first = std::move(new_sprite);
 			drawables[0].first.release();
 
-			drawables[1].second.second = 0;
-
-			
+			drawables[1].second.second = 0;	
 		}
-
-		else
-			drawables[1].second.second++;
 	}
 }

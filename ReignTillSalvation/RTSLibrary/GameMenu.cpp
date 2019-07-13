@@ -4,8 +4,9 @@
 
 
 GameMenu::GameMenu(const Game & state, std::unique_ptr<Map> new_map,
-	std::unique_ptr<sftools::Chronometer> new_time, std::unique_ptr<sf::Music> old_music) :
-	Game(state, std::move(new_map), std::move(new_time), std::move(old_music))
+	std::unique_ptr<sftools::Chronometer> new_time, std::unique_ptr<sf::Music> old_music,
+	std::vector<std::unique_ptr<Renderable>> renderables) :
+	Game(state, std::move(new_map), std::move(new_time), std::move(old_music), std::move(renderables))
 {
 	time->pause();
 }
@@ -38,7 +39,7 @@ void GameMenu::renderMenu(sf::RenderWindow& window) {
 
 std::unique_ptr<RTSState> GameMenu::changeStateToGameRunning() {
 
-	return std::make_unique<GameRunning>(*this, std::move(map), std::move(time), std::move(music));
+	return std::make_unique<GameRunning>(*this, std::move(map), std::move(time), std::move(music), std::move(renderables));
 
 }
 
