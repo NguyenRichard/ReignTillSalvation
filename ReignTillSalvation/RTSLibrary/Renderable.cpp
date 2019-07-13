@@ -94,6 +94,7 @@ Renderable::Renderable(LineDanger* danger, TextureManager &textureManager)
 }
 
 Renderable::Renderable(Element* element, TextureManager &textures)
+	: object(element)
 {
 	sf::Color color = sf::Color(randomint(255), randomint(255), randomint(255));
 	float range = element->getRangeUnmutable();
@@ -128,7 +129,9 @@ Renderable::Renderable(Element* element, TextureManager &textures)
 	}
 }
 
-Renderable::Renderable(Law* law, TextureManager &textureManager) {
+Renderable::Renderable(Law* law, TextureManager &textureManager)
+	: object(law)
+{
 	std::vector<sf::Vector2f> element_coords = law->getElement()->getCoords();
 
 	std::unique_ptr<sf::RectangleShape> bar;
