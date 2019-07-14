@@ -14,6 +14,7 @@ public:
 	//void render(sf::RenderWindow&) override;
 	void resetBuffer() override { sound.resetBuffer(); }
 	sf::Vector2f getCoord() { return coord; }
+	float getRadius() { return radius; };
 
 	void updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Drawable>, std::pair<std::vector<sf::Texture*>, int>>>&) override;
 

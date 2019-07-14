@@ -33,7 +33,7 @@ Renderable::Renderable(Individual* individual, TextureManager& textureManager) :
 Renderable::Renderable(CircleDanger* danger, TextureManager &textureManager) : 
 	object(danger)
 {
-	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
+	float radius = danger->getRadius();
 	std::unique_ptr<sf::CircleShape> shape = std::make_unique<sf::CircleShape>(radius);
 
 	sf::Vector2f coord = danger->getCoord();

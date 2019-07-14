@@ -28,8 +28,9 @@ CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer>& time,
 CircleDanger::CircleDanger(std::unique_ptr<sftools::Chronometer> &time, float wait,
 	sf::SoundBuffer* buffer) :
 	Danger(time, wait), /*texture(texture),*/ buffer(buffer)
-{/*
-	float radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
+{
+	radius = (float)MIN_RADIUS_DANGER + randomint(MAX_RADIUS_DANGER - MIN_RADIUS_DANGER);
+	/*
 	shape = sf::CircleShape(radius);*/
 	coord = sf::Vector2f(
 		(float)DEFAULT_RADIUS_DANGER + randomint(WINDOW_WIDTH - 2 * DEFAULT_RADIUS_DANGER),
@@ -136,13 +137,14 @@ void CircleDanger::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Dr
 		// if the sprite has not yet been moved
 		if (drawables[0].first != nullptr)
 		{
+			float ratio = MULTIPLY_RATIO_EXPLOSION*radius/BASE_EXPLOSION_SPRITE_SIZE;
 			sf::CircleShape* old_shape = static_cast<sf::CircleShape*>(drawables[0].first.get());
 			std::unique_ptr<sf::Sprite> new_sprite = std::make_unique<sf::Sprite>();
-			new_sprite->setOrigin(old_shape->getOrigin());
+			new_sprite->setOrigin(sf::Vector2f(ratio*BASE_EXPLOSION_SPRITE_SIZE, ratio*BASE_EXPLOSION_SPRITE_SIZE));
 			new_sprite->setPosition(old_shape->getPosition());
 			new_sprite->setTexture(*drawables[1].second.first[0]);
 			new_sprite->setTextureRect(sf::IntRect(0, 0, BASE_EXPLOSION_SPRITE_SIZE, BASE_EXPLOSION_SPRITE_SIZE));
-			new_sprite->setScale(old_shape->getScale());
+			new_sprite->setScale(ratio, ratio);
 			drawables[1].first = std::move(new_sprite);
 			drawables[0].first.release();
 
