@@ -141,7 +141,7 @@ void CircleDanger::updateDrawables(std::vector <std::pair<std::unique_ptr<sf::Dr
 			new_sprite->setOrigin(old_shape->getOrigin());
 			new_sprite->setPosition(old_shape->getPosition());
 			new_sprite->setTexture(*drawables[1].second.first[0]);
-			new_sprite->setTextureRect(old_shape->getTextureRect());
+			new_sprite->setTextureRect(sf::IntRect(0, 0, BASE_EXPLOSION_SPRITE_SIZE, BASE_EXPLOSION_SPRITE_SIZE));
 			new_sprite->setScale(old_shape->getScale());
 			drawables[1].first = std::move(new_sprite);
 			drawables[0].first.release();
